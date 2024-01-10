@@ -52,6 +52,5 @@
 /.web-server-pid
 
 .env.local
-.env
 
 .idea/
