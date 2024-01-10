@@ -1,9 +1,78 @@
-body {
-    background-color: #f8f8f8;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --body-background-color: #f8f8f8;
+    --list-background-color: #F0F4F8;
+    --list-title-background-color: #464646;
+    --fc-non-business-color: #009eff0a; /* couleur pour samedi et dimanche */
+    --border-item-color: #7D5CFF;
 }
+
+body {
+    background-color: var(--body-background-color);
+    padding: 0;
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+}
+
+/*---------HEADER----------*/
+
+header {
+    height: 10vh;
+}
+
+/*---------MAIN----------*/
+
+main {
+    display: flex;
+    height: 90vh;
+    gap: 15px;
+}
+
+/*---------CALENDAR----------*/
 
 #calendar {
     width: 70%;
     height: 90%;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    padding-left: 20px;
 }
+
+/*---------LIST----------*/
+
+#list {
+    width: 30%;
+    background-color: var(--list-background-color);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+#list #title_list {
+    background-color: var(--list-title-background-color);
+    color: white;
+    border-radius: 6px;
+    padding: 16px 42px;
+}
+
+#list h2 {
+    font-size: 35px;
+    margin: 0;
+}
+
+#list #items {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#list .item {
+    background-color: white;
+    border-radius: 6px;
+    padding: 26px 16px;
+    height: 25px;
+    border-left: solid 6px var(--border-item-color);
+}
+
+
