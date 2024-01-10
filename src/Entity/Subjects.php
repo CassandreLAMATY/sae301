@@ -11,7 +11,7 @@ class Subjects
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $sbj_id = null;
 
     #[ORM\Column(length: 100)]
     private ?string $sbj_name = null;
@@ -21,7 +21,7 @@ class Subjects
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->sbj_id;
     }
 
     public function getSbjName(): ?string

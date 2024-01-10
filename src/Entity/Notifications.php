@@ -11,7 +11,7 @@ class Notifications
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $not_id = null;
 
     #[ORM\Column]
     private ?int $not_usr_id = null;
@@ -30,7 +30,7 @@ class Notifications
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->not_id;
     }
 
     public function getNotUsrId(): ?int
