@@ -31,7 +31,7 @@ class Users
     #[ORM\Column(length: 1, nullable: true)]
     private ?string $usr_tp = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ["default" => 0])]
     private ?bool $usr_banned = null;
 
     public function getId(): ?int
