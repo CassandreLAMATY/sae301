@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <header></header>
+    <main>
+        <div id="calendar"></div>
+        <div id="list">
+            <div id="title_list">
+                <h2>À Venir</h2>
+            </div>
+            <div id="items">
+                <div class="item">
+                    <div class="time">
+                        <p class="date">10/01/2024</p>
+                        <div class="time_left">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                            <p class="days">Dans <br> <span>2 jours</span></p>
+                        </div>
+                    </div>
+                    <div class="subject">
+                        <p class="tag">Travaux</p>
+                        <h3>Grammar / Vocabulaire</h3>
+                        <p class="course">WRA301 - Anglais</p>
+                    </div>
+                    <div class="status">
+                        <i class="fa-solid fa-check"></i>
+                        <p>Rendu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
