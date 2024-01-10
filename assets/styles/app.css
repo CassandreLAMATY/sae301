@@ -1,3 +1,9 @@
 body {
-    background-color: skyblue;
+    background-color: #f8f8f8;
+}
+
+#calendar {
+    width: 70%;
+    height: 90%;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
