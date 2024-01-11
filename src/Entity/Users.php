@@ -40,6 +40,9 @@ class Users
     #[ORM\Column(length: 8)]
     private ?string $usr_pseudo = null;
 
+    #[ORM\Column(length: 2)]
+    private ?string $usr_semester = null;
+
     public function getId(): ?int
     {
         return $this->usr_id;
@@ -149,6 +152,18 @@ class Users
     public function setUsrPseudo(string $usr_pseudo): static
     {
         $this->usr_pseudo = $usr_pseudo;
+
+        return $this;
+    }
+
+    public function getUsrSemester(): ?string
+    {
+        return $this->usr_semester;
+    }
+
+    public function setUsrSemester(string $usr_semester): static
+    {
+        $this->usr_semester = $usr_semester;
 
         return $this;
     }
