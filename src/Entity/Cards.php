@@ -29,7 +29,7 @@ class Cards
     #[ORM\Column(nullable: true)]
     private ?int $crd_subject = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $crd_from = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
