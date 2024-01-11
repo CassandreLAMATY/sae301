@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+    {% endblock %}
 
         {% block javascripts %}
-            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-            <script src="https://kit.fontawesome.com/9d34ec166c.js" crossorigin="anonymous"></script>
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js' defer></script>
+            <script src="https://kit.fontawesome.com/9d34ec166c.js" crossorigin="anonymous" defer></script>
 {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
