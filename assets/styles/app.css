@@ -96,11 +96,11 @@ main {
     background-color: var(--white);
     border-radius: 6px;
     padding: 16px 26px;
-    border-left: solid 6px var(--border-item-color);
+    border-left: solid 6px;
     display: grid;
     gap: 26px;
     align-items: center;
-    grid-template-columns: 75px 1fr min-content;
+    grid-template-columns: 79px 1fr min-content;
 }
 
 #list .time{
@@ -148,8 +148,8 @@ main {
     padding: 4px 6px;
     font-size: var(--grup-1);
     margin: 0;
-    background-color: var(--accent-blue);
     width: fit-content;
+    font-weight: 700;
 }
 
 .subject h3{
