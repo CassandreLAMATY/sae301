@@ -9,6 +9,8 @@ import './styles/app.css'
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
 
+////////////////////////////// CALENDAR//////////////////////////////
+
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {

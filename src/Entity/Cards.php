@@ -132,12 +132,12 @@ class Cards
         return $this;
     }
 
-    public function getCrdSbj(): ?Subjects
+    public function getCrdSbjId(): ?Subjects
     {
         return $this->crd_sbj;
     }
 
-    public function setCrdSbj(?Subjects $crd_sbj): static
+    public function setCrdSbjId(?Subjects $crd_sbj): static
     {
         $this->crd_sbj = $crd_sbj;
 
