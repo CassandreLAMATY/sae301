@@ -7,7 +7,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Users
-                property: usr_mail
+                property: usr_pseudo
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -19,6 +19,7 @@ security:
             logout:
                 path: app_logout
                 target: app_login
+
                 # where to redirect after logout
                 # target: app_any_route
 
