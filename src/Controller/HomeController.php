@@ -22,6 +22,17 @@ class HomeController extends AbstractController
         $cardData = [];
 
         foreach ($cards as $card) {
+            $timeEnd = $card->getCrdTo();
+            $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
+            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
+
+            $timeEnd->modify('-1 hour');
+
+            //if timeEnd is before now, skip this card
+            if ($timeEnd < $now) {
+                continue;
+            }
+
             $typeId = $card->getCrdTypId();
             $type = $typesRepository->find($typeId);
 
