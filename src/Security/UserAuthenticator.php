@@ -59,8 +59,4 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
-    public function onLogoutSuccess(Request $request): RedirectResponse
-    {
-        return new RedirectResponse($this->urlGenerator->generate('app_login'));
-    }
 }
