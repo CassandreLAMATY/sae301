@@ -28,6 +28,9 @@ class Users
     #[ORM\Column(length: 50)]
     private ?string $usr_firstname = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $usr_pp = null;
+
     #[ORM\Column(length: 1, nullable: true)]
     private ?string $usr_tp = null;
 
@@ -95,6 +98,18 @@ class Users
     public function setUsrFirstname(string $usr_firstname): static
     {
         $this->usr_firstname = $usr_firstname;
+
+        return $this;
+    }
+
+    public function getUsrPP(): ?string
+    {
+        return $this->usr_pp;
+    }
+
+    public function setUsrPP(string $usr_pp): static
+    {
+        $this->usr_pp = $usr_pp;
 
         return $this;
     }
