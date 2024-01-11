@@ -158,6 +158,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->getUsrMail();
+        return $this->getUsrMail();//changer ici si on veut se connecter avec le pseudo
     }
 }
