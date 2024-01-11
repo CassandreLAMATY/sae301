@@ -22,11 +22,16 @@ class Notifications
     #[ORM\Column(length: 100)]
     private ?string $not_content = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $not_crd_id = null;
+    #[ORM\Column(options: ["default" => 0])]
+    private ?bool $is_seen = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $not_sender_id = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "crd_id")]
+    private ?Cards $not_card = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "usr_id")]
+    private ?Users $not_sender = null;
 
     public function getId(): ?int
     {
@@ -69,26 +74,38 @@ class Notifications
         return $this;
     }
 
-    public function getNotCrdId(): ?int
+    public function isIsSeen(): ?bool
     {
-        return $this->not_crd_id;
+        return $this->is_seen;
     }
 
-    public function setNotCrdId(?int $not_crd_id): static
+    public function setIsSeen(bool $is_seen): static
     {
-        $this->not_crd_id = $not_crd_id;
+        $this->is_seen = $is_seen;
 
         return $this;
     }
 
-    public function getNotSenderId(): ?int
+    public function getNotCard(): ?Cards
     {
-        return $this->not_sender_id;
+        return $this->not_card;
     }
 
-    public function setNotSenderId(?int $not_sender_id): static
+    public function setNotCard(?Cards $not_card): static
     {
-        $this->not_sender_id = $not_sender_id;
+        $this->not_card = $not_card;
+
+        return $this;
+    }
+
+    public function getNotSender(): ?Users
+    {
+        return $this->not_sender;
+    }
+
+    public function setNotSender(?Users $not_sender): static
+    {
+        $this->not_sender = $not_sender;
 
         return $this;
     }
