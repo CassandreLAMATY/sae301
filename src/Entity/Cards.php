@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CardsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Service\DateTimeConverter;
 
 #[ORM\Entity(repositoryClass: CardsRepository::class)]
 class Cards
@@ -105,6 +106,12 @@ class Cards
         return $this->crd_to;
     }
 
+    public function getFormattedCrdTo(): string
+    {
+        $converter = new DateTimeConverter();
+        return $converter->convertToString($this->getCrdTo());
+    }
+
     public function setCrdTo(\DateTimeInterface $crd_to): static
     {
         $this->crd_to = $crd_to;
@@ -122,5 +129,12 @@ class Cards
         $this->crd_from = $crd_from;
 
         return $this;
+    }
+
+    public function getTimeLeft(): string
+    {
+        $now = new \DateTime();
+        $final = $this->getCrdTo();
+        return $now->diff($final)->format('%a jours');
     }
 }
