@@ -23,9 +23,6 @@ class Cards
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $crd_desc = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $crd_subject = null;
-
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $crd_from = null;
 
@@ -35,6 +32,10 @@ class Cards
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: "typ_id", nullable: false)]
     private ?Types $crd_typ = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "sbj_id")]
+    private ?Subjects $crd_sbj = null;
 
     public function getId(): ?int
     {
@@ -73,18 +74,6 @@ class Cards
     public function setCrdDesc(?string $crd_desc): static
     {
         $this->crd_desc = $crd_desc;
-
-        return $this;
-    }
-
-    public function getCrdSubject(): ?int
-    {
-        return $this->crd_subject;
-    }
-
-    public function setCrdSubject(?int $crd_subject): static
-    {
-        $this->crd_subject = $crd_subject;
 
         return $this;
     }
@@ -139,6 +128,18 @@ class Cards
         ?Types $crd_typ
     ): static {
         $this->crd_typ = $crd_typ;
+
+        return $this;
+    }
+
+    public function getCrdSbj(): ?Subjects
+    {
+        return $this->crd_sbj;
+    }
+
+    public function setCrdSbj(?Subjects $crd_sbj): static
+    {
+        $this->crd_sbj = $crd_sbj;
 
         return $this;
     }
