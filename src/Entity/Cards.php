@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CardsRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CardsRepository::class)]
@@ -17,9 +16,6 @@ class Cards
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $crd_created_at = null;
 
-    #[ORM\Column(length: 20)]
-    private ?string $crd_type = null;
-
     #[ORM\Column(length: 255)]
     private ?string $crd_title = null;
 
@@ -29,11 +25,15 @@ class Cards
     #[ORM\Column(nullable: true)]
     private ?int $crd_subject = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $crd_from = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $crd_to = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "typ_id", nullable: false)]
+    private ?Types $crd_typ_id = null;
 
     public function getId(): ?int
     {
@@ -48,18 +48,6 @@ class Cards
     public function setCrdCreatedAt(\DateTimeImmutable $crd_created_at): static
     {
         $this->crd_created_at = $crd_created_at;
-
-        return $this;
-    }
-
-    public function getCrdType(): ?string
-    {
-        return $this->crd_type;
-    }
-
-    public function setCrdType(string $crd_type): static
-    {
-        $this->crd_type = $crd_type;
 
         return $this;
     }
@@ -120,6 +108,18 @@ class Cards
     public function setCrdFrom(?\DateTimeInterface $crd_from): static
     {
         $this->crd_from = $crd_from;
+
+        return $this;
+    }
+
+    public function getCrdTypId(): ?Types
+    {
+        return $this->crd_typ_id;
+    }
+
+    public function setCrdTypId(?Types $crd_typ_id): static
+    {
+        $this->crd_typ_id = $crd_typ_id;
 
         return $this;
     }
