@@ -16,7 +16,7 @@ class Users
     #[ORM\Column(length: 100)]
     private ?string $usr_mail = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 200)]
     private ?string $usr_pwd = null;
 
     #[ORM\Column(length: 20)]
@@ -36,6 +36,9 @@ class Users
 
     #[ORM\Column(options: ["default" => 0])]
     private ?bool $usr_banned = null;
+
+    #[ORM\Column(length: 8)]
+    private ?string $usr_pseudo = null;
 
     public function getId(): ?int
     {
@@ -134,6 +137,18 @@ class Users
     public function setUsrBanned(bool $usr_banned): static
     {
         $this->usr_banned = $usr_banned;
+
+        return $this;
+    }
+
+    public function getUsrPseudo(): ?string
+    {
+        return $this->usr_pseudo;
+    }
+
+    public function setUsrPseudo(string $usr_pseudo): static
+    {
+        $this->usr_pseudo = $usr_pseudo;
 
         return $this;
     }
