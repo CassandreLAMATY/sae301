@@ -21,9 +21,17 @@ class HomeController extends AbstractController
     {
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
-
+            $user = $this->getUser();
+            $username = $user->getUsrPseudo();
+            $name = $user->getUsrName();
+            $firstname = $user->getUsrFirstname();
+            $email = $user->getUsrMail();
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
+                'username' => $username,
+                'name' => $name,
+                'firstname' => $firstname,
+                'email' => $email,
             ]);
         } else {
             // Utilisateur non connecté,
