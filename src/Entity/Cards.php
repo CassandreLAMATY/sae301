@@ -34,7 +34,7 @@ class Cards
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: "typ_id", nullable: false)]
-    private ?Types $crd_typ_id = null;
+    private ?Types $crd_typ = null;
 
     public function getId(): ?int
     {
@@ -131,14 +131,14 @@ class Cards
     public
     function getCrdTypId(): ?Types
     {
-        return $this->crd_typ_id;
+        return $this->crd_typ;
     }
 
     public
     function setCrdTypId(
-        ?Types $crd_typ_id
+        ?Types $crd_typ
     ): static {
-        $this->crd_typ_id = $crd_typ_id;
+        $this->crd_typ = $crd_typ;
 
         return $this;
     }
