@@ -147,12 +147,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
+
+    return [$this->getUsrRole()];
     }
 
     public function eraseCredentials(): void
     {
-        // TODO: Implement eraseCredentials() method.
+            // TODO: Implement eraseCredentials() method.
     }
 
     public function getUserIdentifier(): string
