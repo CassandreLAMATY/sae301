@@ -67,6 +67,10 @@ class HomeController extends AbstractController
             }
         }
 
+        usort($cardData, function ($a, $b) {
+            return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
+        });
+
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
             $user = $this->getUser();
