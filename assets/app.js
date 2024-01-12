@@ -52,3 +52,5 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   calendar.render();
 });
+
+export default getCalendar;

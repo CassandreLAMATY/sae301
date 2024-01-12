@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+    {% endblock %}
 
         {% block javascripts %}
             <script src='{{ asset('fullcalendar-6.1.10/dist/index.global.min.js') }}'></script>
@@ -14,10 +14,23 @@
         {% endblock %}
     </head>
     <body>
-        <header>
-            <div class="logo-placeholder"></div>
-            <div class="header--user-card"></div>
-        </header>
+        <header class="header">
+        <div class="header__logo-placeholder"></div>
+        <div class="header__menu">
+            <div class="menu-notif">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <div class="menu-userCard">
+                <img class="userCard__image" src="" alt="photo de profil">
+                <div class="userCard__content">
+                    <p class="userCard__content-name">
+                        <span>Bienvenue</span>
+                        Cassandre Lamaty
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
         {% block body %}{% endblock %}
     </body>
 </html>
