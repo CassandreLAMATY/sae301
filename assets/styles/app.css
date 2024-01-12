@@ -76,6 +76,15 @@ main {
     text-transform: capitalize;
 }
 
+#calendar td.gridcell .fc-daygrid-day-events{
+    display: flex;
+    flex-direction: column;
+}
+
+#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness{
+    position: relative !important;
+}
+
 /*---------LIST----------*/
 
 #list {
