@@ -18,23 +18,17 @@ class HomeController extends AbstractController
     {
         $this->security = $security;
     }
+
     #[Route('/', name: 'app_home')]
-    public function index(
-        CardsRepository $cardsRepository,
-        TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository
-    ): Response
+    public function index(CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository): Response
     {
         $cards = $cardsRepository->findAll();
-
         $cardData = [];
 
         foreach ($cards as $card) {
             $timeEnd = $card->getCrdTo();
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
-
-            $timeEnd->modify('-1 hour');
 
             //if timeEnd is before now, skip this card
             if ($timeEnd < $now) {
@@ -58,13 +52,6 @@ class HomeController extends AbstractController
             }
         }
 
-        return $this->render('home/index.html.twig', [
-            'cardData' => $cardData,
-        ]);
-    }
-
-    public function securityIndex(): Response
-    {
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
             $user = $this->getUser();
@@ -78,29 +65,11 @@ class HomeController extends AbstractController
                 'name' => $name,
                 'firstname' => $firstname,
                 'email' => $email,
+                'cardData' => $cardData,
             ]);
         } else {
             // Utilisateur non connecté,
             return $this->redirectToRoute('app_login');
         }
-    }
-
-    #[Route('/home', name: 'app_data_calendar')]
-    public function getDataCalendar()
-    {
-        $data[] = [
-
-            'title' => 'Événement 1',
-            'start' => '2024-01-10',
-            'end' => '2024-01-12',
-        ];
-        $data[] =
-            [
-                'title' => 'Événement 2',
-                'start' => '2024-01-15',
-                'end' => '2024-01-17',
-            ];
-
-        return $this->json($data);
     }
 }
