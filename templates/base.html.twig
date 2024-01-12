@@ -13,23 +13,7 @@
         {% endblock %}
     </head>
     <body>
-        <header class="header">
-        <div class="header__logo-placeholder"></div>
-        <div class="header__menu">
-            <div class="menu-notif">
-                <i class="fa-solid fa-bell"></i>
-            </div>
-            <div class="menu-userCard">
-                <img class="userCard__image" src="" alt="photo de profil">
-                <div class="userCard__content">
-                    <p class="userCard__content-name">
-                        <span>Bienvenue</span>
-                        Cassandre Lamaty
-                    </p>
-                </div>
-            </div>
-        </div>
-    </header>
+        {% block header %}{% endblock %}
         {% block body %}{% endblock %}
     </body>
 </html>
