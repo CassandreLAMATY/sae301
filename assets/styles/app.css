@@ -169,13 +169,14 @@ main {
 
 .subject .tag{
     text-transform: uppercase;
-    color: var(--white);
+    color: var(--main--black);
     border-radius: 4px;
-    padding: 4px 6px;
+    padding: 2px 6px;
     font-size: var(--grup-1);
     margin: 0;
     width: fit-content;
     font-weight: 700;
+    border: solid 2px;
 }
 
 .subject h3{
