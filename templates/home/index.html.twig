@@ -18,7 +18,9 @@
                 {% for item in cardData %}
                     <div class="item" style="border-left-color: {{ item.typeColor }};">
                         <div class="time">
-                            <p class="date">{{ item.card.getFormattedCrdTo }}</p>
+                            <p class="date">
+                                {{ item.card.getFormattedCrdTo }}
+                            </p>
                             <div class="time_left">
                                 <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
                                 <p class="days">Dans <br> <span>{{ item.card.getTimeLeft }}</span></p>
