@@ -108,6 +108,13 @@ class Cards
         return $this->crd_from;
     }
 
+    public function getFormattedCrdFrom(): ?string
+    {
+        $converter = new DateTimeConverter();
+
+        return $converter->convertToString($this->getCrdFrom());
+    }
+
     public function setCrdFrom(?\DateTimeInterface $crd_from): static
     {
         $this->crd_from = $crd_from;
