@@ -18,15 +18,11 @@ class HomeController extends AbstractController
     {
         $this->security = $security;
     }
+
     #[Route('/', name: 'app_home')]
-    public function index(
-        CardsRepository $cardsRepository,
-        TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository
-    ): Response
+    public function index(CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository): Response
     {
         $cards = $cardsRepository->findAll();
-
         $cardData = [];
 
         foreach ($cards as $card) {
@@ -58,13 +54,6 @@ class HomeController extends AbstractController
             }
         }
 
-        return $this->render('home/index.html.twig', [
-            'cardData' => $cardData,
-        ]);
-    }
-
-    public function securityIndex(): Response
-    {
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
             $user = $this->getUser();
@@ -78,6 +67,7 @@ class HomeController extends AbstractController
                 'name' => $name,
                 'firstname' => $firstname,
                 'email' => $email,
+                'cardData' => $cardData,
             ]);
         } else {
             // Utilisateur non connecté,
