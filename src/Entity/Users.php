@@ -42,6 +42,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 8)]
     private ?string $usr_pseudo = null;
 
+    #[ORM\Column(length: 2)]
+    private ?string $usr_semester = null;
+
     public function getId(): ?int
     {
         return $this->usr_id;
@@ -174,5 +177,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->getUsrPseudo();//changer ici si on veut se connecter avec le pseudo
+
+    public function getUsrSemester(): ?string
+    {
+        return $this->usr_semester;
+    }
+
+    public function setUsrSemester(string $usr_semester): static
+    {
+        $this->usr_semester = $usr_semester;
+
+        return $this;
     }
 }

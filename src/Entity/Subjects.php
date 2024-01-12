@@ -13,7 +13,7 @@ class Subjects
     #[ORM\Column]
     private ?int $sbj_id = null;
 
-    #[ORM\Column(length: 200)]
+    #[ORM\Column(length: 80)]
     private ?string $sbj_name = null;
 
     #[ORM\Column(length: 9)]

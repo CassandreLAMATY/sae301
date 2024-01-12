@@ -17,7 +17,7 @@ class Cards
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $crd_created_at = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $crd_title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -36,6 +36,12 @@ class Cards
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: "sbj_id")]
     private ?Subjects $crd_sbj = null;
+
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::SMALLINT, options: ["default" => "0"])]
+    private ?int $is_validated = null;
+
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::SMALLINT, nullable: true)]
+    private ?int $validated_by = null;
 
     public function getId(): ?int
     {
@@ -140,6 +146,30 @@ class Cards
     public function setCrdSbj(?Subjects $crd_sbj): static
     {
         $this->crd_sbj = $crd_sbj;
+
+        return $this;
+    }
+
+    public function getIsValidated(): ?int
+    {
+        return $this->is_validated;
+    }
+
+    public function setIsValidated(int $is_validated): static
+    {
+        $this->is_validated = $is_validated;
+
+        return $this;
+    }
+
+    public function getValidatedBy(): ?int
+    {
+        return $this->validated_by;
+    }
+
+    public function setValidatedBy(?int $validated_by): static
+    {
+        $this->validated_by = $validated_by;
 
         return $this;
     }
