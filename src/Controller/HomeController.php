@@ -30,8 +30,6 @@ class HomeController extends AbstractController
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            $timeEnd->modify('-1 hour');
-
             //if timeEnd is before now, skip this card
             if ($timeEnd < $now) {
                 continue;
