@@ -6,7 +6,11 @@
     {% include 'components/header.html.twig' %}
 {% endblock %}
 {% block body %}
+
     <h1>Votre nom : {{ username }} / {{ name }} / {{ firstname }} / {{ email }}</h1>
+
+    <header></header>
+    {#<h1>Votre nom : {{ username }} / {{ name }} / {{ firstname }} / {{ email }}</h1>#}
 
     <main>
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
