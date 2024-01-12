@@ -47,12 +47,12 @@ class HomeController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
-            if($dayLeft < 8) {
-                $timeColor= 'var(--accent-orange)';
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
             }
 
             if ($dayLeft < 3) {
-                $timeColor= 'var(--accent-red)';
+                $timeColor = 'var(--accent-red)';
             }
 
             if ($type !== null) {
@@ -67,7 +67,7 @@ class HomeController extends AbstractController
             }
         }
 
-        $showParams = true;
+        $showParams = false;
 
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
