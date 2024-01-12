@@ -41,6 +41,20 @@ class HomeController extends AbstractController
             $subjectId = $card->getCrdSbjId();
             $subject = $subjectsRepository->find($subjectId);
 
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if($dayLeft < 8) {
+                $timeColor= 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor= 'var(--accent-red)';
+            }
+
             if ($type !== null) {
                 $cardData[] = [
                     'card' => $card,
@@ -48,6 +62,7 @@ class HomeController extends AbstractController
                     'typeColor' => $type->getTypColor(),
                     'subjectName' => $subject->getSbjName(),
                     'subjectColor' => $subject->getSbjColor(),
+                    'timeColor' => $timeColor,
                 ];
             }
         }

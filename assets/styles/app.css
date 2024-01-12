@@ -15,6 +15,8 @@
 
     --accent-yellow: #FFD540;
     --accent-orange: #F5AF47;
+    --accent-red: #FF4040;
+    --accent-green: #6EE014;
     --accent-blue: #4098FF; /* couleur pour les tags A SUPPRIMER APRÈS */
 
     /* --- Couleurs Btns --- */
@@ -123,9 +125,9 @@ main {
     padding: 16px 26px;
     border-left: solid 6px;
     display: grid;
-    gap: 26px;
+    gap: 17px;
     align-items: center;
-    grid-template-columns: 79px 1fr min-content;
+    grid-template-columns: 82px 1fr min-content;
 }
 
 #list .time{
@@ -148,7 +150,6 @@ main {
 
 .time i {
     font-size: 24px;
-    color: var(--accent-orange);
 }
 
 .time_left .days{
@@ -190,7 +191,7 @@ main {
 #list .status{
     display: flex;
     gap: 5px;
-    background-color: var(--done);
+    background-color: var(--btn--done);
     border-radius: 6px;
     padding: 6px 16px;
     height: fit-content;
