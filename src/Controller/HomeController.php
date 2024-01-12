@@ -74,6 +74,5 @@ class HomeController extends AbstractController
             // Utilisateur non connecté,
             return $this->redirectToRoute('app_login');
         }
->>>>>>> main
     }
 }
