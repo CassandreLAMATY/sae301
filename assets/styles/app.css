@@ -12,6 +12,8 @@
     --accent-yellow: #FFD540;
     --accent-orange: #F5AF47;
     --accent-blue: #4098FF; /* couleur pour les tags A SUPPRIMER APRÈS */
+    
+    --main-black: #424242;
     --grup6: 17.94rem; /* 288px */
     --grup5: 11.09rem; /* 177px */
     --grup4: 6.85rem; /* 110px */
@@ -36,12 +38,76 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Outfit', sans-serif;
+
+    overflow-y: hidden;
+}
+
+p {
+    margin: unset;
 }
 
 /*---------HEADER----------*/
 
 header {
-    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: var(--grup) var(--grup1);
+
+    color: var(--main-black);
+
+    user-select: none;
+}
+
+.header__menu {
+    display: flex;
+    align-items: center;
+    gap: var(--grup1);
+}
+
+.menu-notif {
+    position: relative;
+
+    font-size: var(--grup1);
+}
+
+.notif-dot {
+    position: absolute;
+    top: var(--grup-2);
+    right: 0;
+    width: var(--grup-2);
+    height: var(--grup-2);
+    border-radius: 50%;
+
+    background-color: var(--accent-orange);
+}
+
+.menu-userCard {
+    display: flex;
+    align-items: center;
+    gap: var(--grup);
+}
+
+.userCard__image {
+    width: var(--grup2);
+    height: var(--grup2);
+    border-radius: 50%;
+}
+
+.userCard__content-name {
+    font-size: var(--grup-1);
+}
+
+.userCard__content-name > span {
+    font-size: var(--grup);
+    font-weight: 600;
+}
+
+
+.menu-notif:hover,
+.menu-userCard:hover {
+    cursor: pointer;
 }
 
 /*---------MAIN----------*/

@@ -1,0 +1,19 @@
+<header class="header">
+    <img src="{{ asset('images/logo.svg') }}" alt="logo iut">
+    <div class="header__menu">
+        <div class="menu-notif">
+            <i class="fa-solid fa-bell"></i>
+            <div class="notif-dot"></div>
+        </div>
+        <div class="menu-userCard">
+            <img class="userCard__image" src="{{ asset('images/users/Artur.jpg') }}" alt="photo de profil">
+            <div class="userCard__content">
+                <p class="userCard__content-name">
+                    Bienvenue<br>
+                    <span>Artur Moreira Machado</span>
+                </p>
+            </div>
+        </div>
+        {% include 'popups.html.twig' %}        
+    </div>
+</header>
