@@ -8,10 +8,20 @@
   --border-item-color: #7d5cff;
   --white: #ffffff;
   --grey: #a3a3a3;
-  --done: #9ae08f;
+
+  /* --- Couleurs Principales --- */
+  --main--black: #424242;
+  --main--white: #f8f8f8;
+
   --accent-yellow: #ffd540;
   --accent-orange: #f5af47;
+  --accent-red: #ff4040;
+  --accent-green: #6ee014;
   --accent-blue: #4098ff; /* couleur pour les tags A SUPPRIMER APRÈS */
+
+  /* --- Couleurs Btns --- */
+  --btn--done: #9ae08f;
+
   --grup6: 17.94rem; /* 288px */
   --grup5: 11.09rem; /* 177px */
   --grup4: 6.85rem; /* 110px */
@@ -48,16 +58,33 @@ header {
 
 main {
   display: flex;
-  height: 90vh;
   gap: 15px;
 }
 
-/*---------CALENDAR----------*/
+/* --------------------------- */
+/* ----- 📆 CALENDAR 📆 ----- */
+/* --------------------------- */
 
 #calendar {
   width: 70%;
   height: 90%;
   padding-left: 20px;
+}
+
+#calendar button {
+  background-color: var(--accent-yellow);
+  color: var(--main--black);
+  border: none;
+  text-transform: capitalize;
+}
+
+#calendar td.gridcell .fc-daygrid-day-events {
+  display: flex;
+  flex-direction: column;
+}
+
+#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness {
+  position: relative !important;
 }
 
 /*---------LIST----------*/
@@ -98,9 +125,9 @@ main {
   padding: 16px 26px;
   border-left: solid 6px;
   display: grid;
-  gap: 26px;
+  gap: 17px;
   align-items: center;
-  grid-template-columns: 79px 1fr min-content;
+  grid-template-columns: 82px 1fr min-content;
 }
 
 #list .time {
@@ -123,7 +150,6 @@ main {
 
 .time i {
   font-size: 24px;
-  color: var(--accent-orange);
 }
 
 .time_left .days {
@@ -165,7 +191,7 @@ main {
 #list .status {
   display: flex;
   gap: 5px;
-  background-color: var(--done);
+  background-color: var(--btn--done);
   border-radius: 6px;
   padding: 6px 16px;
   height: fit-content;
