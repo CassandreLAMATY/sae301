@@ -117,10 +117,24 @@ class Cards
 
     public function getTimeLeft(): string
     {
-        $now = new \DateTime();
+        $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
         $final = $this->getCrdTo();
+        $final->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-        return $now->diff($final)->format('%a jours');
+        $diff = $now->diff($final);
+        $dayLeft = $diff->format('%a');
+        $hourLeft = $diff->format('%h');
+        $hourLeft = (int)$hourLeft;
+
+        if ($dayLeft === '0' && $hourLeft > 1 ) {
+            return sprintf('%dh%02d', $diff->h, $diff->i);
+        }
+
+        if ($dayLeft === '0' && $hourLeft === 0) {
+            return $diff->format('%i min');
+        }
+
+        return $diff->format('%a jours');
     }
 
     public

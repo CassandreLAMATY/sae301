@@ -3,10 +3,13 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
+
     <header></header>
+    <h1>Votre nom : {{ username }} / {{ name }} / {{ firstname }} / {{ email }}</h1>
+
     <main>
 
-        <div id="calendar"></div>
+        <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="list">
             <div id="title_list">
                 <h2>À Venir</h2>
@@ -71,4 +74,7 @@
         {% endif %}
     </main>
 
+
 {% endblock %}
+
+
