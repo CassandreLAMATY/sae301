@@ -27,7 +27,7 @@
     --secondary-gray--02: #E5E9ED;
     --secondary-gray--03: #C0C5CA;
     --secondary-gray--04: #6B6B6B;
-    
+
     --grup6: 17.94rem; /* 288px */
     --grup5: 11.09rem; /* 177px */
     --grup4: 6.85rem; /* 110px */
@@ -52,8 +52,6 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Outfit', sans-serif;
-
-    overflow-y: hidden;
 }
 
 p {
