@@ -39,8 +39,11 @@ class HomeController extends AbstractController
             }
         }
 
+        $showParams = true;
+
         return $this->render('home/index.html.twig', [
             'cardData' => $cardData,
+            'showParams' => $showParams,
         ]);
     }
 }

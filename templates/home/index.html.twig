@@ -34,6 +34,41 @@
                 {% endfor %}
             </div>
         </div>
+        {% if showParams %} {# Use your boolean flag here #}
+        <div id="params">
+            <div id="params_pop-up">
+                <div id="params_pop-up_top_section">
+                    <h2>Paramètres</h2>
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                <div id="params_pop-up_main_section">
+                    <h3>Notification par mail</h3> 
+                    <div class="params_pop-up_row">
+                        <i class="fa-solid fa-toggle-off"></i>
+                        <p>Rappels des devoirs à rendre</p>
+                    </div>
+                    <div class="params_pop-up_row">
+                        <i class="fa-solid fa-toggle-off"></i>
+                        <p>Rappels des examens</p>
+                    </div>
+                    <div class="params_pop-up_row">
+                        <i class="fa-solid fa-toggle-off"></i>
+                        <p>Nouveaux éléments</p>
+                    </div>
+                    <div class="params_pop-up_row">
+                        <i class="fa-solid fa-toggle-off"></i>
+                        <p>Modification d'un évènement</p>
+                    </div>
+                    <hr>
+                    <h3>Confidentialité</h3> 
+                    <div class="params_pop-up_row">
+                        <i class="fa-solid fa-toggle-off"></i>
+                        <p>Cookies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </main>
 
 {% endblock %}
