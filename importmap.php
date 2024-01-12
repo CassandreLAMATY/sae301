@@ -27,4 +27,43 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'fullcalendar' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/core/index.js' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/interaction/index.js' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/daygrid/index.js' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/timegrid/index.js' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/list/index.js' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/multimonth/index.js' => [
+        'version' => '6.1.10',
+    ],
+    'preact' => [
+        'version' => '10.12.1',
+    ],
+    'preact/compat' => [
+        'version' => '10.12.1',
+    ],
+    '@fullcalendar/core/internal.js' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/core/preact.js' => [
+        'version' => '6.1.10',
+    ],
+    '@fullcalendar/daygrid/internal.js' => [
+        'version' => '6.1.10',
+    ],
+    'preact/hooks' => [
+        'version' => '10.12.1',
+    ],
 ];
