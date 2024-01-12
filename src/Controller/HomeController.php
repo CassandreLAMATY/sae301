@@ -8,15 +8,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
 use App\Repository\TypesRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class HomeController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     #[Route('/', name: 'app_home')]
     public function index(
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository
-    ): Response {
+    ): Response
+    {
         $cards = $cardsRepository->findAll();
 
         $cardData = [];
@@ -53,6 +61,28 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'cardData' => $cardData,
         ]);
+    }
+
+    public function securityIndex(): Response
+    {
+        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Utilisateur déjà connecté,
+            $user = $this->getUser();
+            $username = $user->getUsrPseudo();
+            $name = $user->getUsrName();
+            $firstname = $user->getUsrFirstname();
+            $email = $user->getUsrMail();
+            return $this->render('home/index.html.twig', [
+                'controller_name' => 'HomeController',
+                'username' => $username,
+                'name' => $name,
+                'firstname' => $firstname,
+                'email' => $email,
+            ]);
+        } else {
+            // Utilisateur non connecté,
+            return $this->redirectToRoute('app_login');
+        }
     }
 
     #[Route('/home', name: 'app_data_calendar')]

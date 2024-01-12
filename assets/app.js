@@ -7,7 +7,10 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+//import { Calendar } from './vendor/@fullcalendar/core/index.js';
+//import dayGridPlugin from './vendor/@fullcalendar/daygrid/index.js';
+//import timeGridPlugin from './vendor/@fullcalendar/timegrid/index.js';
+//import listPlugin from './vendor/@fullcalendar/list/index.js';
 
 ////////////////////////////// CALENDAR//////////////////////////////
 document.addEventListener('DOMContentLoaded', async function() {
