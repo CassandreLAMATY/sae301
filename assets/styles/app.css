@@ -14,6 +14,10 @@
     --accent-blue: #4098FF; /* couleur pour les tags A SUPPRIMER APRÈS */
     
     --main-black: #424242;
+    --secondary-gray--01: #F0F4F8;
+    --secondary-gray--02: #E5E9ED;
+    --secondary-gray--03: #C0C5CA;
+    --secondary-gray--04: #6B6B6B;
     --grup6: 17.94rem; /* 288px */
     --grup5: 11.09rem; /* 177px */
     --grup4: 6.85rem; /* 110px */
@@ -46,9 +50,25 @@ p {
     margin: unset;
 }
 
+button {
+    display: block;
+
+    margin: unset;
+    padding: unset;
+    border: unset;
+
+    background-color: unset;
+
+    font-family: unset;
+    font-size: unset;
+    color: unset;
+}
+
 /*---------HEADER----------*/
 
 header {
+    position: relative;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -108,6 +128,70 @@ header {
 .menu-notif:hover,
 .menu-userCard:hover {
     cursor: pointer;
+}
+
+.userCard-dropdown {
+    position: absolute;
+    top: 100%;
+    right: var(--grup1);
+
+    padding: var(--grup1);
+    border-radius: var(--grup);
+
+    background-color: var(--white);
+
+    color: var(--secondary-gray--04);
+}
+
+.userCard-dropdown::before {
+    content: "";
+
+    position: absolute;
+    top: calc(0px - var(--grup1));
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: block;
+
+    width: var(--grup1);
+    height: var(--grup1);
+
+    background-color: var(--white);
+
+    clip-path: polygon(50% 40%, 0% 100%, 100% 100%);
+}
+
+.dropdown__buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--grup);
+}
+
+.dropdown__buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
+
+    padding: var(--grup-2) var(--grup);
+    border: solid 2px var(--secondary-gray--02);
+    border-radius: var(--grup-2);
+
+    background-color: var(--secondary-gray--01);
+
+    font-size: var(--grup);
+    font-weight: 600;
+}
+
+.dropdown__logout {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
+
+    width: fit-content;
+    margin: var(--grup-2) auto 0 auto;
+
+    font-size: var(--grup);
 }
 
 /*---------MAIN----------*/
