@@ -91,9 +91,7 @@ class Cards
 
     public function getFormattedCrdTo(): string
     {
-        $converter = new DateTimeConverter();
-
-        return $converter->convertToString($this->getCrdTo());
+        return $this->getCrdTo()->format('d M');
     }
 
     public function setCrdTo(\DateTimeInterface $crd_to): static
@@ -110,9 +108,7 @@ class Cards
 
     public function getFormattedCrdFrom(): ?string
     {
-        $converter = new DateTimeConverter();
-
-        return $converter->convertToString($this->getCrdFrom());
+        return $this->getCrdFrom()->format('d M');
     }
 
     public function setCrdFrom(?\DateTimeInterface $crd_from): static

@@ -19,6 +19,9 @@
                     <div class="item" style="border-left-color: {{ item.typeColor }};">
                         <div class="time">
                             <p class="date">
+                                {% if item.card.getCrdFrom is not null %}
+                                    Du {{ item.card.getFormattedCrdFrom }} <br> Au
+                                {% endif %}
                                 {{ item.card.getFormattedCrdTo }}
                             </p>
                             <div class="time_left">

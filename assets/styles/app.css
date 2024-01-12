@@ -137,7 +137,7 @@ main {
 }
 
 .time .date{
-    font-size: var(--grup-1);
+    font-size: 12px;
     color: var(--grey);
     margin-bottom: 0;
 }
