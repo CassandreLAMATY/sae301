@@ -52,23 +52,4 @@ class HomeController extends AbstractController
             'cardData' => $cardData,
         ]);
     }
-
-    #[Route('/home', name: 'app_data_calendar')]
-    public function getDataCalendar()
-    {
-        $data[] = [
-
-            'title' => 'Événement 1',
-            'start' => '2024-01-10',
-            'end' => '2024-01-12',
-        ];
-        $data[] =
-            [
-                'title' => 'Événement 2',
-                'start' => '2024-01-15',
-                'end' => '2024-01-17',
-            ];
-
-        return $this->json($data);
-    }
 }
