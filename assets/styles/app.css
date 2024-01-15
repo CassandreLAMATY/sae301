@@ -141,9 +141,14 @@ header {
     background-color: var(--white);
 
     color: var(--secondary-gray--04);
+    
+    box-shadow: 
+        0 0 0 2px var(--secondary-gray--02)
+    ;
 }
 
-.userCard-dropdown::before {
+.userCard-dropdown::before,
+.userCard-dropdown::after {
     content: "";
 
     position: absolute;
@@ -155,10 +160,20 @@ header {
 
     width: var(--grup1);
     height: var(--grup1);
+}
+
+.userCard-dropdown::before {
+    z-index: 2;
 
     background-color: var(--white);
 
     clip-path: polygon(50% 40%, 0% 100%, 100% 100%);
+}
+
+.userCard-dropdown::after {
+    background-color: var(--secondary-gray--02);
+
+    clip-path: polygon(50% 28%, -10% 100%, 110% 100%);
 }
 
 .dropdown__buttons-container {
@@ -189,7 +204,7 @@ header {
     gap: var(--grup-2);
 
     width: fit-content;
-    margin: var(--grup-2) auto 0 auto;
+    margin: var(--grup-1) auto 0 auto;
 
     font-size: var(--grup);
 }
