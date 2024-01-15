@@ -6,14 +6,15 @@
  */
 
 //import FullCalendar from './fullcalendar-6.1.10/dist/index.global.min.js';
-import './styles/app.css'
+import './styles/app.css';
 
 ////////////////////////////// CALENDAR //////////////////////////////
 
 document.addEventListener('DOMContentLoaded', async function() {
   if (document.getElementById('calendar')) {
-    const calendar = document.getElementById('calendar')
-    const dataEvents = await fetch(calendar.dataset.url).then(response => response.json());
+    const calendar = document.getElementById('calendar');
+    const dataEvents = await fetch(calendar.dataset.url).
+      then(response => response.json());
     console.log(dataEvents);
     getCalendar(dataEvents);
   }
@@ -27,41 +28,45 @@ function getCalendar(dataEvents) {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'timeGridWeek,dayGridMonth'
+      right: 'timeGridWeek,dayGridMonth',
     },
     firstDay: 1,
     businessHours: {
       // Jours ouvrés (lundi à vendredi)
       daysOfWeek: [1, 2, 3, 4, 5],
       startTime: '08:00', // Heure de début de la journée
-      endTime: '18:00'   // Heure de fin de la journée
+      endTime: '18:00',   // Heure de fin de la journée
     },
-    durationSlot: false,
     allDaySlot: true,
 
     views: {
       listWeek: {
-        buttonText: 'List'
-      }
+        buttonText: 'List',
       },
-
-    eventColor: '#F0F4F8',
+    },
+    eventColor: 'transparent',
     eventBorderColor: '#E5E9ED',
     eventTextColor: '#424242',
     events: dataEvents,
 
     eventContent: function(arg) {
-      return {
-        html:
-            arg.event.title + '<br>' +
-            arg.event.extendedProps.subject.sbjName + '<br>' +
-            arg.event.extendedProps.hour + '<br>' +
-            arg.event.extendedProps.type.typName
-      };
-    }
+      const eventDiv = document.createElement('div');
+      eventDiv.innerHTML =
+        arg.event.title + '<br>' +
+        arg.event.extendedProps.subject.sbjName + '<br>' +
+        arg.event.extendedProps.hour,
+
+      eventDiv.style.borderLeft = '5px solid ' + arg.event.extendedProps.type.typColor;
+      eventDiv.style.backgroundColor = arg.event.extendedProps.type.typColor + '20';
+      eventDiv.style.borderRadius = '3px';
+      eventDiv.style.padding = '5px';
+      eventDiv.style.textOverflow = 'ellipsis';
+      eventDiv.style.overflow = 'hidden';
+      return { domNodes: [eventDiv] };
+    },
   });
   calendar.render();
 }
 
-
 export default getCalendar;
+

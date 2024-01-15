@@ -52,6 +52,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Outfit', sans-serif;
+    overflow: hidden;
 }
 
 p {
@@ -215,7 +216,7 @@ main {
 
 #calendar {
     width: 70%;
-    height: 90%;
+    height: 88vh;
     padding-left: 20px;
 }
 
@@ -356,3 +357,4 @@ main {
 .status p{
     margin:0;
 }
+
