@@ -4,6 +4,7 @@
         <div class="menu-notif">
             <i class="fa-solid fa-bell"></i>
             <div class="notif-dot"></div>
+            {% include 'components/notif_dropdown.html.twig' %}
         </div>
         <div class="menu-userCard">
             <img class="userCard__image" src="{{ asset('images/users/Artur.jpg') }}" alt="photo de profil">
@@ -13,7 +14,7 @@
                     <span>Artur Moreira Machado</span>
                 </p>
             </div>
-            {% include 'components/popups.html.twig' %}
+            {% include 'components/userCard_dropdown.html.twig' %}
         </div>
     </div>
 </header>

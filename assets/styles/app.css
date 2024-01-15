@@ -103,6 +103,70 @@ header {
     background-color: var(--accent-orange);
 }
 
+.userCard-dropdown,
+.notif-dropdown {
+    /* display: none; */
+
+    position: absolute;
+
+    padding: var(--grup1);
+    border-radius: var(--grup);
+
+    background-color: var(--white);
+
+    color: var(--secondary-gray--04);
+    
+    box-shadow: 
+        0 0 0 2px var(--secondary-gray--02)
+    ;
+}
+
+.userCard-dropdown {
+    display: none;
+
+    top: 100%;
+    right: var(--grup1);
+}
+
+.notif-dropdown {
+    top: 53px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.userCard-dropdown::before,
+.userCard-dropdown::after,
+.notif-dropdown::before,
+.notif-dropdown::after {
+    content: "";
+
+    position: absolute;
+    top: calc(0px - var(--grup1));
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: block;
+
+    width: var(--grup1);
+    height: var(--grup1);
+}
+
+.userCard-dropdown::before,
+.notif-dropdown::before {
+    z-index: 2;
+
+    background-color: var(--white);
+
+    clip-path: polygon(50% 40%, 0% 100%, 100% 100%);
+}
+
+.userCard-dropdown::after,
+.notif-dropdown::after {
+    background-color: var(--secondary-gray--02);
+
+    clip-path: polygon(50% 28%, -10% 100%, 110% 100%);
+}
+
 .menu-userCard {
     display: flex;
     align-items: center;
@@ -124,66 +188,19 @@ header {
     font-weight: 600;
 }
 
-
 .menu-notif:hover,
 .menu-userCard:hover {
     cursor: pointer;
 }
 
-.userCard-dropdown {
-    position: absolute;
-    top: 100%;
-    right: var(--grup1);
-
-    padding: var(--grup1);
-    border-radius: var(--grup);
-
-    background-color: var(--white);
-
-    color: var(--secondary-gray--04);
-    
-    box-shadow: 
-        0 0 0 2px var(--secondary-gray--02)
-    ;
-}
-
-.userCard-dropdown::before,
-.userCard-dropdown::after {
-    content: "";
-
-    position: absolute;
-    top: calc(0px - var(--grup1));
-    left: 50%;
-    transform: translateX(-50%);
-
-    display: block;
-
-    width: var(--grup1);
-    height: var(--grup1);
-}
-
-.userCard-dropdown::before {
-    z-index: 2;
-
-    background-color: var(--white);
-
-    clip-path: polygon(50% 40%, 0% 100%, 100% 100%);
-}
-
-.userCard-dropdown::after {
-    background-color: var(--secondary-gray--02);
-
-    clip-path: polygon(50% 28%, -10% 100%, 110% 100%);
-}
-
-.dropdown__buttons-container {
+.userCard__buttons-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: var(--grup);
 }
 
-.dropdown__buttons {
+.userCard__buttons {
     display: flex;
     align-items: center;
     gap: var(--grup-2);
@@ -198,7 +215,7 @@ header {
     font-weight: 600;
 }
 
-.dropdown__logout {
+.userCard__logout {
     display: flex;
     align-items: center;
     gap: var(--grup-2);
@@ -207,6 +224,32 @@ header {
     margin: var(--grup-1) auto 0 auto;
 
     font-size: var(--grup);
+}
+
+.double-button {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+
+    width: fit-content;
+    border: solid 2px var(--secondary-gray--02);
+    border-radius: var(--grup-2);
+}
+
+.double-button > button {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
+
+    padding: var(--grup-2) var(--grup-1);
+
+    background-color: var(--secondary-gray--01);
+
+    font-size: var(--grup);
+}
+
+.double-button > button:first-child {
+    box-shadow: 2px 0 0 0 var(--secondary-gray--02);
 }
 
 /*---------MAIN----------*/
