@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
 use App\Repository\TypesRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use App\Entity\Cards;
+use App\Form\CardsType;
+
 
 class HomeController extends AbstractController
 {
@@ -87,4 +90,15 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
     }
+    #[Route('/create-cards', name: 'create_cards')]
+    public function createCardForm(): Response
+    {
+        $card = new Cards();
+        $form = $this->createForm(CardsType::class, $card);
+
+        return $this->render('cards/_form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
 }

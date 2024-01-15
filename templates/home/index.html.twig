@@ -14,6 +14,18 @@
             <div id="title_list">
                 <h2>À Venir</h2>
             </div>
+{#             formulaire de creation d'un évènement "cards"#}
+            <div id="create_card" class="card">
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        // Charge le formulaire de création de carte en AJAX
+                        $.get('{{ path('create_cards') }}', function(response) {
+                            $('#createCardFormContainer').html(response);
+                        });
+                    });
+                </script>
+            </div>
             <div id="items">
                 {% for item in cardData %}
                     <div class="item" style="border-left-color: {{ item.typeColor }};">
