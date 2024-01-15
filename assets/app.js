@@ -10,7 +10,16 @@ import './styles/app.css'
 
 ////////////////////////////// CALENDAR //////////////////////////////
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+  if (document.getElementById('calendar')) {
+    const calendar = document.getElementById('calendar')
+    const dataEvents = await fetch(calendar.dataset.url).then(response => response.json());
+    console.log(dataEvents);
+    getCalendar(dataEvents);
+  }
+});
+
+function getCalendar(dataEvents) {
   let calendarEl = document.getElementById('calendar');
   let calendar = new FullCalendar.Calendar(calendarEl, {
     locale: 'fr',
@@ -39,36 +48,20 @@ document.addEventListener('DOMContentLoaded', function() {
     eventColor: '#F0F4F8',
     eventBorderColor: '#E5E9ED',
     eventTextColor: '#424242',
-    events: [
-      {
-        title: 'Événement 1',
-        start: '2024-01-10',
-        end: '2024-01-10',
-        extraInfo: 'This is some extra information'
-      },
-      {
-        title: 'Événement 2',
-        start: '2024-01-15',
-        end: '2024-01-17',
-        extraInfo: 'This is some extra information'
-      },
-      {
-        title: 'Événement 2',
-        start: '2024-01-15',
-        end: '2024-01-20',
-        extraInfo: 'This is some extra information'
-      }
-    ],
+    events: dataEvents,
 
     eventContent: function(arg) {
       return {
         html:
             arg.event.title + '<br>' +
-            arg.event.extendedProps.extraInfo
+            arg.event.extendedProps.subject.sbjName + '<br>' +
+            arg.event.extendedProps.hour + '<br>' +
+            arg.event.extendedProps.type.typName
       };
     }
   });
   calendar.render();
-});
+}
+
 
 export default getCalendar;
