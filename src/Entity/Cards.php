@@ -91,9 +91,7 @@ class Cards
 
     public function getFormattedCrdTo(): string
     {
-        $converter = new DateTimeConverter();
-
-        return $converter->convertToString($this->getCrdTo());
+        return $this->getCrdTo()->format('d M');
     }
 
     public function setCrdTo(\DateTimeInterface $crd_to): static
@@ -108,6 +106,11 @@ class Cards
         return $this->crd_from;
     }
 
+    public function getFormattedCrdFrom(): ?string
+    {
+        return $this->getCrdFrom()->format('d M');
+    }
+
     public function setCrdFrom(?\DateTimeInterface $crd_from): static
     {
         $this->crd_from = $crd_from;
@@ -117,10 +120,24 @@ class Cards
 
     public function getTimeLeft(): string
     {
-        $now = new \DateTime();
+        $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
         $final = $this->getCrdTo();
+        $final->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-        return $now->diff($final)->format('%a jours');
+        $diff = $now->diff($final);
+        $dayLeft = $diff->format('%a');
+        $hourLeft = $diff->format('%h');
+        $hourLeft = (int)$hourLeft;
+
+        if ($dayLeft === '0' && $hourLeft > 1 ) {
+            return sprintf('%dh%02d', $diff->h, $diff->i);
+        }
+
+        if ($dayLeft === '0' && $hourLeft === 0) {
+            return $diff->format('%i min');
+        }
+
+        return $diff->format('%a jours');
     }
 
     public
@@ -138,12 +155,12 @@ class Cards
         return $this;
     }
 
-    public function getCrdSbj(): ?Subjects
+    public function getCrdSbjId(): ?Subjects
     {
         return $this->crd_sbj;
     }
 
-    public function setCrdSbj(?Subjects $crd_sbj): static
+    public function setCrdSbjId(?Subjects $crd_sbj): static
     {
         $this->crd_sbj = $crd_sbj;
 

@@ -16,10 +16,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CardsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry
+    )
     {
         parent::__construct($registry, Cards::class);
     }
+    
 
 //    /**
 //     * @return Cards[] Returns an array of Cards objects
