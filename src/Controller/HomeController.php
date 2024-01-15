@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
 use App\Repository\SubjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,18 +10,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
 use App\Repository\TypesRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class HomeController extends AbstractController
 {
     private $security;
+    private $entityManager;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, EntityManagerInterface $entityManager)
     {
         $this->security = $security;
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository): Response
+    public function index(Request $request, CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository, EntityManagerInterface $entityManager): Response
     {
         $cards = $cardsRepository->findAll();
         $cardData = [];
@@ -67,7 +73,7 @@ class HomeController extends AbstractController
             }
         }
 
-        $showParams = false;
+        $showParams = true;
 
         usort($cardData, function ($a, $b) {
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
@@ -80,6 +86,15 @@ class HomeController extends AbstractController
             $name = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
+            $homeworkReminder = $user->isUsrHomeworkReminder();
+
+            if ($request->isMethod('POST')) {
+                $homeworkReminder = !$homeworkReminder;
+                $user->setUsrHomeworkReminder($homeworkReminder);
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
+
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
@@ -88,6 +103,7 @@ class HomeController extends AbstractController
                 'email' => $email,
                 'cardData' => $cardData,
                 'showParams' => $showParams,
+                'homeworkReminder' => $homeworkReminder,
             ]);
         } else {
             // Utilisateur non connecté,

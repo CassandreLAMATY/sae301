@@ -51,10 +51,17 @@
                 </div>
                 <div id="params_pop-up_main_section">
                     <h3>Notification par mail</h3> 
-                    <div class="params_pop-up_row">
+                    <form method="post" action="{{ path('app_home') }}">
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="homeworkReminder" value="{{ homeworkReminder }}" />
+                            <i class="fa-solid {% if homeworkReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[0].submit();"></i>
+                            <p>Rappels des devoirs à rendre</p>
+                        </div>
+                    </form>
+                    {# <div class="params_pop-up_row">
                         <i class="fa-solid fa-toggle-off"></i>
                         <p>Rappels des devoirs à rendre</p>
-                    </div>
+                    </div> #}
                     <div class="params_pop-up_row">
                         <i class="fa-solid fa-toggle-off"></i>
                         <p>Rappels des examens</p>
@@ -78,4 +85,46 @@
         </div>
         {% endif %}
     </main>
+
+{# TODO : refactor code #}
+{# script to close the pop-up with the close icon #}
+ <style>
+    .fa-toggle-on {
+        color: #4098FF !important; /* Change this to your desired color */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var closeIcon = document.querySelector('#params_pop-up_top_section i.fa-xmark');
+        var paramsDiv = document.querySelector('#params');
+
+        // Check if the elements exist on the page
+        if (closeIcon && paramsDiv) {
+            closeIcon.addEventListener('click', function () {
+                // Close the params div by hiding it or removing it from the DOM
+                paramsDiv.style.display = 'none'; // You can use 'block', 'inline', etc. if you want to show it again
+                // Alternatively, you can remove the entire div from the DOM
+                // paramsDiv.remove();
+            });
+
+            // Toggle between fa-toggle-off and fa-toggle-on when params_pop-up_row is clicked
+            var paramsRows = document.querySelectorAll('.params_pop-up_row');
+            paramsRows.forEach(function (row) {
+                row.addEventListener('click', function () {
+                    var toggleIcon = row.querySelector('i.fa-solid');
+                    if (toggleIcon.classList.contains('fa-toggle-off')) {
+                        toggleIcon.classList.remove('fa-toggle-off');
+                        toggleIcon.classList.add('fa-toggle-on');
+                    } else {
+                        toggleIcon.classList.remove('fa-toggle-on');
+                        toggleIcon.classList.add('fa-toggle-off');
+                    }
+                });
+            });
+        }
+    });
+</script>
 {% endblock %}
+
+
