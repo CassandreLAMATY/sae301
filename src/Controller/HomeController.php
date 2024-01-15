@@ -100,7 +100,7 @@ class HomeController extends AbstractController
         $card = new Cards();
         $form = $this->createForm(CardsType::class, $card);
 
-        return $this->render('cards/_form.html.twig', [
+        return $this->render('home/created_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
