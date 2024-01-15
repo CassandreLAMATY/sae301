@@ -271,11 +271,16 @@ main {
     background-color: var(--white);
     border-radius: 6px;
     padding: 16px 26px;
-    border-left: solid 6px;
+    border-left: solid 6px !important;
     display: grid;
     gap: 17px;
     align-items: center;
     grid-template-columns: 82px 1fr min-content;
+}
+
+#list .notvalidated{
+    opacity: 50%;
+    border: dashed 2px var(--secondary-gray--04);
 }
 
 #list .time{
