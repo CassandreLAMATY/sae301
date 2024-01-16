@@ -259,12 +259,16 @@ main {
 #details{
     position: absolute;
     top: 0;
+    right: -100%;
+}
+
+#list #title_list{
+    color: white;
 }
 
 #list #title_list,
 #details #title_details{
     background-color: var(--list-h-bg-color);
-    color: white;
     border-radius: 6px;
     padding: 16px 42px;
 }
@@ -375,3 +379,12 @@ main {
     margin:0;
 }
 
+/*---------MODAL----------*/
+
+#back{
+    font-size: var(--grup1);
+}
+
+#details #title_details{
+    color: var(--main--black);
+}

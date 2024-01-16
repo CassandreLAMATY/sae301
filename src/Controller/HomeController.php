@@ -61,7 +61,6 @@ class HomeController extends AbstractController
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
                     'subjectName' => $subject->getSbjName(),
-                    'subjectColor' => $subject->getSbjColor(),
                     'timeColor' => $timeColor,
                 ];
             }

@@ -1,5 +1,8 @@
 {% if detailsCard %}
-    <div id="title_details">
-        <h2>{{detailsCard.getCrdTitle}}</h2>
-    </div>
+    {% for item in detailsCard %}
+        <i class="fa-solid fa-arrow-left" id="back"></i>
+        <div id="title_details" style="background-color: {{ item.typeColor }}20; border: solid 6px {{ item.typeColor }}">
+            <h2>{{ item.card.getCrdTitle() }}</h2>
+        </div>
+    {% endfor %}
 {% endif %}

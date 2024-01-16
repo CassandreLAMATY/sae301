@@ -19,6 +19,7 @@
                     {% for item in cardData %}
                         <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
                              style="border-left-color: {{ item.typeColor }} !important;">
+                            <p class="card_id"> {{item.card.getId}}</p>
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.getCrdFrom is not null %}
