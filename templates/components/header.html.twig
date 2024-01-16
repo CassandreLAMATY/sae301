@@ -4,16 +4,18 @@
         <div class="notif">
             <i class="fa-solid fa-bell"></i>
             <div class="notif-dot"></div>
+            <div class="active-hover"></div>
             {% include 'components/notif_dropdown.html.twig' %}
         </div>
         <div class="userCard">
-            <img class="userCard__image" src="{{ asset('images/users/Artur.jpg') }}" alt="photo de profil">
+            <img class="userCard__image" src="{{ asset('images/users/' ~ username ~ '.jpg') }}" alt="photo de profil">
             <div class="userCard-content">
                 <p class="userCard__name">
                     Bienvenue<br>
                     <span>{{ firstname }} {{ lastname }}</span>
                 </p>
             </div>
+            <div class="active-hover"></div>
             {% include 'components/userCard_dropdown.html.twig' %}
         </div>
     </div>

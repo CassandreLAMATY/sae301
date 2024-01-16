@@ -132,6 +132,8 @@ header {
 
 /* usercard menu */
 .userCard {
+    position: relative;
+
     display: flex;
     align-items: center;
     gap: var(--grup);
@@ -152,24 +154,6 @@ header {
     font-weight: 600;
 }
 
-.notif:hover,
-.userCard:hover {
-    cursor: pointer;
-}
-
-.notif:hover::before {
-    content: "";
-    display: block;
-
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 50px;
-    height: 50px;
-}
-
 
 
 /* dropdown */
@@ -177,7 +161,7 @@ header {
 .notif-dropdown {
     display: none;
     position: absolute;
-    z-index: 1;
+    z-index: 100;
 
     padding: var(--grup1);
 
@@ -193,11 +177,12 @@ header {
 .userCard:hover > .userCard-dropdown,
 .notif:hover > .notif-dropdown {
     opacity: 1;
+    pointer-events: unset;
 }
 
 .userCard-dropdown {
     display: unset;
-    top: calc(100% + var(--grup-1));
+    top: calc(60px + var(--grup-1));
     right: var(--grup1);
 
     color: var(--secondary-gray--04);
@@ -247,6 +232,25 @@ header {
 .notif-dropdown::after {
     background-color: var(--secondary-gray--02);
     clip-path: polygon(50% 28%, -10% 100%, 110% 100%);
+}
+
+.active-hover {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+
+    width: 300%;
+    max-width: 300px;
+    height: 200%;
+}
+
+.notif:hover .active-hover,
+.userCard:hover .active-hover {
+    display: unset;
 }
 
 
