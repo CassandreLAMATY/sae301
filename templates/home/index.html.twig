@@ -6,7 +6,7 @@
 
     {% include 'components/header.html.twig' %}
 
-    <main>
+    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
             <div class="side-list">
@@ -17,7 +17,8 @@
                     {% for item in cardData %}
                         <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
                              style="border-left-color: {{ item.typeColor }} !important;">
-                            <p class="card_id"> {{item.card.getId}}</p>
+                            <p class="card-id">{{item.card.getId}}</p>
+                            <p class="type-id">{{item.card.getCrdTypId.getId}}</p>
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.getCrdFrom is not null %}

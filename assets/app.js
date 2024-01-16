@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (document.getElementById('calendar')) {
     const dataSubject = await fetch('/subjects/data').
       then(response => response.json());
-    console.log(dataSubject);
 
     const calendar = document.getElementById('calendar');
     const dataEvents = await fetch(calendar.dataset.url).
@@ -25,7 +24,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     const toolbarChunks = document.querySelectorAll('.fc-toolbar-chunk');
 
     if (toolbarChunks.length >= 3) {
+      const firstToolbarChunk = toolbarChunks[0];
       const thirdToolbarChunk = toolbarChunks[2];
+
+      const firstButtonGroup = firstToolbarChunk.querySelector(
+        '.fc-button-group');
 
       const newDivDisplay = document.createElement('div');
       newDivDisplay.classList.add('fc-button-group');
@@ -35,19 +38,37 @@ document.addEventListener('DOMContentLoaded', async function() {
       innerDiv1.innerHTML = '<i class="fa-regular fa-calendar"></i>';
       innerDiv1.classList.add('fc-button');
       innerDiv1.classList.add('fc-button-primary');
+      innerDiv1.classList.add('calendar-view');
 
       const innerDiv2 = document.createElement('button');
       innerDiv2.innerHTML = '<i class="fa-solid fa-table-list"></i>';
       innerDiv2.classList.add('fc-button');
       innerDiv2.classList.add('fc-button-primary');
+      innerDiv2.classList.add('list-view');
 
       newDivDisplay.appendChild(innerDiv1);
       newDivDisplay.appendChild(innerDiv2);
 
-      thirdToolbarChunk.appendChild(newDivDisplay);
+      firstToolbarChunk.appendChild(newDivDisplay);
+
+      // METTRE LE BOUTON SLIDE MONTH À DROITE DU CALENDRIER ET A GAUCHE DE LA DIV
+      if (firstButtonGroup) {
+        firstToolbarChunk.removeChild(firstButtonGroup);
+
+        thirdToolbarChunk.appendChild(firstButtonGroup);
+      }
+
+      const slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
+      thirdToolbarChunk.removeChild(slideBtn);
+      thirdToolbarChunk.appendChild(slideBtn);
+
+      // METTRE LE BOUTON TODAY À DROITE
+      const todayBtn = firstToolbarChunk.querySelector('.fc-today-button');
+      firstToolbarChunk.removeChild(todayBtn);
+      firstToolbarChunk.appendChild(todayBtn);
     }
 
-    // Créer la div pour les filtres
+    // CRÉER LA DIV DE FILTRES
     const divFilters = document.createElement('div');
     divFilters.classList.add('filter');
     divFilters.classList.add('fc-header-toolbar');
@@ -68,15 +89,15 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     const btnTypes = document.querySelectorAll('.types button');
     btnTypes[0].innerHTML = 'Rendus';
-    btnTypes[1].innerHTML = 'Partiels';
+    btnTypes[1].innerHTML = 'Examens';
     btnTypes[2].innerHTML = 'IUT';
     btnTypes[3].innerHTML = 'BDE';
 
     createFilter('statusHomework', 1);
 
-    const btnstatusHomework = document.querySelectorAll('.statusHomework button');
+    const btnstatusHomework = document.querySelectorAll(
+      '.statusHomework button');
     btnstatusHomework[0].innerHTML = '<i class="fa-regular fa-square-check"></i> Rendu';
-
 
     createFilter('statusEvent', 1);
 
@@ -98,8 +119,28 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     subjectDiv.appendChild(select);
 
+    // FILTRER LES ÉVÉNEMENTS
+    for (let i = 1; i <= 4; i++) {
+      typeFilter(i);
+    }
+
     getDetailsCard('fc-event-main');
     getDetailsCard('item');
+
+    const listView = document.querySelector('.list-view');
+    listView.addEventListener('click', async function() {
+      try {
+        const response = await fetch('/home-list');
+        const htmlContent = await response.text();
+
+// Now, you can use the HTML content as needed
+        console.log(htmlContent);
+
+        document.querySelector('main').innerHTML = htmlContent;
+      } catch (error) {
+        console.error('Erreur lors de la récupération du contenu détaillé :', error);
+      }
+    });
   }
 });
 
@@ -138,7 +179,8 @@ function getCalendar(dataEvents) {
         arg.event.title + '<br>' +
         arg.event.extendedProps.subject.sbjName + '<br>' +
         arg.event.extendedProps.hour + '<br> ' +
-        '<p class="card_id">' + arg.event.id + '</p>';
+        '<p class="card-id">' + arg.event.id + '</p>' +
+        '<p class="type-id">' + arg.event.extendedProps.type.id + '</p>';
 
       eventDiv.style.borderLeft = '5px solid ' +
         arg.event.extendedProps.type.typColor;
@@ -159,8 +201,7 @@ function getDetailsCard(className) {
   let eventDiv = document.getElementsByClassName(className);
   for (let i = 0; i < eventDiv.length; i++) {
     eventDiv[i].addEventListener('click', function() {
-      let eventId = this.querySelector('.card_id').innerHTML;
-      console.log(eventId);
+      let eventId = this.querySelector('.card-id').innerHTML;
       fetch('/details', {
         method: 'POST',
         headers: {
@@ -208,7 +249,50 @@ function createFilter(className, nbFiltersOptions) {
     filterBtn.classList.add('fc-button');
     filterBtn.classList.add('fc-button-primary');
 
+    filterBtn.setAttribute('aria-pressed', 'true');
+
     filterDiv.appendChild(filterBtn);
   }
+}
+
+function typeFilter(typeId) {
+  const btnsTypes = document.querySelectorAll('.types button');
+  const btnType = typeId - 1;
+
+  btnsTypes[btnType].addEventListener('click', function() {
+    const events = document.querySelectorAll('.fc-event-main');
+    const eventsList = document.querySelectorAll('.item');
+
+    if (this.getAttribute('aria-pressed') === 'true') {
+      events.forEach(event => {
+        if (event.querySelector('.type-id').innerHTML == typeId) {
+          event.parentNode.style.display = 'none';
+        }
+      });
+      eventsList.forEach(eventList => {
+        if (eventList.querySelector('.type-id').innerHTML == typeId) {
+          eventList.style.display = 'none';
+        }
+      });
+      this.setAttribute('aria-pressed', 'false');
+    } else {
+      events.forEach(event => {
+        if (event.querySelector('.type-id').innerHTML == typeId) {
+          event.parentNode.style.display = 'block';
+        }
+      });
+      eventsList.forEach(eventList => {
+        if (eventList.querySelector('.type-id').innerHTML == typeId) {
+          eventList.style.display = 'grid';
+        }
+      });
+      this.setAttribute('aria-pressed', 'true');
+    }
+  });
+}
+
+function changeVew(){
+
+
 }
 

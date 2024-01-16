@@ -468,7 +468,8 @@ main {
     position: relative !important;
 }
 
-.card_id{
+.card-id,
+.type-id{
     display: none;
 }
 
