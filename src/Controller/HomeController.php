@@ -104,6 +104,7 @@ class HomeController extends AbstractController
                 'cardData' => $cardData,
                 'showParams' => $showParams,
                 'homeworkReminder' => $homeworkReminder,
+                'detailsCard' => null,
             ]);
         } else {
             // Utilisateur non connecté,

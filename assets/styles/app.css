@@ -52,6 +52,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Outfit", sans-serif;
+  overflow: hidden;
 }
 
 p {
@@ -214,7 +215,7 @@ main {
 
 #calendar {
   width: 70%;
-  height: 90%;
+  height: 88vh;
   padding-left: 20px;
 }
 
@@ -234,25 +235,41 @@ main {
   position: relative !important;
 }
 
-/*---------LIST----------*/
+.card_id {
+  display: none;
+}
 
-#list {
-  width: 38%;
+/*---------LIST----------*/
+#section_right {
+  position: relative;
+}
+
+#list,
+#details {
+  width: 34vw;
   background-color: var(--list-bg-color);
   padding: 26px;
   display: flex;
   flex-direction: column;
   gap: 26px;
+  height: 81vh;
 }
 
-#list #title_list {
+#details {
+  position: absolute;
+  top: 0;
+}
+
+#list #title_list,
+#details #title_details {
   background-color: var(--list-h-bg-color);
   color: white;
   border-radius: 6px;
   padding: 16px 42px;
 }
 
-#list h2 {
+#list h2,
+#details h2 {
   font-size: var(--grup1);
   margin: 0;
 }
@@ -278,7 +295,6 @@ main {
 }
 
 #list .notvalidated {
-  opacity: 50%;
   border: dashed 2px var(--secondary-gray--04);
 }
 
@@ -307,6 +323,7 @@ main {
 .time_left .days {
   margin: 0;
   font-size: var(--grup);
+  width: 60px;
 }
 
 .days span {
@@ -344,12 +361,13 @@ main {
 #list .status {
   display: flex;
   gap: 5px;
-  background-color: var(--btn--done);
+  background-color: var(--accent-blue);
   border-radius: 6px;
   padding: 6px 16px;
   height: fit-content;
   color: var(--white);
   align-items: center;
+  width: max-content;
 }
 
 .status p {
