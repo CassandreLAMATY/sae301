@@ -242,14 +242,14 @@ header {
     display: none;
 
     position: absolute;
-    top: 0;
+    top: 75%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
 
     width: 300%;
     max-width: 300px;
-    height: 200%;
+    height: 125%;
 }
 
 .notif:hover .active-hover,
