@@ -1,37 +1,22 @@
 <div class="notif-dropdown">
     <div class="double-button">
-        <button><i class="fa-solid fa-envelope-open"></i></button>
-        <button><i class="fa-solid fa-gear"></i></button>
+        <button class="double-button__item"><i class="fa-solid fa-envelope-open"></i></button>
+        <button class="double-button__item"><i class="fa-solid fa-gear"></i></button>
     </div>
-    <div class="notif__card">
-        <div class="items">
-            <div class="item" style="border-left-color: #4098FF !important;">
-                <div class="subject">
-                    <div class="tags_container">
-                        <p class="tag">Nouveau</p>
-                        <p class="tag">Travaux</p>
-                    </div>
-                    <h3>Grammar / Vocabulaire</h3>
-                    <p class="course">WRA301 - Anglais</p>
+    {% for item in notifications %}
+        <div class="notif-card">
+            <div class="notif-card__content" style="border-left-color: {{ item.getNotType().getTypColor }}!important">
+                <div class="tags_container">
+                    <p class="tag new {{ item.isNotIsSeen() ? '' : 'tag' }}">Nouveau</p>
+                    <p class="tag" style="color: {{ item.getNotType().getTypColor }}!important">{{ item.getNotType().getTypName }}</p>
                 </div>
+                <h3 class="notif-card__title">{{ item.getNotTitle() }}</h3>
+                <p class="notif-card__subject">{{ item.getNotSubject().getSbjRef ? item.getNotSubject().getSbjRef : '' }} - {{ item.getNotSubject().getSbjName ? item.getNotSubject().getSbjName : '' }}</p>
             </div>
-
-            {% for item in notifications %}
-                <div class="item" style="border-left-color: #4098FF !important;">
-                    <div class="subject">
-                        <div class="tags_container">
-                            <p class="tag">Nouveau</p>
-                            <p class="tag">Travaux</p>
-                        </div>
-                        <h3>{{ item.getNotTitle() }}</h3>
-                        <p class="course">WRA301 - Anglais</p>
-                    </div>
-                </div>
-            {% endfor %}
+            <div class="double-button">
+                <button class="double-button__item see-button"><i class="fa-solid fa-eye"></i> Voir</button>
+                <button class="double-button__item"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
         </div>
-        <div class="double-button">
-            <button><i class="fa-solid fa-eye"></i> Voir</button>
-            <button><i class="fa-solid fa-trash-can"></i></button>
-        </div>
-    </div>
+    {% endfor %}
 </div>

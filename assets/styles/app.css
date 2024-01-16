@@ -19,6 +19,8 @@
     --accent-green: #6EE014;
     --accent-blue: #4098FF; /* couleur pour les tags A SUPPRIMER APRÈS */
 
+    --accent-yellow-shadow: #EFB623;
+
     /* --- Couleurs Btns --- */
     --btn--done: #9AE08F;
     
@@ -72,8 +74,13 @@ button {
     color: unset;
 }
 
-/*---------HEADER----------*/
+.disabled {
+    display: none;
+}
 
+/*/ ------------------------------------------------------------------------ /*/
+/*/ -------------------------------- HEADER -------------------------------- /*/
+/*/ ------------------------------------------------------------------------ /*/
 header {
     position: relative;
 
@@ -88,33 +95,15 @@ header {
     user-select: none;
 }
 
-.header__menu {
+.header-menu {
     display: flex;
     align-items: center;
     gap: var(--grup1);
 }
 
-.menu-notif {
-    position: relative;
 
-    font-size: var(--grup1);
-}
 
-.menu-notif:hover > .notif-dropdown {
-    display: grid;
-}
-
-.notif-dot {
-    position: absolute;
-    top: var(--grup-2);
-    right: 0;
-    width: var(--grup-2);
-    height: var(--grup-2);
-    border-radius: 50%;
-
-    background-color: var(--accent-orange);
-}
-
+/* dropdowns */
 .userCard-dropdown,
 .notif-dropdown {
     display: none;
@@ -123,32 +112,32 @@ header {
     z-index: 1;
 
     padding: var(--grup1);
-    border-radius: var(--grup);
 
-    color: var(--secondary-gray--04);
-    
-    box-shadow: 
-        0 0 0 2px var(--secondary-gray--02)
-    ;
+    background-color: var(--white);
+    border-radius: var(--grup);
+    box-shadow: 0 0 0 2px var(--secondary-gray--02);
 }
 
 .userCard-dropdown {
     top: 100%;
     right: var(--grup1);
 
-    background-color: var(--white);
+    color: var(--secondary-gray--04);
 }
 
 .notif-dropdown {
+    display: grid;
     row-gap: var(--grup);
 
     top: 53px;
     left: 50%;
     transform: translateX(-50%);
 
-    width: 350px;
+    min-width: 350px;
+    width: fit-content;
+    max-width: 400px;
 
-    background-color: var(--white);
+    color: var(--main--black);
 }
 
 .userCard-dropdown::before,
@@ -156,13 +145,12 @@ header {
 .notif-dropdown::before,
 .notif-dropdown::after {
     content: "";
+    display: block;
 
     position: absolute;
     top: calc(0px - var(--grup1));
     left: 50%;
     transform: translateX(-50%);
-
-    display: block;
 
     width: var(--grup1);
     height: var(--grup1);
@@ -173,16 +161,178 @@ header {
     z-index: 2;
 
     background-color: var(--white);
-
     clip-path: polygon(50% 40%, 0% 100%, 100% 100%);
 }
 
 .userCard-dropdown::after,
 .notif-dropdown::after {
     background-color: var(--secondary-gray--02);
-
     clip-path: polygon(50% 28%, -10% 100%, 110% 100%);
 }
+
+
+
+/* notifications */
+.notif {
+    box-sizing: border-box;
+    position: relative;
+
+    font-size: var(--grup1);
+    color: var(--main-black);
+}
+
+.notif-dot {
+    position: absolute;
+    top: var(--grup-2);
+    right: 0;
+
+    width: var(--grup-2);
+    height: var(--grup-2);
+
+    background-color: var(--accent-orange);
+    border-radius: 50%;
+}
+
+.notif:hover > .notif-dropdown {
+    display: grid;
+}
+
+.notif-dropdown > .double-button {
+    justify-self: right;
+}
+
+.notif-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--grup2);
+
+    padding-right: var(--grup-1);
+
+    border: solid 2px var(--secondary-gray--02);
+    border-left: unset;
+    border-radius: calc( 2px + var(--grup-2) );
+}
+
+.notif-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup-3);
+
+    padding: var(--grup-2) var(--grup-1);
+
+    background-color: var(--white);
+    border-left: solid 6px !important;
+    border-radius: 6px;
+
+    font-size: var(--grup);
+    white-space: nowrap;
+}
+
+.notif-card__title {
+    margin: unset;
+}
+
+.notif-card__title,
+.notif-card__subject {
+    overflow-x: hidden;
+
+    max-width: 200px;
+    
+    text-overflow: ellipsis;
+}
+
+
+
+/* double button */
+.double-button {
+    display: flex;
+    align-items: stretch;
+
+    width: fit-content;
+
+    color: var(--secondary-gray--04);
+}
+
+.double-button__item {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
+
+    padding: var(--grup-2) var(--grup-1);
+
+    background-color: var(--secondary-gray--01);
+    box-shadow: 0 0 0 2px var(--secondary-gray--02);
+
+    font-size: var(--grup);
+}
+
+.double-button__item:first-child {
+    border-radius: var(--grup-2) 0 0 var(--grup-2);
+}
+
+.double-button__item:last-child {
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+}
+
+.see-button {
+    z-index: 2;
+
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
+
+    font-weight: 600;
+    color: var(--main--black);
+}
+
+
+
+/* tags */
+.tags_container {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
+
+    width: fit-content;
+}
+
+.tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    margin: 0;
+    padding: 2px 6px;
+
+    border: solid 2px;
+    border-radius: 4px;   
+    
+    font-size: var(--grup-1);
+    font-weight: 700;
+    color: var(--main--black);
+    text-transform: uppercase;
+}
+
+.new {
+    color: var(--accent-green)!important;
+    border-color: var(--accent-green)!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .menu-userCard {
     display: flex;
@@ -243,70 +393,15 @@ header {
     font-size: var(--grup);
 }
 
-.double-button {
-    display: flex;
-    align-items: stretch;
-    gap: 2px;
 
-    width: fit-content;
-    border: solid 2px var(--secondary-gray--02);
-    border-radius: var(--grup-2);
-}
 
-.notif-dropdown .double-button {
-    justify-self: right;
-}
 
-.double-button > button {
-    display: flex;
-    align-items: center;
-    gap: var(--grup-2);
 
-    padding: var(--grup-2) var(--grup-1);
 
-    background-color: var(--secondary-gray--01);
 
-    font-size: var(--grup);
-}
 
-.double-button > button:first-child {
-    box-shadow: 2px 0 0 0 var(--secondary-gray--02);
-}
 
-.notif__card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--grup-1);
-}
 
-.tags_container {
-    display: flex;
-    align-items: center;
-    gap: var(--grup-2);
-
-    width: fit-content;
-}
-
-.notif-dropdown .item {
-    background-color: var(--white);
-    border-radius: 6px;
-    min-width: fit-content;
-    padding: var(--grup-2) var(--grup-1);
-    border-left: solid 6px !important;
-    display: grid;
-    gap: 17px;
-    align-items: center;
-    grid-template-columns: 82px 1fr min-content;
-
-    white-space: nowrap;
-}
-
-.notif-dropdown .subject {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
 
 /*---------MAIN----------*/
 
@@ -428,19 +523,9 @@ main {
     gap: 5px;
 }
 
-.subject .tag{
-    text-transform: uppercase;
-    color: var(--main--black);
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: var(--grup-1);
-    margin: 0;
-    width: fit-content;
-    font-weight: 700;
-    border: solid 2px;
-}
 
-.subject h3{
+
+/* .subject h3{
     margin: 0;
     font-size: var(--grup);
 }
@@ -448,7 +533,7 @@ main {
 .subject .course{
     margin: 0;
     font-size: var(--grup);
-}
+} */
 
 #list .status{
     display: flex;

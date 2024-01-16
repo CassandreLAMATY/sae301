@@ -28,8 +28,7 @@ class HomeController extends AbstractController
         TypesRepository $typesRepository, 
         SubjectsRepository $subjectsRepository,
         NotificationsRepository $notificationsRepository, 
-        NotifUsersRepository $notifUserRepository, 
-        UsersRepository $usersRepository
+        NotifUsersRepository $notifUserRepository
     ): Response
     {
 

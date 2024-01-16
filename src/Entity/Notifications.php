@@ -25,6 +25,14 @@ class Notifications
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $not_created_at = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "typ_id", nullable: false)]
+    private ?Types $not_type = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "sbj_id")]
+    private ?Subjects $not_subject = null;
+
     public function getId(): ?int
     {
         return $this->not_id;
@@ -74,6 +82,30 @@ class Notifications
     public function setNotCreatedAt(\DateTimeImmutable $not_created_at): static
     {
         $this->not_created_at = $not_created_at;
+
+        return $this;
+    }
+
+    public function getNotType(): ?Types
+    {
+        return $this->not_type;
+    }
+
+    public function setNotType(?Types $not_type): static
+    {
+        $this->not_type = $not_type;
+
+        return $this;
+    }
+
+    public function getNotSubject(): ?Subjects
+    {
+        return $this->not_subject;
+    }
+
+    public function setNotSubject(?Subjects $not_subject): static
+    {
+        $this->not_subject = $not_subject;
 
         return $this;
     }
