@@ -4,33 +4,35 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
+        <link href="{{ asset('styles/app.css') }}" rel="stylesheet">
     {% endblock %}
 
-        {% block javascripts %}
-            <script src='{{ asset('fullcalendar-6.1.10/dist/index.global.min.js') }}'></script>
-            <script src='{{ asset('fullcalendar-6.1.10/packages/core/locales/fr.global.min.js') }}'></script>
-            <script src="https://kit.fontawesome.com/9d34ec166c.js" crossorigin="anonymous"></script>
-{% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        <header class="header">
-        <div class="header__logo-placeholder"></div>
-        <div class="header__menu">
-            <div class="menu-notif">
-                <i class="fa-solid fa-bell"></i>
-            </div>
-            <div class="menu-userCard">
-                <img class="userCard__image" src="" alt="photo de profil">
-                <div class="userCard__content">
-                    <p class="userCard__content-name">
-                        <span>Bienvenue</span>
-                        Cassandre Lamaty
-                    </p>
-                </div>
+    {% block javascripts %}
+        <script src='{{ asset('fullcalendar-6.1.10/dist/index.global.min.js') }}'></script>
+        <script src='{{ asset('fullcalendar-6.1.10/packages/core/locales/fr.global.min.js') }}'></script>
+        <script src="https://kit.fontawesome.com/9d34ec166c.js" crossorigin="anonymous"></script>
+
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+
+    {% endblock %}
+</head>
+<body class="{% block body_class %}sub_page{% endblock %}">
+<header class="header">
+    <div class="header__logo-placeholder"></div>
+    <div class="header__menu">
+        <div class="menu-notif">
+            <i class="fa-solid fa-bell"></i>
+        </div>
+        <div class="menu-userCard">
+            <img class="userCard__image" src="" alt="photo de profil">
+            <div class="userCard__content">
+                <p class="userCard__content-name">
+                    <span>Bienvenue</span>
+                    Cassandre Lamaty </p>
             </div>
         </div>
-    </header>
-        {% block body %}{% endblock %}
-    </body>
+    </div>
+</header>
+{% block body %}{% endblock %}
+</body>
 </html>

@@ -48,6 +48,7 @@ body {
     font-family: 'Outfit', sans-serif;
 }
 
+
 /*---------HEADER----------*/
 
 header {
@@ -78,12 +79,12 @@ main {
     text-transform: capitalize;
 }
 
-#calendar td.gridcell .fc-daygrid-day-events{
+#calendar td.gridcell .fc-daygrid-day-events {
     display: flex;
     flex-direction: column;
 }
 
-#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness{
+#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness {
     position: relative !important;
 }
 
@@ -130,19 +131,19 @@ main {
     grid-template-columns: 82px 1fr min-content;
 }
 
-#list .time{
+#list .time {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.time .date{
+.time .date {
     font-size: var(--grup-1);
     color: var(--grey);
     margin-bottom: 0;
 }
 
-.time .time_left{
+.time .time_left {
     display: flex;
     align-items: center;
     gap: 7px;
@@ -152,22 +153,22 @@ main {
     font-size: 24px;
 }
 
-.time_left .days{
+.time_left .days {
     margin: 0;
     font-size: var(--grup);
 }
 
-.days span{
+.days span {
     font-weight: 600;
 }
 
-#list .subject{
+#list .subject {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.subject .tag{
+.subject .tag {
     text-transform: uppercase;
     color: var(--white);
     border-radius: 4px;
@@ -178,17 +179,17 @@ main {
     font-weight: 700;
 }
 
-.subject h3{
+.subject h3 {
     margin: 0;
     font-size: var(--grup);
 }
 
-.subject .course{
+.subject .course {
     margin: 0;
     font-size: var(--grup);
 }
 
-#list .status{
+#list .status {
     display: flex;
     gap: 5px;
     background-color: var(--btn--done);
@@ -199,6 +200,6 @@ main {
     align-items: center;
 }
 
-.status p{
-    margin:0;
+.status p {
+    margin: 0;
 }

@@ -6,7 +6,6 @@
  */
 
 //import FullCalendar from './fullcalendar-6.1.10/dist/index.global.min.js';
-import './styles/app.css'
 
 ////////////////////////////// CALENDAR //////////////////////////////
 
