@@ -91,7 +91,6 @@ class HomeController extends AbstractController
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
                     'subjectName' => $subject->getSbjName(),
-                    'subjectColor' => $subject->getSbjColor(),
                     'timeColor' => $timeColor,
                 ];
             }
@@ -116,6 +115,7 @@ class HomeController extends AbstractController
                 'email' => $email,
                 'cardData' => $cardData,
 
+                'detailsCard' => null,
                 'notifications' => $notifications,
             ]);
         } else {
