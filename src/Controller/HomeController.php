@@ -27,6 +27,7 @@ class HomeController extends AbstractController
 
     #[Route('/', name: 'app_home')]
     public function index(Request $request, CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository, EntityManagerInterface $entityManager): Response
+
     {
         $cards = $cardsRepository->findAll();
         $cardData = [];
@@ -87,13 +88,43 @@ class HomeController extends AbstractController
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
             $homeworkReminder = $user->isUsrHomeworkReminder();
+            $examReminder = $user->isUsrExamReminder();
+            $newReminder = $user->isUsrNewReminder();
+            $modifReminder = $user->isUsrModifReminder();
+            $cookies = $user->isUsrCookies();
 
-            if ($request->isMethod('POST')) {
-                $homeworkReminder = !$homeworkReminder;
-                $user->setUsrHomeworkReminder($homeworkReminder);
-                $entityManager->persist($user);
-                $entityManager->flush();
-            }
+            // if ($request->isMethod('POST')) {
+            //     if ($request->request->has('homeworkReminder')) {
+            //         $homeworkReminder = !$homeworkReminder;
+            //         $user->setUsrHomeworkReminder($homeworkReminder);
+            //     }
+            //     if ($request->request->has('examReminder')) {
+            //         $examReminder = !$examReminder;
+            //         $user->setUsrExamReminder($examReminder);
+            //     }
+            //     if ($request->request->has('newReminder')) {
+            //         $newReminder = !$newReminder;
+            //         $user->setUsrNewReminder($newReminder);
+            //     }
+            //     if ($request->request->has('modifReminder')) {
+            //         $modifReminder = !$modifReminder;
+            //         $user->setUsrModifReminder($modifReminder);
+            //     }
+            //     if ($request->request->has('cookies')) {
+            //         $cookies = !$cookies;
+            //         $user->setUsrCookies($cookies);
+            //     }
+
+            //     $entityManager->persist($user);
+            //     $entityManager->flush();
+            // }
+
+            return $this->forward(ParamsController::class . '::index', [
+                'request' => $request,
+                // 'cardsRepository' => $cardsRepository, // Pass any other dependencies needed in ParamsController
+                // 'typesRepository' => $typesRepository,
+                // 'subjectsRepository' => $subjectsRepository,
+            ]);
 
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
@@ -104,6 +135,10 @@ class HomeController extends AbstractController
                 'cardData' => $cardData,
                 'showParams' => $showParams,
                 'homeworkReminder' => $homeworkReminder,
+                'examReminder' => $examReminder,
+                'newReminder' => $newReminder,
+                'modifReminder' => $modifReminder,
+                'cookies' => $cookies,
                 'detailsCard' => null,
             ]);
         } else {

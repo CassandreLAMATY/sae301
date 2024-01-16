@@ -63,37 +63,98 @@
                     <i class="fa-solid fa-xmark"></i>
                 </div>
                 <div id="params_pop-up_main_section">
-                    <h3>Notification par mail</h3> 
-                    <form method="post" action="{{ path('app_home') }}">
+                    {#  #}
+                    <form id="paramsFrom" method="post" action="{{ path('app_home_params') }}">
+                        <h3>Notification par mail</h3> 
                         <div class="params_pop-up_row">
-                            <input type="hidden" name="homeworkReminder" value="{{ homeworkReminder }}" />
+                            <input type="hidden" name="homeworkReminder" value="{{ homeworkReminder ? 'on' : 'off' }}" />
+                            <i class="fa-solid {% if homeworkReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="homeworkToggle"></i>
+                            <p>Rappels des devoirs à rendre</p>
+                        </div>
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="examReminder" value="{{ examReminder ? 'on' : 'off' }}" />
+                            <i class="fa-solid {% if examReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="examToggle"></i>
+                            <p>Rappels des examens</p>
+                        </div>
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="newReminder" value="{{ newReminder ? 'on' : 'off' }}" />
+                            <i class="fa-solid {% if newReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="newToggle"></i>
+                            <p>Nouveaux éléments</p>
+                        </div>
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="modifReminder" value="{{ modifReminder ? 'on' : 'off' }}" />
+                            <i class="fa-solid {% if modifReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="modifToggle"></i>
+                            <p>Modification d'un évènement</p>
+                        </div>
+                        <hr>
+                        <h3>Confidentialité</h3> 
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="cookies" value="{{ cookies ? 'on' : 'off' }}" />
+                            <i class="fa-solid {% if cookies %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="cookiesToggle"></i>
+                            <p>Cookies</p>
+                        </div>
+                        <input type="button" id="saveButton" value="Enregistrer" />
+                    </form>
+                    {#  #}
+                    {# <form method="post" action="{{ path('app_home') }}">
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="homeworkReminder" type="button" value="{{ homeworkReminder }}" />
                             <i class="fa-solid {% if homeworkReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[0].submit();"></i>
                             <p>Rappels des devoirs à rendre</p>
                         </div>
-                    </form>
+                    </form> #}
                     {# <div class="params_pop-up_row">
                         <i class="fa-solid fa-toggle-off"></i>
                         <p>Rappels des devoirs à rendre</p>
                     </div> #}
-                    <div class="params_pop-up_row">
+                    {# <form method="post" action="{{ path('app_home') }}">
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="examReminder" value="{{ examReminder }}" />
+                            <i class="fa-solid {% if examReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[1].submit();"></i>
+                            <p>Rappels des examens</p>
+                        </div>
+                    </form> #}
+                    {# <div class="params_pop-up_row">
                         <i class="fa-solid fa-toggle-off"></i>
                         <p>Rappels des examens</p>
-                    </div>
-                    <div class="params_pop-up_row">
+                    </div> #}
+                    {# <form method="post" action="{{ path('app_home') }}">
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="newReminder" value="{{ newReminder }}" />
+                            <i class="fa-solid {% if newReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[2].submit();"></i>
+                            <p>Nouveaux éléments</p>
+                        </div>
+                    </form> #}
+                    {# <div class="params_pop-up_row">
                         <i class="fa-solid fa-toggle-off"></i>
                         <p>Nouveaux éléments</p>
-                    </div>
-                    <div class="params_pop-up_row">
+                    </div> #}
+                    {# <form method="post" action="{{ path('app_home') }}">
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="modifReminder" value="{{ modifReminder }}" />
+                            <i class="fa-solid {% if modifReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[3].submit();"></i>
+                            <p>Modification d'un évènement</p>
+                        </div>
+                    </form> #}
+                    {# <div class="params_pop-up_row">
                         <i class="fa-solid fa-toggle-off"></i>
                         <p>Modification d'un évènement</p>
-                    </div>
-                    <hr>
+                    </div> #}
+                    {# <hr>
                     <h3>Confidentialité</h3> 
-                    <div class="params_pop-up_row">
+                    <form method="post" action="{{ path('app_home') }}">
+                        <div class="params_pop-up_row">
+                            <input type="hidden" name="cookies" value="{{ cookies }}" />
+                            <i class="fa-solid {% if cookies %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[4].submit();"></i>
+                            <p>Cookies</p>
+                        </div>
+                    </form> #}
+                    {# <div class="params_pop-up_row">
                         <i class="fa-solid fa-toggle-off"></i>
                         <p>Cookies</p>
-                    </div>
+                    </div> #}
                 </div>
+                
             </div>
         </div>
         {% endif %}
@@ -108,6 +169,60 @@
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var saveButton = document.getElementById('saveButton');
+        var paramsForm = document.getElementById('paramsForm');
+        var paramsDiv = document.querySelector('#params');
+        var closeIcon = document.querySelector('#params_pop-up_top_section i.fa-xmark');
+
+        if (closeIcon && paramsDiv) {
+            closeIcon.addEventListener('click', function () {
+                // Close the params div by hiding it or removing it from the DOM
+                //paramsDiv.style.display = 'none'; // You can use 'block', 'inline', etc. if you want to show it again
+                // Alternatively, you can remove the entire div from the DOM
+                paramsDiv.remove();
+            });
+        }
+        
+        saveButton.addEventListener('click', function() {
+            // Serialize form data to send
+            var formData = new FormData(paramsForm);
+            
+            // Send an AJAX request
+            fetch('{{ path('app_home_params') }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response as needed
+                console.log(data);
+                paramsDiv.remove();
+                // You can close the pop-up or update the UI based on the response
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Toggle between fa-toggle-off and fa-toggle-on when params_pop-up_row is clicked
+        var paramsRows = document.querySelectorAll('.params_pop-up_row');
+        paramsRows.forEach(function (row) {
+            row.addEventListener('click', function () {
+                var toggleIcon = row.querySelector('i.fa-solid');
+                if (toggleIcon.classList.contains('fa-toggle-off')) {
+                    toggleIcon.classList.remove('fa-toggle-off');
+                    toggleIcon.classList.add('fa-toggle-on');
+                } else {
+                    toggleIcon.classList.remove('fa-toggle-on');
+                    toggleIcon.classList.add('fa-toggle-off');
+                }
+            });
+        });
+    });
+</script>
+
+{# <script>
     document.addEventListener('DOMContentLoaded', function () {
         var closeIcon = document.querySelector('#params_pop-up_top_section i.fa-xmark');
         var paramsDiv = document.querySelector('#params');
@@ -137,7 +252,7 @@
             });
         }
     });
-</script>
+</script> #}
 {% endblock %}
 
 

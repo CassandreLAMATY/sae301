@@ -461,3 +461,14 @@ main {
   color: var(--secondary--gray--04, #6b6b6b);
   margin-top: 15px;
 }
+
+#params_pop-up_bottom_section {
+  margin-bottom: 15px;
+}
+
+#params_pop-up_bottom_section > button {
+  background-color: var(--accent-yellow);
+  margin: auto;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
