@@ -11,14 +11,42 @@ import './styles/app.css';
 ////////////////////////////// CALENDAR //////////////////////////////
 
 document.addEventListener('DOMContentLoaded', async function() {
-  if (document.getElementById('calendar')) {
-    const calendar = document.getElementById('calendar');
-    const dataEvents = await fetch(calendar.dataset.url).
-      then(response => response.json());
-    console.log(dataEvents);
-    getCalendar(dataEvents);
-  }
-});
+    if (document.getElementById('calendar')) {
+      const calendar = document.getElementById('calendar');
+      const dataEvents = await fetch(calendar.dataset.url).
+        then(response => response.json());
+      console.log(dataEvents);
+      getCalendar(dataEvents);
+
+      let eventDiv = document.getElementsByClassName('fc-event-main');
+      for (let i = 0; i < eventDiv.length; i++) {
+        eventDiv[i].addEventListener('click', function() {
+          let eventId = this.querySelector('.card_id').innerHTML;
+          console.log(eventId);
+          fetch('/details', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ eventId: eventId }),
+          })
+          .then(async (response) =>  {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            document.getElementById('details').innerHTML = await response.text();
+          })
+          .then(data => {
+            console.log('Success:', data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        });
+      }
+    }
+  },
+);
 
 function getCalendar(dataEvents) {
   let calendarEl = document.getElementById('calendar');
@@ -54,15 +82,19 @@ function getCalendar(dataEvents) {
       eventDiv.innerHTML =
         arg.event.title + '<br>' +
         arg.event.extendedProps.subject.sbjName + '<br>' +
-        arg.event.extendedProps.hour,
+        arg.event.extendedProps.hour + '<br> ' +
+        '<p class="card_id">' + arg.event.id + '</p>';
 
-      eventDiv.style.borderLeft = '5px solid ' + arg.event.extendedProps.type.typColor;
-      eventDiv.style.backgroundColor = arg.event.extendedProps.type.typColor + '20';
+      eventDiv.style.borderLeft = '5px solid ' +
+        arg.event.extendedProps.type.typColor;
+      eventDiv.style.backgroundColor = arg.event.extendedProps.type.typColor +
+        '20';
       eventDiv.style.borderRadius = '3px';
       eventDiv.style.padding = '5px';
       eventDiv.style.textOverflow = 'ellipsis';
       eventDiv.style.overflow = 'hidden';
-      return { domNodes: [eventDiv] };
+      eventDiv.style.cursor = 'pointer';
+      return {domNodes: [eventDiv]};
     },
   });
   calendar.render();

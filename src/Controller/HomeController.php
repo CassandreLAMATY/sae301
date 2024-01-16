@@ -85,6 +85,7 @@ class HomeController extends AbstractController
                 'firstname' => $firstname,
                 'email' => $email,
                 'cardData' => $cardData,
+                'detailsCard' => null,
             ]);
         } else {
             // Utilisateur non connecté,

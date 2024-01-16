@@ -108,6 +108,10 @@ class Cards
 
     public function getFormattedCrdFrom(): ?string
     {
+        if ($this->getCrdFrom() === null) {
+            return null;
+        }
+
         return $this->getCrdFrom()->format('d M');
     }
 
