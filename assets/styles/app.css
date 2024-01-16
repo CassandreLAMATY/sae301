@@ -58,6 +58,10 @@ body {
     overflow: hidden;
 }
 
+h3 {
+    margin: 0;
+}
+
 p {
     margin: unset;
 }
@@ -128,7 +132,6 @@ header {
 }
 
 .notif-dropdown {
-    display: grid;
     row-gap: var(--grup);
 
     top: 53px;
@@ -229,10 +232,6 @@ header {
 
     font-size: var(--grup);
     white-space: nowrap;
-}
-
-.notif-card__title {
-    margin: unset;
 }
 
 .notif-card__title,
@@ -467,11 +466,11 @@ main {
     gap: 10px;
 }
 /*---------LIST----------*/
-#section_right{
+#section-right{
     position: relative;
 }
 
-#list,
+.side-list,
 #details{
     width: 34vw;
     background-color: var(--list-bg-color);
@@ -488,24 +487,24 @@ main {
     right: -100%;
 }
 
-#list #title_list{
+.side-list .side-list_title {
     color: white;
 }
 
-#list #title_list,
-#details #title_details{
+.side-list .side-list_title,
+#details #title_details {
     background-color: var(--list-h-bg-color);
     border-radius: 6px;
     padding: 16px 42px;
 }
 
-#list h2,
+.side-list h2,
 #details h2{
     font-size: var(--grup1);
     margin: 0;
 }
 
-#list .items {
+.side-list .items {
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -527,16 +526,16 @@ main {
     white-space: nowrap;
 }
 
-#list .notvalidated {
+.side-list .notvalidated {
     opacity: 50%;
     cursor: pointer;
 }
 
-#list .notvalidated{
+.side-list .notvalidated{
     border: dashed 2px var(--secondary-gray--04);
 }
 
-#list .time {
+.side-list .time {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -568,7 +567,7 @@ main {
     font-weight: 600;
 }
 
-#list .subject {
+.side-list .subject {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -586,7 +585,7 @@ main {
     font-size: var(--grup);
 } */
 
-#list .status{
+.side-list .status{
     display: flex;
     gap: 5px;
     background-color: var(--accent-blue);
