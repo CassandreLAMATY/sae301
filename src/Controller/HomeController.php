@@ -32,9 +32,25 @@ class HomeController extends AbstractController
         UsersRepository $usersRepository
     ): Response
     {
-        /* $user = $this->getUser();
-        $notificationsId = $notifUserRepository->findByUserID($user->getUsrId());
-        $notifications = $notificationsRepository->findById($notificationsId); */
+
+        // -------------------------- NOTIFICATIONS --------------------------//
+
+        // Selecting the user
+        $user = $this->getUser();
+
+        // Selecting every notification id by user id
+        $nu = $notifUserRepository->findByUserID($user->getUsrId());
+
+        // Creating an array with every notification id
+        $notificationsId = [];
+        foreach ($nu as $notif) {
+            $notificationsId[] = $notif->getNuNot();
+        }
+
+        $notifications = $notificationsRepository->findById($notificationsId);
+
+        // ----------------------- END NOTIFICATIONS ------------------------ //
+
 
 
         $cards = $cardsRepository->findAll();
@@ -100,7 +116,8 @@ class HomeController extends AbstractController
                 'firstname' => $firstname,
                 'email' => $email,
                 'cardData' => $cardData,
-                /* 'notifications' => $notifications, */
+
+                'notifications' => $notifications,
             ]);
         } else {
             // Utilisateur non connecté,

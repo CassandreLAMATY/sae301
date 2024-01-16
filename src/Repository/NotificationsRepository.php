@@ -21,13 +21,21 @@ class NotificationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Notifications::class);
     }
 
-    public function findById($id): ?Notifications
+    public function findById($id): array
     {
-        return $this->createQueryBuilder('not')
-            ->andWhere('not.not_id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $notifications = [];
+        foreach ($id as $notifId) {
+            $_notifications = $this->createQueryBuilder('n')
+                ->andWhere('n.not_id = :id')
+                ->setParameter('id', $notifId)
+                ->getQuery()
+                ->getResult()
+            ;
+
+            $notifications[] = $_notifications[0];
+        }
+
+        return $notifications;
     }
+
 }

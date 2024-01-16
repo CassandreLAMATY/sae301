@@ -16,18 +16,18 @@
                 </div>
             </div>
 
-            {# {% for item in notifications %}
+            {% for item in notifications %}
                 <div class="item" style="border-left-color: #4098FF !important;">
                     <div class="subject">
                         <div class="tags_container">
                             <p class="tag">Nouveau</p>
                             <p class="tag">Travaux</p>
                         </div>
-                        <h3>{{ item.title }}</h3>
+                        <h3>{{ item.getNotTitle() }}</h3>
                         <p class="course">WRA301 - Anglais</p>
                     </div>
                 </div>
-            {% endfor %} #}
+            {% endfor %}
         </div>
         <div class="double-button">
             <button><i class="fa-solid fa-eye"></i> Voir</button>
