@@ -186,6 +186,10 @@ header {
     color: var(--main-black);
 }
 
+.notif:hover > .notif-dropdown {
+    display: grid;
+}
+
 .notif-dot {
     position: absolute;
     top: var(--grup-2);
@@ -196,10 +200,6 @@ header {
 
     background-color: var(--accent-orange);
     border-radius: 50%;
-}
-
-.notif:hover > .notif-dropdown {
-    display: grid;
 }
 
 .notif-dropdown > .double-button {
@@ -242,6 +242,10 @@ header {
     
     text-overflow: ellipsis;
 }
+
+
+
+/*  */
 
 
 
@@ -335,7 +339,7 @@ header {
 
 
 
-.menu-userCard {
+.userCard {
     display: flex;
     align-items: center;
     gap: var(--grup);
@@ -356,8 +360,8 @@ header {
     font-weight: 600;
 }
 
-.menu-notif:hover,
-.menu-userCard:hover {
+.notif:hover,
+.userCard:hover {
     cursor: pointer;
 }
 
@@ -527,7 +531,6 @@ main {
 }
 
 .side-list .notvalidated {
-    opacity: 50%;
     cursor: pointer;
 }
 
