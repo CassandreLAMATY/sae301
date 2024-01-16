@@ -527,7 +527,6 @@ main {
 }
 
 .side-list .notvalidated {
-    opacity: 50%;
     cursor: pointer;
 }
 
