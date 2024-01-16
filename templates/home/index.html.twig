@@ -2,20 +2,18 @@
 
 {% block title %}Home{% endblock %}
 
-{% block header %}
-    {% include 'components/header.html.twig' %}
-{% endblock %}
 {% block body %}
-    {# <h1>Votre nom : {{ username }} / {{ name }} / {{ firstname }} / {{ email }}</h1> #}
+
+    {% include 'components/header.html.twig' %}
 
     <main>
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
-        <div id="section_right">
-            <div id="list">
-                <div id="title_list">
+        <div id="section-right">
+            <div class="side-list">
+                <div id="side-list_title">
                     <h2>À Venir</h2>
                 </div>
-                <div id="items">
+                <div class="items">
                     {% for item in cardData %}
                         <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
                              style="border-left-color: {{ item.typeColor }} !important;">

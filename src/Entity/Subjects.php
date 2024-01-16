@@ -19,6 +19,9 @@ class Subjects
     #[ORM\Column(length: 9)]
     private ?string $sbj_color = null;
 
+    #[ORM\Column(length: 8, nullable: true)]
+    private ?string $sbj_ref = null;
+
     public function getId(): ?int
     {
         return $this->sbj_id;
@@ -44,6 +47,18 @@ class Subjects
     public function setSbjColor(string $sbj_color): static
     {
         $this->sbj_color = $sbj_color;
+
+        return $this;
+    }
+
+    public function getSbjRef(): ?string
+    {
+        return $this->sbj_ref;
+    }
+
+    public function setSbjRef(?string $sbj_ref): static
+    {
+        $this->sbj_ref = $sbj_ref;
 
         return $this;
     }

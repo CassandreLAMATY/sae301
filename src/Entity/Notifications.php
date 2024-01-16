@@ -13,51 +13,39 @@ class Notifications
     #[ORM\Column]
     private ?int $not_id = null;
 
-    #[ORM\Column]
-    private ?int $not_usr_id = null;
-
-    #[ORM\Column(length: 20)]
-    private ?string $not_type = null;
-
     #[ORM\Column(length: 100)]
+    private ?string $not_title = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $not_content = null;
 
-    #[ORM\Column(options: ["default" => 0])]
-    private ?bool $is_seen = null;
+    #[ORM\Column(options: ["default" => "0"])]
+    private ?bool $not_isSeen = null;
+
+    #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeImmutable $not_created_at = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(referencedColumnName: "crd_id")]
-    private ?Cards $not_card = null;
+    #[ORM\JoinColumn(referencedColumnName: "typ_id", nullable: false)]
+    private ?Types $not_type = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(referencedColumnName: "usr_id")]
-    private ?Users $not_sender = null;
+    #[ORM\JoinColumn(referencedColumnName: "sbj_id")]
+    private ?Subjects $not_subject = null;
 
     public function getId(): ?int
     {
         return $this->not_id;
     }
 
-    public function getNotUsrId(): ?int
+    public function getNotTitle(): ?string
     {
-        return $this->not_usr_id;
+        return $this->not_title;
     }
 
-    public function setNotUsrId(int $not_usr_id): static
+    public function setNotTitle(string $not_title): static
     {
-        $this->not_usr_id = $not_usr_id;
-
-        return $this;
-    }
-
-    public function getNotType(): ?string
-    {
-        return $this->not_type;
-    }
-
-    public function setNotType(string $not_type): static
-    {
-        $this->not_type = $not_type;
+        $this->not_title = $not_title;
 
         return $this;
     }
@@ -67,45 +55,57 @@ class Notifications
         return $this->not_content;
     }
 
-    public function setNotContent(string $not_content): static
+    public function setNotContent(?string $not_content): static
     {
         $this->not_content = $not_content;
 
         return $this;
     }
 
-    public function isIsSeen(): ?bool
+    public function isNotIsSeen(): ?bool
     {
-        return $this->is_seen;
+        return $this->not_isSeen;
     }
 
-    public function setIsSeen(bool $is_seen): static
+    public function setNotIsSeen(bool $not_isSeen): static
     {
-        $this->is_seen = $is_seen;
+        $this->not_isSeen = $not_isSeen;
 
         return $this;
     }
 
-    public function getNotCard(): ?Cards
+    public function getNotCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->not_card;
+        return $this->not_created_at;
     }
 
-    public function setNotCard(?Cards $not_card): static
+    public function setNotCreatedAt(\DateTimeImmutable $not_created_at): static
     {
-        $this->not_card = $not_card;
+        $this->not_created_at = $not_created_at;
 
         return $this;
     }
 
-    public function getNotSender(): ?Users
+    public function getNotType(): ?Types
     {
-        return $this->not_sender;
+        return $this->not_type;
     }
 
-    public function setNotSender(?Users $not_sender): static
+    public function setNotType(?Types $not_type): static
     {
-        $this->not_sender = $not_sender;
+        $this->not_type = $not_type;
+
+        return $this;
+    }
+
+    public function getNotSubject(): ?Subjects
+    {
+        return $this->not_subject;
+    }
+
+    public function setNotSubject(?Subjects $not_subject): static
+    {
+        $this->not_subject = $not_subject;
 
         return $this;
     }

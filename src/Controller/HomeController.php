@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
-use App\Repository\SubjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
+use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
+use App\Repository\NotificationsRepository;
+use App\Repository\UsersRepository;
+use App\Repository\NotifUsersRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class HomeController extends AbstractController
@@ -20,8 +23,35 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository): Response
+    public function index(
+        CardsRepository $cardsRepository, 
+        TypesRepository $typesRepository, 
+        SubjectsRepository $subjectsRepository,
+        NotificationsRepository $notificationsRepository, 
+        NotifUsersRepository $notifUserRepository
+    ): Response
     {
+
+        // -------------------------- NOTIFICATIONS --------------------------//
+
+        // Selecting the user
+        $user = $this->getUser();
+
+        // Selecting every notification id by user id
+        $nu = $notifUserRepository->findByUserID($user->getUsrId());
+
+        // Creating an array with every notification id
+        $notificationsId = [];
+        foreach ($nu as $notif) {
+            $notificationsId[] = $notif->getNuNot();
+        }
+
+        $notifications = $notificationsRepository->findById($notificationsId);
+
+        // ----------------------- END NOTIFICATIONS ------------------------ //
+
+
+
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
@@ -74,17 +104,19 @@ class HomeController extends AbstractController
             // Utilisateur déjà connecté,
             $user = $this->getUser();
             $username = $user->getUsrPseudo();
-            $name = $user->getUsrName();
+            $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
-                'name' => $name,
+                'lastname' => $lastname,
                 'firstname' => $firstname,
                 'email' => $email,
                 'cardData' => $cardData,
+
                 'detailsCard' => null,
+                'notifications' => $notifications,
             ]);
         } else {
             // Utilisateur non connecté,
