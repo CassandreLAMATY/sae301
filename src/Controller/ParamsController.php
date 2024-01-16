@@ -44,23 +44,23 @@ class ParamsController extends AbstractController
 
                 if ($request->isMethod('POST')) {
                         if ($request->request->has('homeworkReminder')) {
-                                $homeworkReminder = !$homeworkReminder;
+                                $homeworkReminder = $request->request->get('homeworkReminder') === 'on' ? true : false;
                                 $user->setUsrHomeworkReminder($homeworkReminder);
                         }
                         if ($request->request->has('examReminder')) {
-                                $examReminder = !$examReminder;
+                                $examReminder = $request->request->get('examReminder') === 'on' ? true : false;
                                 $user->setUsrExamReminder($examReminder);
                         }
                         if ($request->request->has('newReminder')) {
-                                $newReminder = !$newReminder;
+                                $newReminder = $request->request->get('newReminder') === 'on' ? true : false;
                                 $user->setUsrNewReminder($newReminder);
                         }
                         if ($request->request->has('modifReminder')) {
-                                $modifReminder = !$modifReminder;
+                                $modifReminder = $request->request->get('modifReminder') === 'on' ? true : false;
                                 $user->setUsrModifReminder($modifReminder);
                         }
                         if ($request->request->has('cookies')) {
-                                $cookies = !$cookies;
+                                $cookies = $request->request->get('cookies') === 'on' ? true : false;
                                 $user->setUsrCookies($cookies);
                         }
 
