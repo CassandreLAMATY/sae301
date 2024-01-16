@@ -100,6 +100,10 @@ header {
     font-size: var(--grup1);
 }
 
+.menu-notif:hover > .notif-dropdown {
+    display: grid;
+}
+
 .notif-dot {
     position: absolute;
     top: var(--grup-2);
@@ -113,14 +117,13 @@ header {
 
 .userCard-dropdown,
 .notif-dropdown {
-    /* display: none; */
+    display: none;
 
     position: absolute;
+    z-index: 1;
 
     padding: var(--grup1);
     border-radius: var(--grup);
-
-    background-color: var(--white);
 
     color: var(--secondary-gray--04);
     
@@ -130,16 +133,22 @@ header {
 }
 
 .userCard-dropdown {
-    display: none;
-
     top: 100%;
     right: var(--grup1);
+
+    background-color: var(--white);
 }
 
 .notif-dropdown {
+    row-gap: var(--grup);
+
     top: 53px;
     left: 50%;
     transform: translateX(-50%);
+
+    width: 350px;
+
+    background-color: var(--white);
 }
 
 .userCard-dropdown::before,
@@ -244,6 +253,10 @@ header {
     border-radius: var(--grup-2);
 }
 
+.notif-dropdown .double-button {
+    justify-self: right;
+}
+
 .double-button > button {
     display: flex;
     align-items: center;
@@ -258,6 +271,41 @@ header {
 
 .double-button > button:first-child {
     box-shadow: 2px 0 0 0 var(--secondary-gray--02);
+}
+
+.notif__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--grup-1);
+}
+
+.tags_container {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
+
+    width: fit-content;
+}
+
+.notif-dropdown .item {
+    background-color: var(--white);
+    border-radius: 6px;
+    min-width: fit-content;
+    padding: var(--grup-2) var(--grup-1);
+    border-left: solid 6px !important;
+    display: grid;
+    gap: 17px;
+    align-items: center;
+    grid-template-columns: 82px 1fr min-content;
+
+    white-space: nowrap;
+}
+
+.notif-dropdown .subject {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 /*---------MAIN----------*/
@@ -316,7 +364,7 @@ main {
     margin: 0;
 }
 
-#list #items {
+#list .items {
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -325,7 +373,7 @@ main {
 
 /*---------ITEM----------*/
 
-#list .item {
+.item {
     background-color: var(--white);
     border-radius: 6px;
     padding: 16px 26px;
@@ -334,20 +382,22 @@ main {
     gap: 17px;
     align-items: center;
     grid-template-columns: 82px 1fr min-content;
+
+    white-space: nowrap;
 }
 
-#list .notvalidated{
+#list .notvalidated {
     opacity: 50%;
     border: dashed 2px var(--secondary-gray--04);
 }
 
-#list .time{
+#list .time {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.time .date{
+.time .date {
     font-size: 12px;
     color: var(--grey);
     margin-bottom: 0;
@@ -372,7 +422,7 @@ main {
     font-weight: 600;
 }
 
-#list .subject{
+#list .subject {
     display: flex;
     flex-direction: column;
     gap: 5px;

@@ -12,7 +12,7 @@
             <div id="title_list">
                 <h2>À Venir</h2>
             </div>
-            <div id="items">
+            <div class="items">
                 {% for item in cardData %}
                     <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}" style="border-left-color: {{ item.typeColor }} !important;">
                         <div class="time">

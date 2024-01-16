@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
-use App\Repository\SubjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
+use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
+use App\Repository\NotificationsRepository;
+use App\Repository\UsersRepository;
+use App\Repository\NotifUsersRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class HomeController extends AbstractController
@@ -20,8 +23,20 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository): Response
+    public function index(
+        CardsRepository $cardsRepository, 
+        TypesRepository $typesRepository, 
+        SubjectsRepository $subjectsRepository,
+        NotificationsRepository $notificationsRepository, 
+        NotifUsersRepository $notifUserRepository, 
+        UsersRepository $usersRepository
+    ): Response
     {
+        /* $user = $this->getUser();
+        $notificationsId = $notifUserRepository->findByUserID($user->getUsrId());
+        $notifications = $notificationsRepository->findById($notificationsId); */
+
+
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
@@ -75,16 +90,17 @@ class HomeController extends AbstractController
             // Utilisateur déjà connecté,
             $user = $this->getUser();
             $username = $user->getUsrPseudo();
-            $name = $user->getUsrName();
+            $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
-                'name' => $name,
+                'lastname' => $lastname,
                 'firstname' => $firstname,
                 'email' => $email,
                 'cardData' => $cardData,
+                /* 'notifications' => $notifications, */
             ]);
         } else {
             // Utilisateur non connecté,
