@@ -38,11 +38,13 @@ document.addEventListener('DOMContentLoaded', async function() {
       innerDiv1.innerHTML = '<i class="fa-regular fa-calendar"></i>';
       innerDiv1.classList.add('fc-button');
       innerDiv1.classList.add('fc-button-primary');
+      innerDiv1.classList.add('calendar-view');
 
       const innerDiv2 = document.createElement('button');
       innerDiv2.innerHTML = '<i class="fa-solid fa-table-list"></i>';
       innerDiv2.classList.add('fc-button');
       innerDiv2.classList.add('fc-button-primary');
+      innerDiv2.classList.add('list-view');
 
       newDivDisplay.appendChild(innerDiv1);
       newDivDisplay.appendChild(innerDiv2);
@@ -124,6 +126,21 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     getDetailsCard('fc-event-main');
     getDetailsCard('item');
+
+    const listView = document.querySelector('.list-view');
+    listView.addEventListener('click', async function() {
+      try {
+        const response = await fetch('/home-list');
+        const htmlContent = await response.text();
+
+// Now, you can use the HTML content as needed
+        console.log(htmlContent);
+
+        document.querySelector('main').innerHTML = htmlContent;
+      } catch (error) {
+        console.error('Erreur lors de la récupération du contenu détaillé :', error);
+      }
+    });
   }
 });
 
@@ -272,5 +289,10 @@ function typeFilter(typeId) {
       this.setAttribute('aria-pressed', 'true');
     }
   });
+}
+
+function changeVew(){
+
+
 }
 

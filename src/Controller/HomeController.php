@@ -108,7 +108,6 @@ class HomeController extends AbstractController
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
             return $this->render('home/index.html.twig', [
-                'controller_name' => 'HomeController',
                 'username' => $username,
                 'lastname' => $lastname,
                 'firstname' => $firstname,
@@ -122,5 +121,65 @@ class HomeController extends AbstractController
             // Utilisateur non connecté,
             return $this->redirectToRoute('app_login');
         }
+    }
+
+    #[Route('/home-list', name: 'app_home_list')]
+    public function getListContent(
+        CardsRepository $cardsRepository,
+        TypesRepository $typesRepository,
+        SubjectsRepository $subjectsRepository
+    ): Response
+    {
+        $cards = $cardsRepository->findAll();
+        $cardData = [];
+
+        foreach ($cards as $card) {
+            $timeEnd = $card->getCrdTo();
+            $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
+            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
+
+            //if timeEnd is before now, skip this card
+            if ($timeEnd < $now) {
+                continue;
+            }
+
+            $typeId = $card->getCrdTypId();
+            $type = $typesRepository->find($typeId);
+
+            $subjectId = $card->getCrdSbjId();
+            $subject = $subjectsRepository->find($subjectId);
+
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if($dayLeft < 8) {
+                $timeColor= 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor= 'var(--accent-red)';
+            }
+
+            if ($type !== null) {
+                $cardData[] = [
+                    'card' => $card,
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'subjectName' => $subject->getSbjName(),
+                    'timeColor' => $timeColor,
+                ];
+            }
+        }
+
+        usort($cardData, function ($a, $b) {
+            return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
+        });
+
+        $content = $this->renderView('home/list.html.twig', ['cardData' => $cardData]);
+
+        return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
     }
 }
