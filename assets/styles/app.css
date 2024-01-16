@@ -80,6 +80,10 @@ button {
     color: unset;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 .disabled {
     display: none;
 }
@@ -331,6 +335,8 @@ header {
     margin: var(--grup-1) auto 0 auto;
 
     font-size: var(--grup);
+    color: var(--secondary-gray--04);
+    text-decoration: none;
 }
 
 
