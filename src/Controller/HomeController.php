@@ -48,6 +48,13 @@ class HomeController extends AbstractController
 
         $notifications = $notificationsRepository->findById($notificationsId);
 
+        $shouldNotify = false;
+        foreach ($notifications as $notification) {
+            if (!$notification->isNotIsSeen()) {
+                $shouldNotify = true;
+            }
+        }
+
         // ----------------------- END NOTIFICATIONS ------------------------ //
 
 
@@ -115,7 +122,9 @@ class HomeController extends AbstractController
                 'cardData' => $cardData,
 
                 'detailsCard' => null,
+                
                 'notifications' => $notifications,
+                'shouldNotify' => $shouldNotify,
             ]);
         } else {
             // Utilisateur non connecté,

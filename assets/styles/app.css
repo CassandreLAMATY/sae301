@@ -121,6 +121,8 @@ header {
 }
 
 .notif-dot {
+    display: none;
+    
     position: absolute;
     top: var(--grup-2);
     right: 0;
@@ -257,6 +259,11 @@ header {
     display: unset;
 }
 
+.userCard__button:hover,
+.double-button__item:hover {
+    background-color: var(--secondary-gray--02);
+}
+
 
 
 /* notif */
@@ -380,6 +387,10 @@ header {
 
     font-weight: 600;
     color: var(--main--black);
+}
+
+.see-button:hover {
+    background-color: var(--accent-yellow-shadow);
 }
 
 

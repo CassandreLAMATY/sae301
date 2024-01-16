@@ -4,7 +4,7 @@
         <button class="double-button__item"><i class="fa-solid fa-gear"></i></button>
     </div>
     {% for item in notifications %}
-        <div class="notif-card">
+        <div class="notif-card" style="{{item.isNotIsSeen() ? '' : 'box-shadow: 0 0 0 2px #EFB623'}}">
             <div class="notif-card__content" style="border-left-color: {{ item.getNotType().getTypColor }}!important">
                 <div class="tags_container">
                     <p class="tag new {{ item.isNotIsSeen() ? '' : 'tag' }}">Nouveau</p>

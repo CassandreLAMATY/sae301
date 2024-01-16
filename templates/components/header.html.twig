@@ -3,7 +3,7 @@
     <div class="header-menu">
         <div class="notif">
             <i class="fa-solid fa-bell"></i>
-            <div class="notif-dot"></div>
+            <div class="notif-dot" style="display: {{ shouldNotify ? 'block' : '' }}"></div>
             <div class="active-hover"></div>
             {% include 'components/notif_dropdown.html.twig' %}
         </div>
