@@ -22,8 +22,8 @@ class CalendarDataController extends AbstractController
                     'start' => $card->getCrdFrom()->format('Y-m-d'),
                     'end' => $card->getCrdTo()->format('Y-m-d'),
                     'hour' => $card->getCrdTo()->format('H:i'),
-                    'subject' => $card->getCrdSbjId(),
-                    'type' => $card->getCrdTypId(),
+                    'subject' => $card->getCrdSbj(),
+                    'type' => $card->getCrdTyp(),
                 ];
                 continue;
             }
@@ -31,8 +31,8 @@ class CalendarDataController extends AbstractController
                 'title' => $card->getCrdTitle(),
                 'start' => $card->getCrdTo()->format('Y-m-d'),
                 'hour' => $card->getCrdTo()->format('H:i'),
-                'subject' => $card->getCrdSbjId(),
-                'type' => $card->getCrdTypId(),
+                'subject' => $card->getCrdSbj(),
+                'type' => $card->getCrdTyp(),
 
             ];
         }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CardsRepository;
+use App\Entity\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\DateTimeConverter;
 
@@ -141,13 +142,13 @@ class Cards
     }
 
     public
-    function getCrdTypId(): ?Types
+    function getCrdTyp(): ?Types
     {
         return $this->crd_typ;
     }
 
     public
-    function setCrdTypId(
+    function setCrdTyp(
         ?Types $crd_typ
     ): static {
         $this->crd_typ = $crd_typ;
@@ -155,16 +156,34 @@ class Cards
         return $this;
     }
 
-    public function getCrdSbjId(): ?Subjects
+    public function getCrdSbj(): ?Subjects
     {
         return $this->crd_sbj;
     }
 
-    public function setCrdSbjId(?Subjects $crd_sbj): static
+    public function setCrdSbj(?Subjects $crd_sbj): static
     {
         $this->crd_sbj = $crd_sbj;
 
         return $this;
+    }
+
+
+    public function getValidatedBy(): ?int
+    {
+        return $this->validated_by;
+    }
+
+    public function setValidatedBy(?int $validated_by): static
+    {
+        $this->validated_by = $validated_by;
+
+        return $this;
+    }
+
+    public function getCrdId(): ?int
+    {
+        return $this->crd_id;
     }
 
     public function getIsValidated(): ?int
@@ -175,18 +194,6 @@ class Cards
     public function setIsValidated(int $is_validated): static
     {
         $this->is_validated = $is_validated;
-
-        return $this;
-    }
-
-    public function getValidatedBy(): ?int
-    {
-        return $this->validated_by;
-    }
-
-    public function setValidatedBy(?int $validated_by): static
-    {
-        $this->validated_by = $validated_by;
 
         return $this;
     }

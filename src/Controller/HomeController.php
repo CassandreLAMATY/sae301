@@ -5,21 +5,28 @@ namespace App\Controller;
 use App\Repository\SubjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
 use App\Repository\TypesRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Entity\Cards;
+use App\Entity\UsersCards;
 use App\Form\CardsType;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 
 class HomeController extends AbstractController
 {
     private $security;
+    private $entityManager;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, EntityManagerInterface $entityManager)
     {
         $this->security = $security;
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_home')]
@@ -38,10 +45,10 @@ class HomeController extends AbstractController
                 continue;
             }
 
-            $typeId = $card->getCrdTypId();
+            $typeId = $card->getCrdTyp();
             $type = $typesRepository->find($typeId);
 
-            $subjectId = $card->getCrdSbjId();
+            $subjectId = $card->getCrdSbj();
             $subject = $subjectsRepository->find($subjectId);
 
             $timeleft = $now->diff($timeEnd);
@@ -95,12 +102,29 @@ class HomeController extends AbstractController
         }
     }
     #[Route('/create-cards', name: 'create_cards')]
-    public function createCardForm(): Response
+    public function createCardForm(Request $request, EntityManagerInterface $entityManager): Response
     {
         $card = new Cards();
-        $form = $this->createForm(CardsType::class, $card);
+        //$UC = new UsersCards();
 
-        return $this->render('home/created_form.html.twig', [
+
+        $form = $this->createForm(CardsType::class, $card, [
+            'action' => $this->generateUrl('create_cards'),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Enregistrez les données dans la base de données ici
+            $card = $form->getData();
+            $card->setCrdCreatedAt(new \DateTimeImmutable());
+            $card->setIsValidated(0);
+            $entityManager->persist($card);
+            $entityManager->flush();
+            // Redirigez l'utilisateur ou effectuez d'autres actions après la soumission réussie
+            return $this->redirectToRoute('app_home');
+        }
+        return $this->render('home/_created_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
