@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (document.getElementById('calendar')) {
     const dataSubject = await fetch('/subjects/data').
       then(response => response.json());
-    console.log(dataSubject);
 
     const calendar = document.getElementById('calendar');
     const dataEvents = await fetch(calendar.dataset.url).
@@ -25,7 +24,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     const toolbarChunks = document.querySelectorAll('.fc-toolbar-chunk');
 
     if (toolbarChunks.length >= 3) {
+      const firstToolbarChunk = toolbarChunks[0];
       const thirdToolbarChunk = toolbarChunks[2];
+
+      const firstButtonGroup = firstToolbarChunk.querySelector('.fc-button-group');
 
       const newDivDisplay = document.createElement('div');
       newDivDisplay.classList.add('fc-button-group');
@@ -44,8 +46,27 @@ document.addEventListener('DOMContentLoaded', async function() {
       newDivDisplay.appendChild(innerDiv1);
       newDivDisplay.appendChild(innerDiv2);
 
-      thirdToolbarChunk.appendChild(newDivDisplay);
+      firstToolbarChunk.appendChild(newDivDisplay);
+
+      // Vérification pour s'assurer que le fc-button-group a été trouvé
+      if (firstButtonGroup) {
+        // Suppression du fc-button-group du premier fc-toolbar-chunk
+        firstToolbarChunk.removeChild(firstButtonGroup);
+
+        // Ajout du fc-button-group au troisième fc-toolbar-chunk
+        thirdToolbarChunk.appendChild(firstButtonGroup);
+      }
+
+      const todayBtn = firstToolbarChunk.querySelector('.fc-today-button');
+      firstToolbarChunk.removeChild(todayBtn);
+      firstToolbarChunk.appendChild(todayBtn);
+
+      const slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
+      thirdToolbarChunk.removeChild(slideBtn);
+      thirdToolbarChunk.appendChild(slideBtn);
+
     }
+
 
     // Créer la div pour les filtres
     const divFilters = document.createElement('div');
