@@ -116,10 +116,6 @@ header {
     color: var(--main-black);
 }
 
-.notif:hover > .notif-dropdown {
-    display: grid;
-}
-
 .notif-dot {
     position: absolute;
     top: var(--grup-2);
@@ -141,21 +137,17 @@ header {
     gap: var(--grup);
 }
 
-.userCard:hover > .userCard-dropdown {
-    display: unset;
-}
-
 .userCard__image {
     width: var(--grup2);
     height: var(--grup2);
     border-radius: 50%;
 }
 
-.userCard-content__name {
+.userCard__name {
     font-size: var(--grup-1);
 }
 
-.userCard-content > span {
+.userCard__name > span {
     font-size: var(--grup);
     font-weight: 600;
 }
@@ -165,13 +157,25 @@ header {
     cursor: pointer;
 }
 
+.notif:hover::before {
+    content: "";
+    display: block;
+
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 50px;
+    height: 50px;
+}
+
 
 
 /* dropdown */
 .userCard-dropdown,
 .notif-dropdown {
     display: none;
-
     position: absolute;
     z-index: 1;
 
@@ -180,19 +184,31 @@ header {
     background-color: var(--white);
     border-radius: var(--grup);
     box-shadow: 0 0 0 2px var(--secondary-gray--02);
+
+    opacity: 0;
+    transition: opacity var(--smooth3);
+    pointer-events: none;
+}
+
+.userCard:hover > .userCard-dropdown,
+.notif:hover > .notif-dropdown {
+    opacity: 1;
 }
 
 .userCard-dropdown {
-    top: 100%;
+    display: unset;
+    top: calc(100% + var(--grup-1));
     right: var(--grup1);
 
     color: var(--secondary-gray--04);
 }
 
 .notif-dropdown {
+    display: grid;
+
     row-gap: var(--grup);
 
-    top: 53px;
+    top: calc(53px + var(--grup-1));
     left: 50%;
     transform: translateX(-50%);
 
