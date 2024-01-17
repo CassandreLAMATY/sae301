@@ -55,6 +55,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Outfit', sans-serif;
+    color: var(--main--black);
     overflow: hidden;
 }
 
@@ -600,6 +601,7 @@ main {
 
 #back {
     font-size: var(--grup1);
+    cursor: pointer;
 }
 
 #details #title_details {
@@ -611,23 +613,37 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: end;
-    outline: red solid 1px;
 }
 
-#details .detail--title {
-    outline: solid 1px darkolivegreen;
+#details .detail--back p {
+    padding: var(--grup-3) var(--grup-1);
+    font-size: var(--grup);
 }
 
-#details .detail--title .detail--title--under {
-    outline: solid 1px #FFD540;
+#details .detail--title h2 {
+    font-size: var(--grup2);
+}
+
+#details .detail--title .detail--title--under .time_left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--grup-1);
+}
+
+#details .detail--title .detail--title--under .time_left p {
+    width: initial;
 }
 
 #details .detail--content {
-    outline: solid 1px cadetblue;
+    background-color: var(--white);
+    padding: var(--grup1);
+    border-radius: 6px;
 }
 
 #details .detail--content .detail--content--time {
-    outline: solid 1px orangered;
+    display: flex;
+    justify-content: space-between;
 }
 
 #details .detail--content .detail--content--time .detail--content--time--left {
@@ -639,8 +655,29 @@ main {
 }
 
 #details .detail--content .detail--content--format {
-    outline: solid 1px violet;
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup-2);
 }
+
+#details .detail--content .detail--content--format-t {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-1);
+}
+
+#details .detail--content .detail--content--format-t i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--grup);
+}
+
+#details .detail--content .detail--content--format-c {
+    font-size: var(--grup1);
+    color: var(--secondary-gray--04);
+}
+
 
 #details .detail--content .detail--content--done {
     outline: solid 1px #6EE014;
