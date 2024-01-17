@@ -461,6 +461,12 @@ header {
 .delete-button {
     background-color: var(--accent-red);
     box-shadow: 0 0 0 2px var(--accent-red-shadow);
+
+    color: var(--secondary-gray--01);
+}
+
+.delete-button:hover {
+    background-color: var(--accent-red-shadow);
 }
 
 a:has(> .delete-button) {
