@@ -198,6 +198,11 @@ header {
     pointer-events: unset;
 }
 
+.dropdown-visible {
+    opacity: 1;
+    pointer-events: unset;
+}
+
 .userCard-dropdown {
     display: unset;
     top: calc(60px + var(--grup-1));
