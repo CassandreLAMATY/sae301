@@ -172,8 +172,14 @@ class Cards
 
     public function getTimeLeft(): string
     {
-        $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
         $final = $this->getCrdTo();
+
+        if($this->getCrdFrom()){
+            $final = $this->getCrdFrom();
+        }
+
+        $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
+
         $final->setTimezone(new \DateTimeZone('Europe/Paris'));
 
         $diff = $now->diff($final);

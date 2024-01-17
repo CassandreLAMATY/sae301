@@ -64,6 +64,11 @@ class HomeController extends AbstractController
 
         foreach ($cards as $card) {
             $timeEnd = $card->getCrdTo();
+
+            if($card->getCrdFrom()){
+                $timeEnd = $card->getCrdFrom();
+            }
+
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
@@ -144,7 +149,13 @@ class HomeController extends AbstractController
         $cardData = [];
 
         foreach ($cards as $card) {
+
             $timeEnd = $card->getCrdTo();
+
+            if($card->getCrdFrom()){
+                $timeEnd = $card->getCrdFrom();
+            }
+
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
