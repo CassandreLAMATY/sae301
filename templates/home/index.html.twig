@@ -17,12 +17,12 @@
                     {% for item in cardData %}
                         <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
                              style="border-left-color: {{ item.typeColor }} !important;">
-                            <p class="card-id">{{item.card.getId}}</p>
-                            <p class="type-id">{{item.card.getCrdTypId.getId}}</p>
+                            <p class="card-id">{{ item.card.getId }}</p>
+                            <p class="type-id">{{ item.card.getCrdTypId.getId }}</p>
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.getCrdFrom is not null %}
-                                        Du {{ item.card.getFormattedCrdFrom }} <br> Au
+                                        Du {{ item.card.getFormattedCrdFrom }} <br>Au
                                     {% endif %}
                                     {{ item.card.getFormattedCrdTo }}
                                 </p>
@@ -32,7 +32,8 @@
                                 </div>
                             </div>
                             <div class="subject">
-                                <p class="tag" style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
+                                <p class="tag"
+                                   style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
                                 <div>
                                     <h3 class="notif-card__title">{{ item.card.getCrdTitle }}</h3>
                                     <p class="notif-card__subject">{{ item.subjectRef }} - {{ item.subjectName }}</p>
@@ -43,8 +44,9 @@
                                     <i class="fa-regular fa-square"></i>
                                     <p>À Rendre</p>
                                 </div>-->
-                                <div class="status">
-                                    <i class="fa-regular fa-square-check"></i>
+                                <div class="status status-button not-done">
+                                    <i class="fa-regular fa-square not-done"></i>
+                                    <i class="fa-regular fa-square done"></i>
                                     <p>Rendu</p>
                                 </div>
                             {% endif %}

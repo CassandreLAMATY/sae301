@@ -2,23 +2,21 @@
 
 namespace App\Controller;
 
+use App\Repository\CardsRepository;
+use App\Repository\SubjectsRepository;
+use App\Repository\TypesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use App\Repository\CardsRepository;
-use App\Repository\TypesRepository;
-use App\Repository\SubjectsRepository;
 
-class DetailsController extends AbstractController
-{
+class DetailsController extends AbstractController {
     #[Route('/details', name: 'app_details')]
     public function getDetails(
         Request $request,
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository
-    ): Response {
+        SubjectsRepository $subjectsRepository): Response {
         $eventId = json_decode($request->getContent())->eventId;
 
         $card = $cardsRepository->find($eventId);
@@ -40,6 +38,9 @@ class DetailsController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
+            $validated = [];
+            $validatedBy = [];
+
             if ($dayLeft < 8) {
                 $timeColor = 'var(--accent-orange)';
             }
@@ -51,18 +52,11 @@ class DetailsController extends AbstractController
             $cardData = [];
 
             if ($type !== null) {
-                $cardData[] = [
-                    'card' => $card,
-                    'typeName' => $type->getTypName(),
-                    'typeColor' => $type->getTypColor(),
-                    'subjectName' => $subject->getSbjName(),
-                    'timeColor' => $timeColor,
-                ];
+                $cardData[] = ['card' => $card, 'typeName' => $type->getTypName(), 'typeColor' => $type->getTypColor(), 'subjectName' => $subject->getSbjName(), 'timeColor' => $timeColor, $validated, $validatedBy];
             }
         }
 
-        return $this->render('details/index.html.twig', [
-            'detailsCard' => $cardData,
+        return $this->render('details/index.html.twig', ['detailsCard' => $cardData,
 
         ]);
     }
