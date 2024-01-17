@@ -33,7 +33,7 @@ class Notifications
     #[ORM\JoinColumn(referencedColumnName: "sbj_id")]
     private ?Subjects $not_subject = null;
 
-    public function getId(): ?int
+    public function getNotId(): ?int
     {
         return $this->not_id;
     }
