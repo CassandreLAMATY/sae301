@@ -470,12 +470,12 @@ main {
     background-color: var(--accent-yellow-shadow) !important;
 }
 
-#calendar td.gridcell .fc-daygrid-day-events{
+#calendar td.gridcell .fc-daygrid-day-events {
     display: flex;
     flex-direction: column;
 }
 
-#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness{
+#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness {
     position: relative !important;
 }
 
@@ -571,12 +571,12 @@ main {
 }
 
 .time .date {
-    font-size: 12px;
+    font-size: var(--grup-1);
     color: var(--grey);
     margin-bottom: 0;
 }
 
-.time .time_left{
+.time .time_left {
     display: flex;
     align-items: center;
     gap: 7px;
@@ -586,13 +586,13 @@ main {
     font-size: 24px;
 }
 
-.time_left .days{
+.time_left .days {
     margin: 0;
     font-size: var(--grup);
     width: 60px;
 }
 
-.days span{
+.days span {
     font-weight: 600;
 }
 
@@ -602,19 +602,28 @@ main {
     gap: 5px;
 }
 
+.subject .tag {
+    text-transform: uppercase;
+    color: var(--white);
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-size: var(--grup-1);
+    margin: 0;
+    width: fit-content;
+    font-weight: 700;
+}
 
-
-/* .subject h3{
+.subject h3 {
     margin: 0;
     font-size: var(--grup);
 }
 
-.subject .course{
+.subject .course {
     margin: 0;
     font-size: var(--grup);
 } */
 
-.side-list .status{
+.side-list .status {
     display: flex;
     gap: 5px;
     background-color: var(--accent-blue);
@@ -626,8 +635,8 @@ main {
     width: max-content;
 }
 
-.status p{
-    margin:0;
+.status p {
+    margin: 0;
 }
 
 /*---------MODAL----------*/

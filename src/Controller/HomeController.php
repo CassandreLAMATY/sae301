@@ -15,7 +15,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class HomeController extends AbstractController
 {
-    private $security;
+    protected $security;
 
     public function __construct(Security $security)
     {
