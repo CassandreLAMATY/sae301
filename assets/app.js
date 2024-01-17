@@ -58,9 +58,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         thirdToolbarChunk.appendChild(firstButtonGroup);
       }
 
-      const slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
+      let slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
       thirdToolbarChunk.removeChild(slideBtn);
       thirdToolbarChunk.appendChild(slideBtn);
+       slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
+
+      slideBtn.addEventListener('click', function() {
+        const typeId = localStorage.getItem('typeId');
+        console.log(typeId);
+        hideElement(typeId, true);
+      })
 
       // METTRE LE BOUTON TODAY À DROITE
       const todayBtn = firstToolbarChunk.querySelector('.fc-today-button');
@@ -265,36 +272,49 @@ function typeFilter(typeId) {
   const btnsTypes = document.querySelectorAll('.types button');
   const btnType = typeId - 1;
 
-  btnsTypes[btnType].addEventListener('click', function() {
-    const events = document.querySelectorAll('.fc-event-main');
-    const eventsList = document.querySelectorAll('.item');
+  //localStorage.getItem('typeId')
 
-    if (this.getAttribute('aria-pressed') === 'true') {
-      events.forEach(event => {
-        if (event.querySelector('.type-id').innerHTML == typeId) {
-          event.parentNode.style.display = 'none';
-        }
-      });
-      eventsList.forEach(eventList => {
-        if (eventList.querySelector('.type-id').innerHTML == typeId) {
-          eventList.style.display = 'none';
-        }
-      });
-      this.setAttribute('aria-pressed', 'false');
-    } else {
-      events.forEach(event => {
-        if (event.querySelector('.type-id').innerHTML == typeId) {
-          event.parentNode.style.display = 'block';
-        }
-      });
-      eventsList.forEach(eventList => {
-        if (eventList.querySelector('.type-id').innerHTML == typeId) {
-          eventList.style.display = 'grid';
-        }
-      });
+  btnsTypes[btnType].addEventListener('click', function() {
+    console.log(btnType);
+    localStorage.setItem('typeId', typeId);
+    const isPressed = this.getAttribute('aria-pressed') === 'true'
+
+    if (!isPressed) {
       this.setAttribute('aria-pressed', 'true');
+    } else {
+      this.setAttribute('aria-pressed', 'false');
     }
+
+    hideElement(typeId, isPressed);
   });
+}
+
+function hideElement(typeId, isPressed) {
+  const events = document.querySelectorAll('.fc-event-main');
+  const eventsList = document.querySelectorAll('.item');
+  if (isPressed) {
+    events.forEach(event => {
+      if (event.querySelector('.type-id').innerHTML == typeId) {
+        event.parentNode.style.display = 'none';
+      }
+    });
+    eventsList.forEach(eventList => {
+      if (eventList.querySelector('.type-id').innerHTML == typeId) {
+        eventList.style.display = 'none';
+      }
+    });
+  } else {
+    events.forEach(event => {
+      if (event.querySelector('.type-id').innerHTML == typeId) {
+        event.parentNode.style.display = 'block';
+      }
+    });
+    eventsList.forEach(eventList => {
+      if (eventList.querySelector('.type-id').innerHTML == typeId) {
+        eventList.style.display = 'grid';
+      }
+    });
+  }
 }
 
 function getGlobalView() {
