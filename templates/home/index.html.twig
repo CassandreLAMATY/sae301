@@ -22,13 +22,13 @@
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.getCrdFrom is not null %}
-                                        Du {{ item.card.getFormattedCrdFrom }} <br>Au
+                                        Du {{ item.card.getSmallCrdFrom }} <br>Au
                                     {% endif %}
-                                    {{ item.card.getFormattedCrdTo }}
+                                    {{ item.card.getSmallCrdTo }}
                                 </p>
                                 <div class="time_left">
                                     <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
-                                    <p class="days">Dans<br><span>{{ item.card.getTimeLeft }}</span></p>
+                                    <p class="days">{{ item.card.getTimeLeft|raw }}</p>
                                 </div>
                             </div>
                             <div class="subject">

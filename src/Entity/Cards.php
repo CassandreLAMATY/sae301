@@ -89,9 +89,33 @@ class Cards
         return $this->crd_to;
     }
 
+    public function getSmallCrdTo(): string
+    {
+        $moisFrancais = [
+            'Jan' => 'Jan',
+            'Feb' => 'Fév',
+            'Mar' => 'Mar',
+            'Apr' => 'Avr',
+            'May' => 'Mai',
+            'Jun' => 'Juin',
+            'Jul' => 'Juil',
+            'Aug' => 'Août',
+            'Sep' => 'Sep',
+            'Oct' => 'Oct',
+            'Nov' => 'Nov',
+            'Dec' => 'Déc',
+        ];
+
+        $formattedDate = $this->getCrdTo()->format('d ') . $moisFrancais[$this->getCrdTo()->format('M')];
+
+        return $formattedDate;
+    }
+
     public function getFormattedCrdTo(): string
     {
-        return $this->getCrdTo()->format('d M');
+        $formatter = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+        $formatter->setPattern("d MMMM yyyy 'à' HH:mm");
+        return $formatter->format($this->getCrdTo()->getTimestamp());
     }
 
     public function setCrdTo(\DateTimeInterface $crd_to): static
@@ -106,13 +130,37 @@ class Cards
         return $this->crd_from;
     }
 
-    public function getFormattedCrdFrom(): ?string
+    public function getSmallCrdFrom(): ?string
     {
         if ($this->getCrdFrom() === null) {
             return null;
         }
 
-        return $this->getCrdFrom()->format('d M');
+        $moisFrancais = [
+            'Jan' => 'Jan',
+            'Feb' => 'Fév',
+            'Mar' => 'Mar',
+            'Apr' => 'Avr',
+            'May' => 'Mai',
+            'Jun' => 'Juin',
+            'Jul' => 'Juil',
+            'Aug' => 'Août',
+            'Sep' => 'Sep',
+            'Oct' => 'Oct',
+            'Nov' => 'Nov',
+            'Dec' => 'Déc',
+        ];
+
+        $formattedDate = $this->getCrdFrom()->format('d ') . $moisFrancais[$this->getCrdFrom()->format('M')];
+
+        return $formattedDate;
+    }
+
+    public function getFormattedCrdFrom(): string
+    {
+        $formatter = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+        $formatter->setPattern("d MMMM yyyy 'à' HH:mm");
+        return $formatter->format($this->getCrdFrom()->getTimestamp());
     }
 
     public function setCrdFrom(?\DateTimeInterface $crd_from): static
@@ -124,8 +172,14 @@ class Cards
 
     public function getTimeLeft(): string
     {
-        $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
         $final = $this->getCrdTo();
+
+        if($this->getCrdFrom()){
+            $final = $this->getCrdFrom();
+        }
+
+        $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
+
         $final->setTimezone(new \DateTimeZone('Europe/Paris'));
 
         $diff = $now->diff($final);
@@ -134,14 +188,21 @@ class Cards
         $hourLeft = (int)$hourLeft;
 
         if ($dayLeft === '0' && $hourLeft > 1 ) {
-            return sprintf('%dh%02d', $diff->h, $diff->i);
+            $timeLeft = sprintf('%dh%02d', $diff->h, $diff->i);
+            return 'Dans <br> <span>'. $timeLeft .'</span>';
         }
 
         if ($dayLeft === '0' && $hourLeft === 0) {
-            return $diff->format('%i min');
+            $timeLeft = $diff->format('Dans <br> <span>%i min</span>');
+            return 'Dans <br> <span>'. $timeLeft .'</span>';
         }
 
-        return $diff->format('%a jours');
+        if($final < $now) {
+            return 'Terminé';
+        }
+
+        $timeLeft = $diff->format('%a jours');
+        return 'Dans <br> <span>'. $timeLeft .'</span>';
     }
 
     public

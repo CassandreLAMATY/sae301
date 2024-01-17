@@ -19,9 +19,6 @@ class Notifications
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $not_content = null;
 
-    #[ORM\Column(options: ["default" => "0"])]
-    private ?bool $not_isSeen = null;
-
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $not_created_at = null;
 
@@ -33,7 +30,7 @@ class Notifications
     #[ORM\JoinColumn(referencedColumnName: "sbj_id")]
     private ?Subjects $not_subject = null;
 
-    public function getId(): ?int
+    public function getNotId(): ?int
     {
         return $this->not_id;
     }
@@ -58,18 +55,6 @@ class Notifications
     public function setNotContent(?string $not_content): static
     {
         $this->not_content = $not_content;
-
-        return $this;
-    }
-
-    public function isNotIsSeen(): ?bool
-    {
-        return $this->not_isSeen;
-    }
-
-    public function setNotIsSeen(bool $not_isSeen): static
-    {
-        $this->not_isSeen = $not_isSeen;
 
         return $this;
     }

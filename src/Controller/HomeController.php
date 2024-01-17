@@ -38,20 +38,17 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         // Selecting every notification id by user id
-        $nu = $notifUserRepository->findByUserID($user->getUsrId());
+        $notifications = $notifUserRepository->findByUserID($user->getUsrId());
+        $notifSeen = [];
+        $notifSeen = [];
 
         // Creating an array with every notification id
-        $notificationsId = [];
-        foreach ($nu as $notif) {
-            $notificationsId[] = $notif->getNuNot();
-        }
-
-        $notifications = $notificationsRepository->findById($notificationsId);
-
         $shouldNotify = false;
-        foreach ($notifications as $notification) {
-            if (!$notification->isNotIsSeen()) {
-                $shouldNotify = true;
+        foreach ($notifications as $notif) {
+            if($notif->isNuSeen()) {
+                $notifSeen[] = $notif;
+            } else {
+                $notifNotSeen[] = $notif;
             }
         }
 
@@ -64,6 +61,11 @@ class HomeController extends AbstractController
 
         foreach ($cards as $card) {
             $timeEnd = $card->getCrdTo();
+
+            if($card->getCrdFrom()){
+                $timeEnd = $card->getCrdFrom();
+            }
+
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
@@ -124,7 +126,8 @@ class HomeController extends AbstractController
 
                 'detailsCard' => null,
                 
-                'notifications' => $notifications,
+                'notifSeen' => $notifSeen,
+                'notifNotSeen' => $notifNotSeen,
                 'shouldNotify' => $shouldNotify,
             ]);
         } else {
@@ -144,14 +147,15 @@ class HomeController extends AbstractController
         $cardData = [];
 
         foreach ($cards as $card) {
+
             $timeEnd = $card->getCrdTo();
+
+            if($card->getCrdFrom()){
+                $timeEnd = $card->getCrdFrom();
+            }
+
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
-
-            //if timeEnd is before now, skip this card
-            if ($timeEnd < $now) {
-                continue;
-            }
 
             $typeId = $card->getCrdTypId();
             $type = $typesRepository->find($typeId);
@@ -167,10 +171,6 @@ class HomeController extends AbstractController
 
             if($dayLeft < 8) {
                 $timeColor= 'var(--accent-orange)';
-            }
-
-            if ($dayLeft < 3) {
-                $timeColor= 'var(--accent-red)';
             }
 
             if ($type !== null) {

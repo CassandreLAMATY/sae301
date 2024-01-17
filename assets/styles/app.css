@@ -146,10 +146,11 @@ header {
 
 /* dropdown */
 .userCard-dropdown,
-.notif-dropdown {
-    display: none;
-    position: absolute;
-    z-index: 100;
+.notif-dropdown,
+.subject-choices{
+    display          : none;
+    position         : absolute;
+    z-index          : 100;
 
     padding: var(--grup1);
 
@@ -164,6 +165,11 @@ header {
 
 .userCard:hover > .userCard-dropdown,
 .notif:hover > .notif-dropdown {
+    opacity: 1;
+    pointer-events: unset;
+}
+
+.dropdown-visible {
     opacity: 1;
     pointer-events: unset;
 }
@@ -401,10 +407,15 @@ main {
 
 #calendar button,
 .fc-toolbar-chunk .fc-button-display {
-    background-color: var(--accent-yellow);
-    color: var(--main--black);
-    border: none;
-    text-transform: capitalize;
+    background-color : var(--accent-yellow);
+    color            : var(--main--black);
+    border           : solid 2px var(--accent-yellow-shadow);
+    text-transform   : capitalize;
+}
+
+.filter-nav .fc-button{
+    background-color : var(--secondary-gray--01) !important;
+    border-color: var(--secondary-gray--02) !important;
 }
 
 .fc .fc-button:disabled {
