@@ -35,7 +35,7 @@ class ParamsController extends AbstractController
                 $name = $user->getUsrName();
                 $firstname = $user->getUsrFirstname();
                 $email = $user->getUsrMail();
-                $showParams = true;
+                $showParams = false;
                 $homeworkReminder = $user->isUsrHomeworkReminder();
                 $examReminder = $user->isUsrExamReminder();
                 $newReminder = $user->isUsrNewReminder();
@@ -43,30 +43,32 @@ class ParamsController extends AbstractController
                 $cookies = $user->isUsrCookies();
 
                 if ($request->isMethod('POST')) {
+                        //dd($request->request);
                         if ($request->request->has('homeworkReminder')) {
-                                $homeworkReminder = $request->request->get('homeworkReminder') === 'on' ? true : false;
+                                $homeworkReminder = $request->request->get('homeworkReminder') === 'true' ? true : false;
                                 $user->setUsrHomeworkReminder($homeworkReminder);
                         }
                         if ($request->request->has('examReminder')) {
-                                $examReminder = $request->request->get('examReminder') === 'on' ? true : false;
+                                $examReminder = $request->request->get('examReminder') === 'true' ? true : false;
                                 $user->setUsrExamReminder($examReminder);
                         }
                         if ($request->request->has('newReminder')) {
-                                $newReminder = $request->request->get('newReminder') === 'on' ? true : false;
+                                $newReminder = $request->request->get('newReminder') === 'true' ? true : false;
                                 $user->setUsrNewReminder($newReminder);
                         }
                         if ($request->request->has('modifReminder')) {
-                                $modifReminder = $request->request->get('modifReminder') === 'on' ? true : false;
+                                $modifReminder = $request->request->get('modifReminder') === 'true' ? true : false;
                                 $user->setUsrModifReminder($modifReminder);
                         }
                         if ($request->request->has('cookies')) {
-                                $cookies = $request->request->get('cookies') === 'on' ? true : false;
+                                $cookies = $request->request->get('cookies') === 'true' ? true : false;
                                 $user->setUsrCookies($cookies);
                         }
 
 
                         $this->entityManager->persist($user);
                         $this->entityManager->flush();
+                        return $this->json('ok'); //une réponse json valide avec ce que tu veux qui pourrait être récupéré par ton js
                 }
 
                 return $this->render('home/index.html.twig', [

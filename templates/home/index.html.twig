@@ -64,7 +64,7 @@
                 </div>
                 <div id="params_pop-up_main_section">
                     {#  #}
-                    <form id="paramsFrom" method="post" action="{{ path('app_home_params') }}">
+                    <form id="paramsForm" method="post" action="{{ path('app_home_params') }}">
                         <h3>Notification par mail</h3> 
                         <div class="params_pop-up_row">
                             <input type="hidden" name="homeworkReminder" value="{{ homeworkReminder ? 'on' : 'off' }}" />
@@ -186,7 +186,12 @@
         
         saveButton.addEventListener('click', function() {
             // Serialize form data to send
-            var formData = new FormData(paramsForm);
+            var formData = new FormData();
+            formData.append('homeworkReminder', document.getElementById('homeworkToggle').classList.contains('fa-toggle-on') ? true : false)
+            formData.append('examReminder',  document.getElementById('examToggle').classList.contains('fa-toggle-on') ? true : false);
+            formData.append('newReminder',  document.getElementById('newToggle').classList.contains('fa-toggle-on') ? true : false);
+            formData.append('modifReminder',  document.getElementById('modifToggle').classList.contains('fa-toggle-on') ? true : false);
+            formData.append('cookies',  document.getElementById('cookiesToggle').classList.contains('fa-toggle-on') ? true : false);
             
             // Send an AJAX request
             fetch('{{ path('app_home_params') }}', {
