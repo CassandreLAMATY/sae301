@@ -2,7 +2,7 @@
     {% for item in detailsCard %}
         <div class='detail--back'>
             <button id="back"><i class="fa-solid fa-arrow-left"></i></button>
-            <p class='tag' style=''>{{ item.typeName }}</p>
+            <p class='tag' style='border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20'>{{ item.typeName }}</p>
         </div>
 
         <div class='detail--title'>
