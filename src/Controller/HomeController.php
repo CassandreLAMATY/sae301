@@ -12,9 +12,12 @@ use App\Repository\CardsRepository;
 use App\Repository\TypesRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Entity\Cards;
+use App\Entity\Subjects;
 use App\Entity\UsersCards;
 use App\Form\CardsType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\EventListener\CardsFormListener;
+
 
 
 
@@ -23,7 +26,8 @@ class HomeController extends AbstractController
     private $security;
     private $entityManager;
 
-    public function __construct(Security $security, EntityManagerInterface $entityManager)
+
+    public function __construct(Security $security, EntityManagerInterface $entityManager, CardsFormListener $cardsFormListener)
     {
         $this->security = $security;
         $this->entityManager = $entityManager;
@@ -48,8 +52,6 @@ class HomeController extends AbstractController
             $typeId = $card->getCrdTyp();
             $type = $typesRepository->find($typeId);
 
-            $subjectId = $card->getCrdSbj();
-            $subject = $subjectsRepository->find($subjectId);
 
             $timeleft = $now->diff($timeEnd);
             $dayLeft = $timeleft->format('%a');
@@ -57,15 +59,21 @@ class HomeController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
-            if($dayLeft < 8) {
-                $timeColor= 'var(--accent-orange)';
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
             }
 
             if ($dayLeft < 3) {
-                $timeColor= 'var(--accent-red)';
+                $timeColor = 'var(--accent-red)';
             }
 
+            $subjectId = $card->getCrdSbj();
+
+            $subject = $subjectsRepository->find($subjectId);
+
+
             if ($type !== null) {
+
                 $cardData[] = [
                     'card' => $card,
                     'typeName' => $type->getTypName(),
@@ -75,8 +83,8 @@ class HomeController extends AbstractController
                     'timeColor' => $timeColor,
                 ];
             }
-        }
 
+        }
         usort($cardData, function ($a, $b) {
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
         });
@@ -102,7 +110,7 @@ class HomeController extends AbstractController
         }
     }
     #[Route('/create-cards', name: 'create_cards')]
-    public function createCardForm(Request $request, EntityManagerInterface $entityManager): Response
+    public function createCardForm(Request $request, EntityManagerInterface $entityManager, SubjectsRepository $subjectsRepository): Response
     {
         $card = new Cards();
         //$UC = new UsersCards();
@@ -111,6 +119,7 @@ class HomeController extends AbstractController
         $form = $this->createForm(CardsType::class, $card, [
             'action' => $this->generateUrl('create_cards'),
             'method' => 'POST',
+            'attr' => ['id' => 'create-cards-form'],
         ]);
 
         $form->handleRequest($request);
@@ -119,6 +128,9 @@ class HomeController extends AbstractController
             $card = $form->getData();
             $card->setCrdCreatedAt(new \DateTimeImmutable());
             $card->setIsValidated(0);
+            if($card->getCrdSbj() == null){
+                $card->setCrdSbj($subjectsRepository->find(22));
+            }
             $entityManager->persist($card);
             $entityManager->flush();
             // Redirigez l'utilisateur ou effectuez d'autres actions après la soumission réussie

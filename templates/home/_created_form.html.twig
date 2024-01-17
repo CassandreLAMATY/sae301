@@ -1,31 +1,34 @@
 
 <h2>Creation d'un évènement</h2>
 
-{{ form_start(form, {'method': 'POST'}) }}
+{{ form_start(form, {'method': 'POST', }) }}
 <br>
-{{ form_label(form.crd_typ,'Type d évènement') }}
+{{ form_label(form.crd_typ,'Type d\'évènement : ') }}
     {{ form_widget(form.crd_typ) }}
 <br>
-    {{ form_label(form.crd_title,'Titre de l évènement') }}
+    {{ form_label(form.crd_title,'Titre de l\'évènement : ') }}
     {{ form_widget(form.crd_title) }}
 <br>
-    {{ form_label(form.crd_desc,'Description de l évènement') }}
+    {{ form_label(form.crd_desc,'Description de l\'évènement : ') }}
     {{ form_widget(form.crd_desc) }}
-<br>
 
-    {{ form_label(form.crd_from,'Date de début') }}
+    <br>
+
+    {{ form_label(form.crd_from,'Date de début : ') }}
     {{ form_widget(form.crd_from) }}
 <br>
-    {{ form_label(form.crd_to,'Date de fin') }}
+    {{ form_label(form.crd_to,'Date de fin : ') }}
     {{ form_widget(form.crd_to) }}
 
 <br>
-{{ form_label(form.crd_sbj,'Matière de l évènement') }}
+
+{{ form_label(form.crd_sbj,'Matière de l\'évènement : ') }}
     {{ form_widget(form.crd_sbj) }}
 
-{#    {{ form_row(form.is_validated) }}#}
-{#    {{ form_row(form.validated_by) }}#}
     <button type="submit">Valider</button>
 {{ form_end(form) }}
 
 
+<script>
+
+</script>
