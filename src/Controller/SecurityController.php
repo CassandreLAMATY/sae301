@@ -8,11 +8,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
-class SecurityController extends AbstractController
+class SecurityController extends HomeController
 {
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+
+        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Utilisateur déjà connecté,
+            return $this->redirectToRoute('app_home');
+        }
         //if ($this->getUser()) {
 
         //return $this->redirectToRoute('app_home');

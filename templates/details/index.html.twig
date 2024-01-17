@@ -1,5 +1,56 @@
 {% if detailsCard %}
-    <div id="title_details">
-        <h2>{{detailsCard.getCrdTitle}}</h2>
-    </div>
+    {% for item in detailsCard %}
+        <div>
+            <i class="fa-solid fa-arrow-left" id="back"></i>
+            <p>{{ item.typeName }}</p>
+        </div>
+
+        <div>
+            <h2>{{ item.card.getCrdTitle() }}</h2>
+            <div class="time">
+                <div class="time_left">
+                    <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
+                    <p class="days">Dans <br> <span>{{ item.card.getTimeLeft }}</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background-color: white">
+            <div>
+                <div>
+                    <div>
+                        <p><i class="fa-solid fa-book"></i> Matière</p>
+                        <p>{{ item.subjectName }}</p>
+                    </div>
+                    <div>
+                        <p><i class="fa-solid fa-pen"></i> Modifier</p>
+                        <p><i class="fa-solid fa-flag"></i></p>
+                    </div>
+                </div>
+                <div>
+                    <p><i class="fa-solid fa-calendar-days"></i> Date</p>
+                    {% if item.card.getCrdFrom %}
+                        <p>Du {{ item.card.getFormattedCrdFrom }}</p>
+                        <p>Au {{ item.card.getFormattedCrdTo }}</p>
+                    {% else %}
+                        <p>Le {{ item.card.getFormattedCrdTo }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p><i class="fa-solid fa-paragraph"></i> Description</p>
+                    <p>{{ item.card.getCrdDesc }}</p>
+                </div>
+                <div>
+                    <p><i class="fa-solid fa-link"></i> Liens</p>
+                    <p style="color:red;">A FAIRE</p>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <i class="fa-regular fa-square-check"></i>
+                    <p>Rendu</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endif %}

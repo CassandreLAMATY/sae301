@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Users;
-use App\Repository\SubjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
+use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
+use App\Repository\NotificationsRepository;
+use App\Repository\UsersRepository;
+use App\Repository\NotifUsersRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,8 +19,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController
 {
-    private $security;
     private $entityManager;
+    protected $security;
 
     public function __construct(Security $security, EntityManagerInterface $entityManager)
     {
@@ -26,9 +29,43 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository, EntityManagerInterface $entityManager): Response
+    public function index(
+        Request $request,
+        CardsRepository $cardsRepository,
+        TypesRepository $typesRepository,
+        SubjectsRepository $subjectsRepository,
+        EntityManagerInterface $entityManager,
+        NotificationsRepository $notificationsRepository,
+        NotifUsersRepository $notifUserRepository
+    ): Response {
 
-    {
+        // -------------------------- NOTIFICATIONS --------------------------//
+
+        // Selecting the user
+        $user = $this->getUser();
+
+        // Selecting every notification id by user id
+        $nu = $notifUserRepository->findByUserID($user->getUsrId());
+
+        // Creating an array with every notification id
+        $notificationsId = [];
+        foreach ($nu as $notif) {
+            $notificationsId[] = $notif->getNuNot();
+        }
+
+        $notifications = $notificationsRepository->findById($notificationsId);
+
+        $shouldNotify = false;
+        foreach ($notifications as $notification) {
+            if (!$notification->isNotIsSeen()) {
+                $shouldNotify = true;
+            }
+        }
+
+        // ----------------------- END NOTIFICATIONS ------------------------ //
+
+
+
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
@@ -67,8 +104,88 @@ class HomeController extends AbstractController
                     'card' => $card,
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
+                    'subjectRef' => $subject->getSbjRef(),
                     'subjectName' => $subject->getSbjName(),
-                    'subjectColor' => $subject->getSbjColor(),
+                    'timeColor' => $timeColor,
+                ];
+            }
+        }
+
+        usort($cardData, function ($a, $b) {
+            return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
+        });
+
+        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Utilisateur déjà connecté,
+            $user = $this->getUser();
+            $username = $user->getUsrPseudo();
+            $lastname = $user->getUsrName();
+            $firstname = $user->getUsrFirstname();
+            $email = $user->getUsrMail();
+            return $this->render('home/index.html.twig', [
+                'username' => $username,
+                'lastname' => $lastname,
+                'firstname' => $firstname,
+                'email' => $email,
+                'cardData' => $cardData,
+
+                'detailsCard' => null,
+                'showParams' => false,
+                'notifications' => $notifications,
+                'shouldNotify' => $shouldNotify,
+            ]);
+        } else {
+            // Utilisateur non connecté,
+            return $this->redirectToRoute('app_login');
+        }
+    }
+
+    #[Route('/home-list', name: 'app_home_list')]
+    public function getListContent(
+        CardsRepository $cardsRepository,
+        TypesRepository $typesRepository,
+        SubjectsRepository $subjectsRepository
+    ): Response {
+        $cards = $cardsRepository->findAll();
+        $cardData = [];
+
+        foreach ($cards as $card) {
+            $timeEnd = $card->getCrdTo();
+            $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
+            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
+
+            //if timeEnd is before now, skip this card
+            if ($timeEnd < $now) {
+                continue;
+            }
+
+            $typeId = $card->getCrdTypId();
+            $type = $typesRepository->find($typeId);
+
+            $subjectId = $card->getCrdSbjId();
+            $subject = $subjectsRepository->find($subjectId);
+
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
+            }
+
+            if ($type !== null) {
+                $cardData[] = [
+                    'card' => $card,
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'subjectRef' => $subject->getSbjRef(),
+                    'subjectName' => $subject->getSbjName(),
                     'timeColor' => $timeColor,
                 ];
             }
@@ -145,5 +262,8 @@ class HomeController extends AbstractController
             // Utilisateur non connecté,
             return $this->redirectToRoute('app_login');
         }
+        $content = $this->renderView('home/list.html.twig', ['cardData' => $cardData]);
+
+        return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
     }
 }

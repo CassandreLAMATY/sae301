@@ -60,7 +60,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $usr_cookies = false;
 
-    public function getId(): ?int
+    public function getUsrId(): ?int
     {
         return $this->usr_id;
     }
@@ -263,6 +263,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsrCookies(bool $usr_cookies): static
     {
         $this->usr_cookies = $usr_cookies;
+
+        return $this;
+    }
+
+    public function setId(?Notifications $id): static
+    {
+        $this->id = $id;
 
         return $this;
     }

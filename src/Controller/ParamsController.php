@@ -23,7 +23,7 @@ class ParamsController extends AbstractController
                 $this->entityManager = $entityManager;
         }
 
-        #[Route('/', name: 'app_home_params')]
+        #[Route('/parametres', name: 'app_home_params')]
         public function index(Request $request): Response
         {
                 if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -71,7 +71,7 @@ class ParamsController extends AbstractController
                         return $this->json('ok'); //une réponse json valide avec ce que tu veux qui pourrait être récupéré par ton js
                 }
 
-                return $this->render('home/index.html.twig', [
+                return $this->render('home/_params.html.twig', [
                         'controller_name' => 'ParamsController',
                         'username' => $username,
                         'name' => $name,
