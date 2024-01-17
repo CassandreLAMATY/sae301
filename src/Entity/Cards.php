@@ -109,6 +109,10 @@ class Cards
 
     public function getFormattedCrdFrom(): ?string
     {
+        if ($this->getCrdFrom() === null) {
+            return null;
+        }
+
         return $this->getCrdFrom()->format('d M');
     }
 
@@ -131,14 +135,21 @@ class Cards
         $hourLeft = (int)$hourLeft;
 
         if ($dayLeft === '0' && $hourLeft > 1 ) {
-            return sprintf('%dh%02d', $diff->h, $diff->i);
+            $timeLeft = sprintf('%dh%02d', $diff->h, $diff->i);
+            return 'Dans <br> <span>'. $timeLeft .'</span>';
         }
 
         if ($dayLeft === '0' && $hourLeft === 0) {
-            return $diff->format('%i min');
+            $timeLeft = $diff->format('Dans <br> <span>%i min</span>');
+            return 'Dans <br> <span>'. $timeLeft .'</span>';
         }
 
-        return $diff->format('%a jours');
+        if($final < $now) {
+            return 'Terminé';
+        }
+
+        $timeLeft = $diff->format('%a jours');
+        return 'Dans <br> <span>'. $timeLeft .'</span>';
     }
 
     public

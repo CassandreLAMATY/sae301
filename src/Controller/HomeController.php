@@ -10,13 +10,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CardsRepository;
 use App\Repository\TypesRepository;
+use App\Repository\NotificationsRepository;
+use App\Repository\UsersRepository;
+use App\Repository\NotifUsersRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Entity\Cards;
 use App\Entity\Subjects;
 use App\Entity\UsersCards;
 use App\Form\CardsType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\EventListener\CardsFormListener;
 
 
 
@@ -27,15 +29,48 @@ class HomeController extends AbstractController
     private $entityManager;
 
 
-    public function __construct(Security $security, EntityManagerInterface $entityManager, CardsFormListener $cardsFormListener)
+    public function __construct(Security $security, EntityManagerInterface $entityManager)
     {
         $this->security = $security;
-        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(CardsRepository $cardsRepository, TypesRepository $typesRepository, SubjectsRepository $subjectsRepository): Response
+    public function index(
+        CardsRepository $cardsRepository,
+        TypesRepository $typesRepository,
+        SubjectsRepository $subjectsRepository,
+        NotificationsRepository $notificationsRepository,
+        NotifUsersRepository $notifUserRepository
+    ): Response
     {
+
+        // -------------------------- NOTIFICATIONS --------------------------//
+
+        // Selecting the user
+        $user = $this->getUser();
+
+        // Selecting every notification id by user id
+        $nu = $notifUserRepository->findByUserID($user->getUsrId());
+
+        // Creating an array with every notification id
+        $notificationsId = [];
+        foreach ($nu as $notif) {
+            $notificationsId[] = $notif->getNuNot();
+        }
+
+        $notifications = $notificationsRepository->findById($notificationsId);
+
+        $shouldNotify = false;
+        foreach ($notifications as $notification) {
+            if (!$notification->isNotIsSeen()) {
+                $shouldNotify = true;
+            }
+        }
+
+        // ----------------------- END NOTIFICATIONS ------------------------ //
+
+
+
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
@@ -59,12 +94,12 @@ class HomeController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
-            if ($dayLeft < 8) {
-                $timeColor = 'var(--accent-orange)';
+            if($dayLeft < 8) {
+                $timeColor= 'var(--accent-orange)';
             }
 
             if ($dayLeft < 3) {
-                $timeColor = 'var(--accent-red)';
+                $timeColor= 'var(--accent-red)';
             }
 
             $subjectId = $card->getCrdSbj();
@@ -73,7 +108,6 @@ class HomeController extends AbstractController
 
 
             if ($type !== null) {
-
                 $cardData[] = [
                     'card' => $card,
                     'typeName' => $type->getTypName(),
@@ -83,8 +117,9 @@ class HomeController extends AbstractController
                     'timeColor' => $timeColor,
                 ];
             }
-
         }
+
+
         usort($cardData, function ($a, $b) {
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
         });
@@ -93,16 +128,21 @@ class HomeController extends AbstractController
             // Utilisateur déjà connecté,
             $user = $this->getUser();
             $username = $user->getUsrPseudo();
-            $name = $user->getUsrName();
+            $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
-                'name' => $name,
+                'lastname' => $lastname,
                 'firstname' => $firstname,
                 'email' => $email,
                 'cardData' => $cardData,
+
+                'detailsCard' => null,
+
+                'notifications' => $notifications,
+                'shouldNotify' => $shouldNotify,
             ]);
         } else {
             // Utilisateur non connecté,
@@ -141,4 +181,60 @@ class HomeController extends AbstractController
         ]);
     }
 
+
+    #[Route('/home-list', name: 'app_home_list')]
+    public function getListContent(
+        CardsRepository $cardsRepository,
+        TypesRepository $typesRepository,
+        SubjectsRepository $subjectsRepository
+    ): Response
+    {
+        $cards = $cardsRepository->findAll();
+        $cardData = [];
+
+        foreach ($cards as $card) {
+            $timeEnd = $card->getCrdTo();
+            $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
+            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
+
+            //if timeEnd is before now, skip this card
+            if ($timeEnd < $now) {
+                continue;
+            }
+
+            $typeId = $card->getCrdTyp();
+            $type = $typesRepository->find($typeId);
+
+            $subjectId = $card->getCrdSbj();
+            $subject = $subjectsRepository->find($subjectId);
+
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if($dayLeft < 8) {
+                $timeColor= 'var(--accent-orange)';
+            }
+
+            if ($type !== null) {
+                $cardData[] = [
+                    'card' => $card,
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'subjectName' => $subject->getSbjName(),
+                    'timeColor' => $timeColor,
+                ];
+            }
+        }
+
+        usort($cardData, function ($a, $b) {
+            return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
+        });
+
+        $content = $this->renderView('home/list.html.twig', ['cardData' => $cardData]);
+
+        return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
+    }
 }

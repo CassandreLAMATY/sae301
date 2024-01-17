@@ -45,7 +45,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 2)]
     private ?string $usr_semester = null;
 
-    public function getId(): ?int
+    public function getUsrId(): ?int
     {
         return $this->usr_id;
     }
@@ -188,6 +188,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsrSemester(string $usr_semester): static
     {
         $this->usr_semester = $usr_semester;
+
+        return $this;
+    }
+
+    public function setId(?Notifications $id): static
+    {
+        $this->id = $id;
 
         return $this;
     }

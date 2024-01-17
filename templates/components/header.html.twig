@@ -1,19 +1,22 @@
 <header class="header">
     <img src="{{ asset('images/logo.svg') }}" alt="logo iut">
-    <div class="header__menu">
-        <div class="menu-notif">
+    <div class="header-menu">
+        <div class="notif">
             <i class="fa-solid fa-bell"></i>
-            <div class="notif-dot"></div>
+            <div class="notif-dot" style="display: {{ shouldNotify ? 'block' : '' }}"></div>
+            <div class="active-hover"></div>
+            {% include 'components/notif_dropdown.html.twig' %}
         </div>
-        <div class="menu-userCard">
-            <img class="userCard__image" src="{{ asset('images/users/Artur.jpg') }}" alt="photo de profil">
-            <div class="userCard__content">
-                <p class="userCard__content-name">
+        <div class="userCard">
+            <img class="userCard__image" src="{{ asset('images/users/' ~ username ~ '.jpg') }}" alt="photo de profil">
+            <div class="userCard-content">
+                <p class="userCard__name">
                     Bienvenue<br>
-                    <span>Artur Moreira Machado</span>
+                    <span>{{ firstname }} {{ lastname }}</span>
                 </p>
             </div>
-            {% include 'components/popups.html.twig' %}
+            <div class="active-hover"></div>
+            {% include 'components/userCard_dropdown.html.twig' %}
         </div>
     </div>
 </header>

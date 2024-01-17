@@ -21,28 +21,22 @@ class NotificationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Notifications::class);
     }
 
-//    /**
-//     * @return Notifications[] Returns an array of Notifications objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findById($id): array
+    {
+        $notifications = [];
+        foreach ($id as $notifId) {
+            $_notifications = $this->createQueryBuilder('n')
+                ->innerJoin('n.not_type', 't', 'WITH', 'n.not_type = t.typ_id')
+                ->innerJoin('n.not_subject', 's', 'WITH', 'n.not_subject = s.sbj_id')
+                ->andWhere('n.not_id = :id')
+                ->setParameter('id', $notifId)
+                ->getQuery()
+                ->getResult()
+            ;
 
-//    public function findOneBySomeField($value): ?Notifications
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+            $notifications[] = $_notifications[0];
+        }
+
+        return $notifications;
+    }
 }

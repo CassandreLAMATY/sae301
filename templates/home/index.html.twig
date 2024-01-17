@@ -2,9 +2,6 @@
 
 {% block title %}Home{% endblock %}
 
-{% block header %}
-    {% include 'components/header.html.twig' %}
-{% endblock %}
 {% block body %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -23,8 +20,8 @@
             // Ajoute un gestionnaire d'événement pour le clic sur le bouton
             $('#toggleCreateCardForm').click(function() {
                 $('#createCardFormContainer').toggle();
-                $('#items').toggle();
-                $('#title_list').toggle();
+                $('.items').toggle();
+                $('#side-list_title').toggle();
                 console.log('End of document ready');
 
             });
@@ -34,46 +31,60 @@
     </script>
     {#<h1>Votre nom : {{ username }} / {{ name }} / {{ firstname }} / {{ email }}</h1>#}
 
-    <main>
+    {% include 'components/header.html.twig' %}
+
+    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
-        <div id="list">
-            {#             formulaire de creation d'un évènement "cards"#}
-            <button id="toggleCreateCardForm">Créer une carte-------------------</button>
-            <div id="createCardFormContainer" class="card">
+        <div id="section-right">
+            <div class="side-list">
+                <button id="toggleCreateCardForm">Créer une carte-------------------</button>
+                <div id="createCardFormContainer" class="card">
 
-            </div>
-            <div id="title_list">
-                <h2>À Venir</h2>
-            </div>
-
-            <div id="items">
-                {% for item in cardData %}
-                    <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}" style="border-left-color: {{ item.typeColor }} !important;">
-                        <div class="time">
-                            <p class="date">
-                                {% if item.card.getCrdFrom is not null %}
-                                    Du {{ item.card.getFormattedCrdFrom }} <br> Au
-                                {% endif %}
-                                {{ item.card.getFormattedCrdTo }}
-                            </p>
-                            <div class="time_left">
-                                <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
-                                <p class="days">Dans <br> <span>{{ item.card.getTimeLeft }}</span></p>
+                </div>
+                <div id="side-list_title">
+                    <h2>À Venir</h2>
+                </div>
+                <div class="items">
+                    {% for item in cardData %}
+                        <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
+                             style="border-left-color: {{ item.typeColor }} !important;">
+                            <p class="card-id">{{item.card.getId}}</p>
+                            <p class="type-id">{{item.card.getCrdTyp.getId}}</p>
+                            <div class="time">
+                                <p class="date">
+                                    {% if item.card.getCrdFrom is not null %}
+                                        Du {{ item.card.getFormattedCrdFrom }} <br> Au
+                                    {% endif %}
+                                    {{ item.card.getFormattedCrdTo }}
+                                </p>
+                                <div class="time_left">
+                                    <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
+                                    <p class="days">{{ item.card.getTimeLeft|raw }}</p>
+                                </div>
                             </div>
+                            <div class="subject">
+                                <p class="tag"
+                                   style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
+                                <h3>{{ item.card.getCrdTitle }}</h3>
+                                <p class="course">{{ item.subjectName }}</p>
+                            </div>
+                            {% if item.typeName is same as('rendu') %}
+                                <!--<div class="status">
+                                    <i class="fa-regular fa-square"></i>
+                                    <p>À Rendre</p>
+                                </div>-->
+                                <div class="status">
+                                    <i class="fa-regular fa-square-check"></i>
+                                    <p>Rendu</p>
+                                </div>
+                            {% endif %}
                         </div>
-                        <div class="subject">
-                            <p class="tag" style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
-                            <h3>{{ item.card.getCrdTitle }}</h3>
-                            <p class="course">{{ item.subjectName }}</p>
-                        </div>
-                        <div class="status">
-                            <i class="fa-solid fa-check"></i>
-                            <p>Rendu</p>
-                        </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="details">
+
             </div>
         </div>
     </main>
-
 {% endblock %}
