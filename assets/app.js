@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       });
 
+      if(localStorage.getItem('view') == 2){
+        let thirdGroup = thirdToolbarChunk.querySelectorAll('.fc-button-group');
+        thirdToolbarChunk.removeChild(thirdGroup[0]);
+        thirdToolbarChunk.removeChild(thirdGroup[1]);
+      }
+
       // METTRE LE BOUTON TODAY À DROITE
       const todayBtn = firstToolbarChunk.querySelector('.fc-today-button');
       firstToolbarChunk.removeChild(todayBtn);
@@ -341,10 +347,11 @@ function getView(originalCalendarContent) {
       const htmlContent = await response.text();
 
       document.querySelector('.fc-view-harness').innerHTML = htmlContent;
-      localStorage.setItem('view', 2);
       for (let i = 1; i <= 4; i++) {
         typeFilter(i);
       }
+
+      localStorage.setItem('view', 2);
     } catch (error) {
       console.error('Erreur lors de la récupération du contenu détaillé :',
         error);
@@ -364,16 +371,16 @@ function getView(originalCalendarContent) {
   calendarView.addEventListener('click', async function() {
     try {
       document.querySelector('.fc-view-harness').innerHTML = originalCalendarContent;
+
+      for (let i = 1; i <= 4; i++) {
+        typeFilter(i);
+      }
+
       localStorage.setItem('view', 1);
     } catch (error) {
       console.error('Erreur lors de la récupération du contenu détaillé :',
         error);
     }
-
-    for (let i = 1; i <= 4; i++) {
-      typeFilter(i);
-    }
-
     const detailsCard = document.getElementById('section-right');
     detailsCard.style.display = 'block';
 
@@ -394,7 +401,8 @@ function getHomeView(){
     const listView = document.querySelector('.list-view');
     listView.click();
   }
-  else{
+
+  if(localStorage.getItem('view') == 1){
     const calendarView = document.querySelector('.calendar-view');
     calendarView.click();
   }

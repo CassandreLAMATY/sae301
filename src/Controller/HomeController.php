@@ -157,11 +157,6 @@ class HomeController extends AbstractController
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            //if timeEnd is before now, skip this card
-            if ($timeEnd < $now) {
-                continue;
-            }
-
             $typeId = $card->getCrdTypId();
             $type = $typesRepository->find($typeId);
 
