@@ -24,7 +24,7 @@
 
     /* --- Couleurs Btns --- */
     --btn--done: #9AE08F;
-    
+
     --main-black: #424242;
     --secondary-gray--01: #F0F4F8;
     --secondary-gray--02: #E5E9ED;
@@ -87,6 +87,7 @@ button {
 /*/ ------------------------------------------------------------------------ /*/
 /*/ -------------------------------- HEADER -------------------------------- /*/
 /*/ ------------------------------------------------------------------------ /*/
+
 header {
     position: relative;
 
@@ -94,6 +95,7 @@ header {
     justify-content: space-between;
     align-items: center;
 
+    height: var(--grup3);
     padding: var(--grup) var(--grup1);
 
     color: var(--main-black);
@@ -106,7 +108,6 @@ header {
     align-items: center;
     gap: var(--grup1);
 }
-
 
 
 /* dropdowns */
@@ -176,8 +177,8 @@ header {
 }
 
 
-
 /* notifications */
+
 .notif {
     box-sizing: border-box;
     position: relative;
@@ -216,7 +217,7 @@ header {
 
     border: solid 2px var(--secondary-gray--02);
     border-left: unset;
-    border-radius: calc( 2px + var(--grup-2) );
+    border-radius: calc(2px + var(--grup-2));
 }
 
 .notif-card__content {
@@ -239,13 +240,13 @@ header {
     overflow-x: hidden;
 
     max-width: 200px;
-    
+
     text-overflow: ellipsis;
 }
 
 
-
 /* double button */
+
 .double-button {
     display: flex;
     align-items: stretch;
@@ -287,8 +288,8 @@ header {
 }
 
 
-
 /* tags */
+
 .tags_container {
     display: flex;
     align-items: center;
@@ -307,8 +308,8 @@ header {
     padding: 2px 6px;
 
     border: solid 2px;
-    border-radius: 4px;   
-    
+    border-radius: 4px;
+
     font-size: var(--grup-1);
     font-weight: 700;
     color: var(--main--black);
@@ -316,23 +317,9 @@ header {
 }
 
 .new {
-    color: var(--accent-green)!important;
-    border-color: var(--accent-green)!important;
+    color: var(--accent-green) !important;
+    border-color: var(--accent-green) !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .menu-userCard {
@@ -395,20 +382,12 @@ header {
 }
 
 
-
-
-
-
-
-
-
-
-
 /*---------MAIN----------*/
 
 main {
     display: flex;
     gap: 15px;
+    height: calc(100vh - var(--grup3));
 }
 
 /* --------------------------- */
@@ -416,13 +395,13 @@ main {
 /* --------------------------- */
 
 #calendar {
-    width: 70%;
-    height: 88vh;
+    width: 100%;
+    height: calc(100vh - var(--grup5));
     padding-left: 20px;
 }
 
 #calendar button,
-.fc-toolbar-chunk .fc-button-display{
+.fc-toolbar-chunk .fc-button-display {
     background-color: var(--accent-yellow);
     color: var(--main--black);
     border: none;
@@ -433,55 +412,58 @@ main {
     opacity: 1;
 }
 
-.filter .fc-button{
+.filter .fc-button {
     font-size: 0.9em !important;
 }
 
-.fc-button-active{
+.fc-button-active {
     background-color: var(--accent-yellow-shadow) !important;
 }
 
-#calendar td.gridcell .fc-daygrid-day-events{
+#calendar td.gridcell .fc-daygrid-day-events {
     display: flex;
     flex-direction: column;
 }
 
-#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness{
+#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness {
     position: relative !important;
 }
 
-.card_id{
+.card_id {
     display: none;
 }
 
-.fc-toolbar-chunk{
+.fc-toolbar-chunk {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.fc-toolbar-chunk .fc-button-display{
+.fc-toolbar-chunk .fc-button-display {
     display: flex;
     padding: 0.4em 0.65em;
     gap: 10px;
 }
+
 /*---------LIST----------*/
-#section-right{
+#section-right {
     position: relative;
 }
 
 .side-list,
-#details{
-    width: 34vw;
+#details {
+    width: min(669px, );
     background-color: var(--list-bg-color);
+    outline: 1px solid var(--secondary-gray--02);
     padding: 26px;
     display: flex;
     flex-direction: column;
     gap: 26px;
-    height: 81vh;
+    height: calc(100vh - var(--grup5));
+    border-radius: var(--grup1) 0 0 var(--grup1);
 }
 
-#details{
+#details {
     position: absolute;
     top: 0;
     right: -100%;
@@ -499,13 +481,13 @@ main {
 }
 
 .side-list h2,
-#details h2{
+#details h2 {
     font-size: var(--grup1);
     margin: 0;
 }
 
 .side-list .items {
-    overflow-y: scroll;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -530,8 +512,8 @@ main {
     cursor: pointer;
 }
 
-.side-list .notvalidated{
-    border: dashed 2px var(--secondary-gray--04);
+.side-list .notvalidated {
+    border: dashed 2px var(--secondary-gray--03);
 }
 
 .side-list .time {
@@ -546,7 +528,7 @@ main {
     margin-bottom: 0;
 }
 
-.time .time_left{
+.time .time_left {
     display: flex;
     align-items: center;
     gap: 7px;
@@ -556,13 +538,13 @@ main {
     font-size: 24px;
 }
 
-.time_left .days{
+.time_left .days {
     margin: 0;
     font-size: var(--grup);
     width: 60px;
 }
 
-.days span{
+.days span {
     font-weight: 600;
 }
 
@@ -571,7 +553,6 @@ main {
     flex-direction: column;
     gap: 5px;
 }
-
 
 
 /* .subject h3{
@@ -584,7 +565,7 @@ main {
     font-size: var(--grup);
 } */
 
-.side-list .status{
+.side-list .status {
     display: flex;
     gap: 5px;
     background-color: var(--accent-blue);
@@ -596,16 +577,16 @@ main {
     width: max-content;
 }
 
-.status p{
-    margin:0;
+.status p {
+    margin: 0;
 }
 
 /*---------MODAL----------*/
 
-#back{
+#back {
     font-size: var(--grup1);
 }
 
-#details #title_details{
+#details #title_details {
     color: var(--main--black);
 }
