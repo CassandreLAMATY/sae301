@@ -112,13 +112,12 @@ class HomeController extends AbstractController
                     'card' => $card,
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
+                    'subjectRef' => $subject->getSbjRef(),
                     'subjectName' => $subject->getSbjName(),
-                    'subjectColor' => $subject->getSbjColor(),
                     'timeColor' => $timeColor,
                 ];
             }
         }
-
 
         usort($cardData, function ($a, $b) {
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
@@ -223,6 +222,7 @@ class HomeController extends AbstractController
                     'card' => $card,
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
+                    'subjectRef' => $subject->getSbjRef(),
                     'subjectName' => $subject->getSbjName(),
                     'timeColor' => $timeColor,
                 ];

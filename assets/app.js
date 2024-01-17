@@ -6,7 +6,6 @@
  */
 
 //import FullCalendar from './fullcalendar-6.1.10/dist/index.global.min.js';
-import './styles/app.css';
 
 ////////////////////////////// CALENDAR //////////////////////////////
 
@@ -39,11 +38,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       innerDiv1.classList.add('fc-button');
       innerDiv1.classList.add('fc-button-primary');
       innerDiv1.classList.add('calendar-view');
+      innerDiv1.classList.add('btn-calendar');
+      innerDiv1.classList.add('fc-button-active');
 
       const innerDiv2 = document.createElement('button');
       innerDiv2.innerHTML = '<i class="fa-solid fa-table-list"></i>';
       innerDiv2.classList.add('fc-button');
       innerDiv2.classList.add('fc-button-primary');
+      innerDiv2.classList.add('btn-list');
       innerDiv2.classList.add('list-view');
 
       newDivDisplay.appendChild(innerDiv1);
@@ -61,13 +63,13 @@ document.addEventListener('DOMContentLoaded', async function() {
       let slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
       thirdToolbarChunk.removeChild(slideBtn);
       thirdToolbarChunk.appendChild(slideBtn);
-       slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
+      slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
 
       slideBtn.addEventListener('click', function() {
         const typeId = localStorage.getItem('typeId');
         console.log(typeId);
         hideElement(typeId, true);
-      })
+      });
 
       // METTRE LE BOUTON TODAY À DROITE
       const todayBtn = firstToolbarChunk.querySelector('.fc-today-button');
@@ -134,22 +136,26 @@ document.addEventListener('DOMContentLoaded', async function() {
     getDetailsCard('fc-event-main');
     getDetailsCard('item');
 
-    getGlobalView();
+    const originalCalendarContent = document.querySelector(
+      '.fc-view-harness').innerHTML;
+
+    getView(originalCalendarContent);
 
     const btnWeek = document.querySelector('[title="Semaine"]');
     btnWeek.addEventListener('click', function() {
         if (btnWeek.getAttribute('aria-pressed') === 'true') {
-          const hourList = document.querySelectorAll('.fc-scrollgrid-section-body');
+          const hourList = document.querySelectorAll(
+            '.fc-scrollgrid-section-body');
           hourList[1].style.display = 'none';
           const divider = document.querySelectorAll('.fc-scrollgrid-section');
           divider[2].style.display = 'none';
-          const week= document.querySelectorAll('.fc-scroller-harness');
+          const week = document.querySelectorAll('.fc-scroller-harness');
           week[1].style.height = '100%';
-          const week2= document.querySelectorAll('.fc-scroller');
+          const week2 = document.querySelectorAll('.fc-scroller');
           week2[1].style.height = '100%';
-          const week3= document.querySelector('.fc-daygrid-body');
+          const week3 = document.querySelector('.fc-daygrid-body');
           week3.style.height = '100%';
-          const week4= document.querySelector('.fc-scrollgrid-sync-table');
+          const week4 = document.querySelector('.fc-scrollgrid-sync-table');
           week4.style.height = '100%';
         }
       },
@@ -171,8 +177,6 @@ function getCalendar(dataEvents) {
     businessHours: {
       // Jours ouvrés (lundi à vendredi)
       daysOfWeek: [1, 2, 3, 4, 5],
-      startTime: '08:00', // Heure de début de la journée
-      endTime: '18:00',   // Heure de fin de la journée
     },
     allDaySlot: true,
 
@@ -226,6 +230,7 @@ function getDetailsCard(className) {
           throw new Error('Network response was not ok');
         }
         document.getElementById('details').innerHTML = await response.text();
+        console.log(document.getElementById('details'));
 
         let modal = document.getElementById('details');
         modal.style.transform = 'translateX(-100%)';
@@ -277,7 +282,7 @@ function typeFilter(typeId) {
   btnsTypes[btnType].addEventListener('click', function() {
     console.log(btnType);
     localStorage.setItem('typeId', typeId);
-    const isPressed = this.getAttribute('aria-pressed') === 'true'
+    const isPressed = this.getAttribute('aria-pressed') === 'true';
 
     if (!isPressed) {
       this.setAttribute('aria-pressed', 'true');
@@ -317,17 +322,46 @@ function hideElement(typeId, isPressed) {
   }
 }
 
-function getGlobalView() {
+function getView(originalCalendarContent) {
   const listView = document.querySelector('.list-view');
+
   listView.addEventListener('click', async function() {
     try {
       const response = await fetch('/home-list');
       const htmlContent = await response.text();
 
-      document.querySelector('main').innerHTML = htmlContent;
+      document.querySelector('.fc-view-harness').innerHTML = htmlContent;
     } catch (error) {
       console.error('Erreur lors de la récupération du contenu détaillé :',
         error);
     }
+    const detailsCard = document.getElementById('section-right');
+    detailsCard.style.display = 'none';
+
+    const btnCalendar = document.querySelector('.btn-calendar');
+    btnCalendar.classList.toggle('fc-button-active');
+
+    const btnList = document.querySelector('.btn-list');
+    btnList.classList.toggle('fc-button-active');
+  });
+  const calendarView = document.querySelector('.calendar-view');
+  calendarView.addEventListener('click', async function() {
+    try {
+      document.querySelector(
+        '.fc-view-harness').innerHTML = originalCalendarContent;
+    } catch (error) {
+      console.error('Erreur lors de la récupération du contenu détaillé :',
+        error);
+    }
+    const detailsCard = document.getElementById('section-right');
+    detailsCard.style.display = 'block';
+
+    const btnCalendar = document.querySelector('.btn-calendar');
+    btnCalendar.classList.toggle('fc-button-active');
+
+    const btnList = document.querySelector('.btn-list');
+    btnList.classList.toggle('fc-button-active');
+
+    getDetailsCard('fc-event-main');
   });
 }
