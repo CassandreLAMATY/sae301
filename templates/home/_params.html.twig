@@ -4,7 +4,6 @@
             <i id="params_pop-up_close" class="fa-solid fa-xmark"></i>
         </div>
         <div id="params_pop-up_main_section">
-            {#  #}
             <form id="paramsForm" method="post" action="{{ path('app_home_params') }}">
                 <h3>Notification par mail</h3> 
                 <div class="params_pop-up_row">
@@ -38,63 +37,5 @@
                     <input type="button" id="params_pop-up_saveButton" value="Enregistrer" />
                 </div>
             </form>
-            {#  #}
-            {# <form method="post" action="{{ path('app_home') }}">
-                <div class="params_pop-up_row">
-                    <input type="hidden" name="homeworkReminder" type="button" value="{{ homeworkReminder }}" />
-                    <i class="fa-solid {% if homeworkReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[0].submit();"></i>
-                    <p>Rappels des devoirs à rendre</p>
-                </div>
-            </form> #}
-            {# <div class="params_pop-up_row">
-                <i class="fa-solid fa-toggle-off"></i>
-                <p>Rappels des devoirs à rendre</p>
-            </div> #}
-            {# <form method="post" action="{{ path('app_home') }}">
-                <div class="params_pop-up_row">
-                    <input type="hidden" name="examReminder" value="{{ examReminder }}" />
-                    <i class="fa-solid {% if examReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[1].submit();"></i>
-                    <p>Rappels des examens</p>
-                </div>
-            </form> #}
-            {# <div class="params_pop-up_row">
-                <i class="fa-solid fa-toggle-off"></i>
-                <p>Rappels des examens</p>
-            </div> #}
-            {# <form method="post" action="{{ path('app_home') }}">
-                <div class="params_pop-up_row">
-                    <input type="hidden" name="newReminder" value="{{ newReminder }}" />
-                    <i class="fa-solid {% if newReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[2].submit();"></i>
-                    <p>Nouveaux éléments</p>
-                </div>
-            </form> #}
-            {# <div class="params_pop-up_row">
-                <i class="fa-solid fa-toggle-off"></i>
-                <p>Nouveaux éléments</p>
-            </div> #}
-            {# <form method="post" action="{{ path('app_home') }}">
-                <div class="params_pop-up_row">
-                    <input type="hidden" name="modifReminder" value="{{ modifReminder }}" />
-                    <i class="fa-solid {% if modifReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[3].submit();"></i>
-                    <p>Modification d'un évènement</p>
-                </div>
-            </form> #}
-            {# <div class="params_pop-up_row">
-                <i class="fa-solid fa-toggle-off"></i>
-                <p>Modification d'un évènement</p>
-            </div> #}
-            {# <hr>
-            <h3>Confidentialité</h3> 
-            <form method="post" action="{{ path('app_home') }}">
-                <div class="params_pop-up_row">
-                    <input type="hidden" name="cookies" value="{{ cookies }}" />
-                    <i class="fa-solid {% if cookies %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" onclick="document.forms[4].submit();"></i>
-                    <p>Cookies</p>
-                </div>
-            </form> #}
-            {# <div class="params_pop-up_row">
-                <i class="fa-solid fa-toggle-off"></i>
-                <p>Cookies</p>
-            </div> #}
         </div>      
     </div>

@@ -1,7 +1,7 @@
 <div class="notif-dropdown">
     <div class="double-button">
         <button class="double-button__item"><i class="fa-solid fa-envelope-open"></i></button>
-        <button class="double-button__item"><i class="fa-solid fa-gear"></i></button>
+        <button class="double-button__item" id="optionButtonIcon"><i class="fa-solid fa-gear"></i></button>
     </div>
     {% for item in notifications %}
         <div class="notif-card" style="{{item.isNotIsSeen() ? '' : 'border: solid 2px var(--accent-yellow-shadow)'}}">
