@@ -1,8 +1,8 @@
-<div>
-    <div>
+<div class="view">
+    <div class="calendar-view">
         <i class="fa-regular fa-calendar"></i>
     </div>
-    <div>
+    <div class="view-list">
         <i class="fa-solid fa-table-list"></i>
     </div>
 </div>
@@ -26,7 +26,7 @@
                         </p>
                         <div class="time_left">
                             <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
-                            <p class="days">Dans <br> <span>{{ item.card.getTimeLeft }}</span></p>
+                            <p class="days">{{ item.card.getTimeLeft|raw }}</p>
                         </div>
                     </div>
                     <div class="subject">

@@ -451,11 +451,11 @@ main {
 }
 
 #calendar button,
-.fc-toolbar-chunk .fc-button-display{
+.fc-toolbar-chunk .fc-button-display,
+.view{
     background-color: var(--accent-yellow);
     color: var(--main--black);
     border: none;
-    text-transform: capitalize;
 }
 
 .fc .fc-button:disabled {
@@ -496,10 +496,11 @@ main {
     gap: 10px;
 }
 
-/*---------WEEK----------*/
-
-/*.fc-scrollgrid-section-liquid{
-    display:none;
+.view{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.4em 0.65em;
 }
 
 /*---------LIST----------*/
