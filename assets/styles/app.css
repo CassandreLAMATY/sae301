@@ -380,7 +380,12 @@ header {
     color: var(--main--black);
 }
 
-.see-button:hover {
+.see-button__active {
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 0 2px var(--accent-yellow-shadow)!important;
+}
+
+.see-button__active:hover {
     background-color: var(--accent-yellow-shadow);
 }
 
