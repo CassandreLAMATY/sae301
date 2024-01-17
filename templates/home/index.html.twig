@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {#<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             console.log('Document ready');
@@ -28,8 +28,67 @@
 
         });
 
+    </script>#}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log('Document ready');
+
+            // Initialisation : Cache le formulaire
+            var createCardFormContainer = document.querySelector('#createCardFormContainer');
+            createCardFormContainer.style.display = 'none';
+
+            // Charge le formulaire de création de carte en AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '{{ path('create_cards') }}', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    createCardFormContainer.innerHTML = xhr.responseText;
+
+                    // Ajoute un gestionnaire d'événement pour le clic sur le bouton après le chargement AJAX
+                    document.querySelector('#toggleCreateCardForm').addEventListener('click', function() {
+                        createCardFormContainer.style.display = (createCardFormContainer.style.display === 'none') ? 'block' : 'none';
+
+                        var items = document.querySelector('.items');
+                        if (items) {
+                            items.style.display = (items.style.display === 'none') ? 'block' : 'none';
+                        }
+
+                        var sideListTitle = document.querySelector('#side-list_title');
+                        if (sideListTitle) {
+                            sideListTitle.style.display = (sideListTitle.style.display === 'none') ? 'block' : 'none';
+                        }
+
+                        console.log('End of document ready');
+                    });
+
+                    // Ajoute un gestionnaire d'événement pour le changement sur cards_crd_typ après le chargement AJAX
+                    document.getElementById('cards_crd_typ').addEventListener('change', function() {
+                        var selectedValue = this.value;
+                        console.log(selectedValue);
+
+                        // Masquer ou afficher les champs crd_sbj et crd_from en fonction du choix
+                        var labelCrdSbj = document.getElementById('label_crd_sbj');
+                        var labelCrdFrom = document.getElementById('label_crd_from');
+
+                        if (selectedValue === '1' || selectedValue === '2') {
+                            labelCrdSbj.style.display = 'block';
+                            labelCrdFrom.style.display = 'none';
+                        } else if (selectedValue === '3' || selectedValue === '4') {
+                            labelCrdFrom.style.display = 'block';
+                            labelCrdSbj.style.display = 'none';
+                        } else {
+                            // Afficher les deux champs ou effectuer d'autres actions si nécessaire
+                            labelCrdSbj.style.display = 'none';
+                            labelCrdFrom.style.display = 'none';
+                        }
+                    });
+                }
+            };
+            xhr.send();
+        });
     </script>
-    {#<h1>Votre nom : {{ username }} / {{ name }} / {{ firstname }} / {{ email }}</h1>#}
+
+
 
     {% include 'components/header.html.twig' %}
 
