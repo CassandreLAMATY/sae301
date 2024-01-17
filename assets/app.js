@@ -38,11 +38,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       innerDiv1.classList.add('fc-button');
       innerDiv1.classList.add('fc-button-primary');
       innerDiv1.classList.add('calendar-view');
+      innerDiv1.classList.add('btn-calendar');
+      innerDiv1.classList.add('fc-button-active');
 
       const innerDiv2 = document.createElement('button');
       innerDiv2.innerHTML = '<i class="fa-solid fa-table-list"></i>';
       innerDiv2.classList.add('fc-button');
       innerDiv2.classList.add('fc-button-primary');
+      innerDiv2.classList.add('btn-list');
       innerDiv2.classList.add('list-view');
 
       newDivDisplay.appendChild(innerDiv1);
@@ -133,11 +136,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     getDetailsCard('fc-event-main');
     getDetailsCard('item');
 
-    const originalMainContent = document.querySelector('main').innerHTML;
+    const originalCalendarContent = document.querySelector(
+      '.fc-view-harness').innerHTML;
 
-    const listView = document.querySelector('.list-view');
-
-    getListView(listView, originalMainContent);
+    getView(originalCalendarContent);
 
     const btnWeek = document.querySelector('[title="Semaine"]');
     btnWeek.addEventListener('click', function() {
@@ -320,37 +322,46 @@ function hideElement(typeId, isPressed) {
   }
 }
 
-function getListView(listView, originalMainContent){
+function getView(originalCalendarContent) {
+  const listView = document.querySelector('.list-view');
+
   listView.addEventListener('click', async function() {
     try {
       const response = await fetch('/home-list');
       const htmlContent = await response.text();
 
-      document.querySelector('main').innerHTML = htmlContent;
+      document.querySelector('.fc-view-harness').innerHTML = htmlContent;
     } catch (error) {
       console.error('Erreur lors de la récupération du contenu détaillé :',
         error);
     }
-    const main = document.querySelector('main');
-    main.classList.add('list-view');
+    const detailsCard = document.getElementById('section-right');
+    detailsCard.style.display = 'none';
 
-    const calendarView = document.querySelector('.calendar-view');
-    getCalendarView(calendarView, originalMainContent);
+    const btnCalendar = document.querySelector('.btn-calendar');
+    btnCalendar.classList.toggle('fc-button-active');
+
+    const btnList = document.querySelector('.btn-list');
+    btnList.classList.toggle('fc-button-active');
   });
-}
-
-function getCalendarView(calendarView, originalMainContent) {
+  const calendarView = document.querySelector('.calendar-view');
   calendarView.addEventListener('click', async function() {
     try {
-      document.querySelector('main').innerHTML = originalMainContent;
+      document.querySelector(
+        '.fc-view-harness').innerHTML = originalCalendarContent;
     } catch (error) {
       console.error('Erreur lors de la récupération du contenu détaillé :',
         error);
     }
-    const main = document.querySelector('main');
-    main.classList.remove('list-view');
+    const detailsCard = document.getElementById('section-right');
+    detailsCard.style.display = 'block';
 
-    const listView = document.querySelector('.list-view');
-    getListView(listView, originalMainContent);
+    const btnCalendar = document.querySelector('.btn-calendar');
+    btnCalendar.classList.toggle('fc-button-active');
+
+    const btnList = document.querySelector('.btn-list');
+    btnList.classList.toggle('fc-button-active');
+
+    getDetailsCard('fc-event-main');
   });
 }

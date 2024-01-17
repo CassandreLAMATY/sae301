@@ -24,7 +24,7 @@
 
     /* --- Couleurs Btns --- */
     --btn--done: #9AE08F;
-    
+
     --main-black: #424242;
     --secondary-gray--01: #F0F4F8;
     --secondary-gray--02: #E5E9ED;
@@ -73,7 +73,7 @@ button {
 
     margin: unset;
     padding: var(--grup-2) var(--grup);
-    
+
     border-radius: var(--grup-2);
     border: none;
     background-color: var(--secondary-gray--01);
@@ -134,7 +134,7 @@ header {
 
 .notif-dot {
     display: none;
-    
+
     position: absolute;
     top: var(--grup-2);
     right: 0;
@@ -145,7 +145,6 @@ header {
     background-color: var(--accent-orange);
     border-radius: 50%;
 }
-
 
 
 /* usercard menu */
@@ -171,7 +170,6 @@ header {
     font-size: var(--grup);
     font-weight: 600;
 }
-
 
 
 /* dropdown */
@@ -272,7 +270,6 @@ header {
 }
 
 
-
 /* notif */
 .notif-dropdown > .double-button {
     justify-self: right;
@@ -290,7 +287,7 @@ header {
 
     border: solid 2px var(--secondary-gray--02);
     border-left: unset;
-    border-radius: calc( 2px + var(--grup-2) );
+    border-radius: calc(2px + var(--grup-2));
 }
 
 .notif-card__content {
@@ -313,10 +310,9 @@ header {
     overflow-x: hidden;
 
     max-width: 200px;
-    
+
     text-overflow: ellipsis;
 }
-
 
 
 /* userCard */
@@ -339,7 +335,6 @@ header {
     color: var(--secondary-gray--04);
     text-decoration: none;
 }
-
 
 
 /* double button */
@@ -383,14 +378,17 @@ header {
 
 .see-button__active {
     background-color: var(--accent-yellow);
-    box-shadow: 0 0 0 2px var(--accent-yellow-shadow)!important;
+    box-shadow: 0 0 0 2px var(--accent-yellow-shadow) !important;
 }
 
 .see-button__active:hover {
     background-color: var(--accent-yellow-shadow);
 }
 
-
+.fc .fc-button-primary:not(:disabled).fc-button-active:focus,
+.fc .fc-button-primary:not(:disabled):active:focus {
+    box-shadow: none !important;
+}
 
 /* tags */
 .tags_container {
@@ -411,8 +409,8 @@ header {
     padding: 2px 6px;
 
     border: solid 2px;
-    border-radius: 4px;   
-    
+    border-radius: 4px;
+
     font-size: var(--grup-1);
     font-weight: 700;
     color: var(--main--black);
@@ -423,7 +421,6 @@ header {
     background-color: #6EE01420;
     border-color: var(--accent-green);
 }
-
 
 
 /* popup */
@@ -442,9 +439,8 @@ header {
 
     background-color: var(--white);
     border-radius: var(--grup);
-    box-shadow: 
-        0 0 0 2px var(--secondary-gray--02),
-        0 0 var(--grup-1) #4242423D;
+    box-shadow: 0 0 0 2px var(--secondary-gray--02),
+    0 0 var(--grup-1) #4242423D;
 }
 
 .popup-content {
@@ -475,11 +471,6 @@ a:has(> .delete-button) {
 }
 
 
-
-
-
-
-
 /*---------MAIN----------*/
 
 main {
@@ -499,7 +490,7 @@ main {
 
 #calendar button,
 .fc-toolbar-chunk .fc-button-display,
-.view{
+.view {
     background-color: var(--accent-yellow);
     color: var(--main--black);
     border: none;
@@ -509,11 +500,11 @@ main {
     opacity: 1;
 }
 
-.filter .fc-button{
+.filter .fc-button {
     font-size: 0.9em !important;
 }
 
-.fc-button-active{
+.fc-button-active {
     background-color: var(--accent-yellow-shadow) !important;
 }
 
@@ -527,23 +518,23 @@ main {
 }
 
 .card-id,
-.type-id{
+.type-id {
     display: none;
 }
 
-.fc-toolbar-chunk{
+.fc-toolbar-chunk {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.fc-toolbar-chunk .fc-button-display{
+.fc-toolbar-chunk .fc-button-display {
     display: flex;
     padding: 0.4em 0.65em;
     gap: 10px;
 }
 
-.view{
+.view {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -551,12 +542,12 @@ main {
 }
 
 /*---------LIST----------*/
-#section-right{
+#section-right {
     position: relative;
 }
 
 .side-list,
-#details{
+#details {
     width: 34vw;
     background-color: var(--list-bg-color);
     padding: 26px;
@@ -566,7 +557,7 @@ main {
     height: 81vh;
 }
 
-#details{
+#details {
     position: absolute;
     top: 0;
     right: -100%;
@@ -584,7 +575,7 @@ main {
 }
 
 .side-list h2,
-#details h2{
+#details h2 {
     font-size: var(--grup1);
     margin: 0;
 }
@@ -615,7 +606,7 @@ main {
     cursor: pointer;
 }
 
-.side-list .notvalidated{
+.side-list .notvalidated {
     border: dashed 2px var(--secondary-gray--03);
 }
 
@@ -679,7 +670,7 @@ main {
     background-color: var(--accent-blue);
     box-shadow: 0 0 0 2px var(--accent-blue-shadow);
     border-radius: 6px;
-    
+
     color: var(--white);
 }
 
@@ -689,11 +680,11 @@ main {
 
 /*---------MODAL----------*/
 
-#back{
+#back {
     font-size: var(--grup1);
 }
 
-#details #title_details{
+#details #title_details {
     color: var(--main--black);
 }
 
@@ -701,21 +692,21 @@ main {
 /*/ ------------------------------ GLOBAL LIST ----------------------------- /*/
 /*/ ------------------------------------------------------------------------ /*/
 
-.list-view{
+.list-view {
     flex-direction: column;
 }
 
-.list-view #calendar{
+.list-view #calendar {
     height: fit-content;
 }
 
-.list-view .list{
+.list-view .list {
     width: 100%;
     justify-content: center;
     display: flex;
 }
 
-.list-view .list .items{
+.list-view .list .items {
     width: 90%;
     gap: 20px;
     display: flex;
