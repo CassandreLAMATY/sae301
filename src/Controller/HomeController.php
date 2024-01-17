@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,25 +13,31 @@ use App\Repository\NotificationsRepository;
 use App\Repository\UsersRepository;
 use App\Repository\NotifUsersRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class HomeController extends AbstractController
 {
+    private $entityManager;
     protected $security;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, EntityManagerInterface $entityManager)
     {
         $this->security = $security;
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_home')]
     public function index(
-        CardsRepository $cardsRepository, 
-        TypesRepository $typesRepository, 
+        Request $request,
+        CardsRepository $cardsRepository,
+        TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository,
-        NotificationsRepository $notificationsRepository, 
+        EntityManagerInterface $entityManager,
+        NotificationsRepository $notificationsRepository,
         NotifUsersRepository $notifUserRepository
-    ): Response
-    {
+    ): Response {
 
         // -------------------------- NOTIFICATIONS --------------------------//
 
@@ -86,12 +93,12 @@ class HomeController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
-            if($dayLeft < 8) {
-                $timeColor= 'var(--accent-orange)';
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
             }
 
             if ($dayLeft < 3) {
-                $timeColor= 'var(--accent-red)';
+                $timeColor = 'var(--accent-red)';
             }
 
             if ($type !== null) {
@@ -129,6 +136,8 @@ class HomeController extends AbstractController
                 'notifSeen' => $notifSeen,
                 'notifNotSeen' => $notifNotSeen,
                 'shouldNotify' => $shouldNotify,
+                
+                'showParams' => false,
             ]);
         } else {
             // Utilisateur non connecté,
@@ -141,8 +150,7 @@ class HomeController extends AbstractController
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository
-    ): Response
-    {
+    ): Response {
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
@@ -174,8 +182,12 @@ class HomeController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
-            if($dayLeft < 8) {
-                $timeColor= 'var(--accent-orange)';
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
             }
 
             if ($type !== null) {
@@ -190,10 +202,77 @@ class HomeController extends AbstractController
             }
         }
 
+        $showParams = true;
+
         usort($cardData, function ($a, $b) {
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
         });
 
+        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Utilisateur déjà connecté,
+            $user = $this->getUser();
+            $username = $user->getUsrPseudo();
+            $name = $user->getUsrName();
+            $firstname = $user->getUsrFirstname();
+            $email = $user->getUsrMail();
+            $homeworkReminder = $user->isUsrHomeworkReminder();
+            $examReminder = $user->isUsrExamReminder();
+            $newReminder = $user->isUsrNewReminder();
+            $modifReminder = $user->isUsrModifReminder();
+            $cookies = $user->isUsrCookies();
+
+            // if ($request->isMethod('POST')) {
+            //     if ($request->request->has('homeworkReminder')) {
+            //         $homeworkReminder = !$homeworkReminder;
+            //         $user->setUsrHomeworkReminder($homeworkReminder);
+            //     }
+            //     if ($request->request->has('examReminder')) {
+            //         $examReminder = !$examReminder;
+            //         $user->setUsrExamReminder($examReminder);
+            //     }
+            //     if ($request->request->has('newReminder')) {
+            //         $newReminder = !$newReminder;
+            //         $user->setUsrNewReminder($newReminder);
+            //     }
+            //     if ($request->request->has('modifReminder')) {
+            //         $modifReminder = !$modifReminder;
+            //         $user->setUsrModifReminder($modifReminder);
+            //     }
+            //     if ($request->request->has('cookies')) {
+            //         $cookies = !$cookies;
+            //         $user->setUsrCookies($cookies);
+            //     }
+
+            //     $entityManager->persist($user);
+            //     $entityManager->flush();
+            // }
+
+            return $this->forward(ParamsController::class . '::index', [
+                'request' => $request,
+                // 'cardsRepository' => $cardsRepository, // Pass any other dependencies needed in ParamsController
+                // 'typesRepository' => $typesRepository,
+                // 'subjectsRepository' => $subjectsRepository,
+            ]);
+
+            return $this->render('home/index.html.twig', [
+                'controller_name' => 'HomeController',
+                'username' => $username,
+                'name' => $name,
+                'firstname' => $firstname,
+                'email' => $email,
+                'cardData' => $cardData,
+                'showParams' => $showParams,
+                'homeworkReminder' => $homeworkReminder,
+                'examReminder' => $examReminder,
+                'newReminder' => $newReminder,
+                'modifReminder' => $modifReminder,
+                'cookies' => $cookies,
+                'detailsCard' => null,
+            ]);
+        } else {
+            // Utilisateur non connecté,
+            return $this->redirectToRoute('app_login');
+        }
         $content = $this->renderView('home/list.html.twig', ['cardData' => $cardData]);
 
         return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
