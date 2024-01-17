@@ -495,6 +495,13 @@ main {
     padding: 0.4em 0.65em;
     gap: 10px;
 }
+
+/*---------WEEK----------*/
+
+/*.fc-scrollgrid-section-liquid{
+    display:none;
+}
+
 /*---------LIST----------*/
 #section-right{
     position: relative;

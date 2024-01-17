@@ -127,20 +127,26 @@ document.addEventListener('DOMContentLoaded', async function() {
     getDetailsCard('fc-event-main');
     getDetailsCard('item');
 
-    const listView = document.querySelector('.list-view');
-    listView.addEventListener('click', async function() {
-      try {
-        const response = await fetch('/home-list');
-        const htmlContent = await response.text();
+    getGlobalView();
 
-// Now, you can use the HTML content as needed
-        console.log(htmlContent);
-
-        document.querySelector('main').innerHTML = htmlContent;
-      } catch (error) {
-        console.error('Erreur lors de la récupération du contenu détaillé :', error);
-      }
-    });
+    const btnWeek = document.querySelector('[title="Semaine"]');
+    btnWeek.addEventListener('click', function() {
+        if (btnWeek.getAttribute('aria-pressed') === 'true') {
+          const hourList = document.querySelectorAll('.fc-scrollgrid-section-body');
+          hourList[1].style.display = 'none';
+          const divider = document.querySelectorAll('.fc-scrollgrid-section');
+          divider[2].style.display = 'none';
+          const week= document.querySelectorAll('.fc-scroller-harness');
+          week[1].style.height = '100%';
+          const week2= document.querySelectorAll('.fc-scroller');
+          week2[1].style.height = '100%';
+          const week3= document.querySelector('.fc-daygrid-body');
+          week3.style.height = '100%';
+          const week4= document.querySelector('.fc-scrollgrid-sync-table');
+          week4.style.height = '100%';
+        }
+      },
+    );
   }
 });
 
@@ -291,8 +297,17 @@ function typeFilter(typeId) {
   });
 }
 
-function changeVew(){
+function getGlobalView() {
+  const listView = document.querySelector('.list-view');
+  listView.addEventListener('click', async function() {
+    try {
+      const response = await fetch('/home-list');
+      const htmlContent = await response.text();
 
-
+      document.querySelector('main').innerHTML = htmlContent;
+    } catch (error) {
+      console.error('Erreur lors de la récupération du contenu détaillé :',
+        error);
+    }
+  });
 }
-
