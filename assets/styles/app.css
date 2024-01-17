@@ -277,6 +277,18 @@ header {
     display : unset;
 }
 
+.notif-dropdown__topMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: bottom;
+}
+
+.notif-message {
+    font-size: var(--grup);
+}
+
+
+
 /* notif */
 .notif-dropdown > .double-button {
     justify-self : right;
@@ -321,7 +333,13 @@ header {
     text-overflow : ellipsis;
 }
 
-/* double button */
+.notif-separator {
+    width: 100%;
+    border: unset;
+    border-top: solid 1px var(--secondary-gray--02);
+}
+
+
 
 /* userCard */
 .buttons-container {
@@ -427,8 +445,8 @@ header {
 }
 
 .new {
-    background-color : #6ee01420;
-    border-color     : var(--accent-green);
+    background-color : #ffd54020;
+    border-color     : var(--accent-yellow);
 }
 
 /* popup */
@@ -465,6 +483,12 @@ header {
 .delete-button {
     background-color : var(--accent-red);
     box-shadow       : 0 0 0 2px var(--accent-red-shadow);
+
+    color            : var(--secondary-gray--01);
+}
+
+.delete-button:hover {
+    background-color : var(--accent-red-shadow);
 }
 
 a:has(> .delete-button) {
