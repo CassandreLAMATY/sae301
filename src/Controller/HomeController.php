@@ -47,7 +47,7 @@ class HomeController extends AbstractController
         // Selecting every notification id by user id
         $notifications = $notifUserRepository->findByUserID($user->getUsrId());
         $notifSeen = [];
-        $notifSeen = [];
+        $notifNotSeen = [];
 
         // Creating an array with every notification id
         $shouldNotify = false;
@@ -136,7 +136,6 @@ class HomeController extends AbstractController
                 'notifSeen' => $notifSeen,
                 'notifNotSeen' => $notifNotSeen,
                 'shouldNotify' => $shouldNotify,
-                
                 'showParams' => false,
             ]);
         } else {
