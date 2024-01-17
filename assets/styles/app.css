@@ -20,6 +20,7 @@
     --accent-red-shadow: #DE2727;
     --accent-green: #6EE014;
     --accent-blue: #4098FF; /* couleur pour les tags A SUPPRIMER APRÈS */
+    --accent-blue-shadow: #1571DD;
 
     /* --- Couleurs Btns --- */
     --btn--done: #9AE08F;
@@ -459,7 +460,7 @@ header {
 
 .delete-button {
     background-color: var(--accent-red);
-    border-color: var(--accent-red-shadow);
+    box-shadow: 0 0 0 2px var(--accent-red-shadow);
 }
 
 a:has(> .delete-button) {
@@ -601,7 +602,7 @@ main {
 }
 
 .side-list .notvalidated{
-    border: dashed 2px var(--secondary-gray--04);
+    border: dashed 2px var(--secondary-gray--03);
 }
 
 .side-list .time {
@@ -652,26 +653,20 @@ main {
     font-weight: 700;
 }
 
-.subject h3 {
-    margin: 0;
-    font-size: var(--grup);
-}
-
-.subject .course {
-    margin: 0;
-    font-size: var(--grup);
-} */
-
-.side-list .status {
+.status {
     display: flex;
-    gap: 5px;
-    background-color: var(--accent-blue);
-    border-radius: 6px;
-    padding: 6px 16px;
-    height: fit-content;
-    color: var(--white);
     align-items: center;
+    gap: 5px;
+
     width: max-content;
+    height: fit-content;
+    padding: 6px 16px;
+
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px var(--accent-blue-shadow);
+    border-radius: 6px;
+    
+    color: var(--white);
 }
 
 .status p {

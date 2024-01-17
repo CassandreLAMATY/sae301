@@ -97,6 +97,7 @@ class HomeController extends AbstractController
                     'card' => $card,
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
+                    'subjectRef' => $subject->getSbjRef(),
                     'subjectName' => $subject->getSbjName(),
                     'timeColor' => $timeColor,
                 ];
@@ -177,6 +178,7 @@ class HomeController extends AbstractController
                     'card' => $card,
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
+                    'subjectRef' => $subject->getSbjRef(),
                     'subjectName' => $subject->getSbjName(),
                     'timeColor' => $timeColor,
                 ];
