@@ -1,10 +1,19 @@
 <div class="notif-dropdown">
-    <div class="double-button">
-        <button class="double-button__item"><i class="fa-solid fa-envelope-open"></i></button>
-        <button class="double-button__item"><i class="fa-solid fa-gear"></i></button>
+    <div class="notif-dropdown__topMenu">
+        <div class="tags_container">
+            {% if notifNotSeen is not empty %}
+                <p class="tag new">Nouveau</p>
+            {% endif %}
+        </div>
+        <div class="double-button">
+            <button class="double-button__item"><i class="fa-solid fa-envelope-open"></i></button>
+            <button class="double-button__item" id="optionButtonIcon"><i class="fa-solid fa-gear"></i></button>
+        </div>
     </div>
+    
+    {# NEW NOTIFICATIONS #}
     {% for item in notifNotSeen %}
-        <div class="notif-card" style="border: solid 2px var(--accent-yellow-shadow)}}">
+        <div class="notif-card" style="border: solid 2px var(--accent-yellow-shadow)">
             <div class="notif-card__content" style="border-left-color: {{ item.getNuNot().getNotType().getTypColor }}!important">
                 <div class="tags_container">
                     <p class="tag" style="background-color: {{ item.getNuNot().getNotType().getTypColor }}20; border-color: {{ item.getNuNot().getNotType().getTypColor }}!important">{{ item.getNuNot().getNotType().getTypName }}</p>
@@ -18,7 +27,12 @@
             </div>
         </div>
     {% endfor %}
-    <hr>
+
+    {% if notifNotSeen is not empty %}
+        <hr class="notif-separator">
+    {% endif %}
+
+    {# OLD NOTIFICATIONS #}
     {% for item in notifSeen %}
         <div class="notif-card">
             <div class="notif-card__content" style="border-left-color: {{ item.getNuNot().getNotType().getTypColor }}!important">
@@ -26,7 +40,11 @@
                     <p class="tag" style="background-color: {{ item.getNuNot().getNotType().getTypColor }}20; border-color: {{ item.getNuNot().getNotType().getTypColor }}!important">{{ item.getNuNot().getNotType().getTypName }}</p>
                 </div>
                 <h3 class="notif-card__title">{{ item.getNuNot().getNotTitle() }}</h3>
-                <p class="notif-card__subject">{{ item.getNuNot().getNotSubject().getSbjRef ? item.getNuNot().getNotSubject().getSbjRef : '' }} - {{ item.getNuNot().getNotSubject().getSbjName ? item.getNuNot().getNotSubject().getSbjName : '' }}</p>
+                {% if item.getNuNot().getNotSubject() %}
+                    <p class="notif-card__subject">{{ item.getNuNot().getNotSubject().getSbjRef ? item.getNuNot().getNotSubject().getSbjRef : '' }} - {{ item.getNuNot().getNotSubject().getSbjName ? item.getNuNot().getNotSubject().getSbjName : '' }}</p>
+                {% else %}
+                    <p class="notif-card__subject">{{ item.getNuNot().getNotContent ? item.getNuNot().getNotContent : '' }}</p>
+                {% endif %}
             </div>
             <div class="double-button">
                 <button class="double-button__item see-button"><i class="fa-solid fa-eye"></i> Voir</button>
@@ -34,6 +52,12 @@
             </div>
         </div>
     {% endfor %}
+
+    {# NO NOTIFICATION #}
+    {% if notifNotSeen is empty and notifSeen is empty %}
+        <p class="notif-message">Aucune notification pour l'instant...</p>
+    {% endif %}
+
 
     <script src="{{ asset('/js/notifications.js') }}"></script>
 </div>
