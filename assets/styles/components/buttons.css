@@ -1,3 +1,7 @@
+/* 🔴 ------------------- 🔴 */
+/* 🔴 ----- BUTTONS ----- 🔴 */
+/* 🔴 ------------------- 🔴 */
+
 button {
     display: flex;
     align-items: center;
@@ -14,22 +18,58 @@ button {
     font-size: var(--grup);
     font-weight: 600;
     color: unset;
-}
 
-.fc-button {
-    box-shadow: none;
+    cursor: pointer;
 }
 
 button:hover {
     background-color: var(--secondary-gray--02);
 }
 
-button:hover {
-    cursor: pointer;
+/* 🔴 --------------------------- 🔴 */
+/* 🟡 ----- CLASSES SIMPLES ----- 🟡 */
+/* 🟡 --------------------------- 🟡 */
+
+button.no-outline {
+    outline: none;
+    box-shadow: none;
+    border: none;
 }
 
-.disabled {
-    display: none;
+button.yellow {
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
+}
+
+button.yellow:hover {
+    background-color: var(--accent-yellow-shadow);
+}
+
+/* 🟢 ----- CLASSES VALIDATIONS ----- 🟢 */
+
+button.a-faire {
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px var(--accent-blue-shadow);
+}
+
+button.a-faire:hover {
+    background-color: var(--accent-blue-shadow);
+}
+
+button.fait {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 0 2px var(--accent-green-shadow);
+}
+
+button.fait:hover {
+    background-color: var(--accent-green-shadow);
+}
+
+/* ⚫ ------------------ ⚫ */
+/* ⚫ ----- AUTRES ----- ⚫ */
+/* ⚫ ------------------ ⚫ */
+.fc-button {
+    box-shadow: none;
 }
 
 .double-button {

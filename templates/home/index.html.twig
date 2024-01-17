@@ -34,10 +34,8 @@
                             <div class="subject">
                                 <p class="tag"
                                    style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
-                                <div>
-                                    <h3 class="notif-card__title">{{ item.card.getCrdTitle }}</h3>
-                                    <p class="notif-card__subject">{{ item.subjectRef }} - {{ item.subjectName }}</p>
-                                </div>
+                                <h3 class="notif-card__title">{{ item.card.getCrdTitle }}</h3>
+                                <p class="notif-card__subject">{{ item.subjectRef }} - {{ item.subjectName }}</p>
                             </div>
                             {% if item.typeName is same as('rendu') %}
                                 <!--<div class="status">

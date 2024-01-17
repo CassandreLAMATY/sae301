@@ -5,13 +5,13 @@
     --cas-theme-primary-bg: rgba(21, 62, 80, 0.2);
     --cas-theme-button-bg: #26418f;
     --cas-theme-primary-light: #006d85;
-    --cas-theme-secondary: #F2C52C;
+    --cas-theme-secondary: #f2c52c;
     --cas-theme-success: var(--cas-theme-secondary);
     --cas-theme-danger: var(--mdc-theme-error);
     --cas-theme-warning: #e6a210;
     --cas-theme-border-light: 1px solid rgba(0, 0, 0, .2);
     --mdc-theme-primary: var(--cas-theme-primary, #153e50);
-    --urca-text-black: #333;
+    --urca-text-black: #333333;
     --base-animation-duration: 30s;
 }
 
@@ -21,7 +21,7 @@ body.portail-conection {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    background-color: #EFEFEF;
+    background-color: #efefef;
     overflow: hidden;
 }
 
@@ -41,7 +41,7 @@ body.portail-conection form.form-co {
     max-width: 700px;
     padding: var(--grup2);
     gap: var(--grup1);
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: var(--grup-2);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
 }
@@ -84,7 +84,7 @@ body.portail-conection form.form-co .form-co--input-cell label {
     padding: 0 var(--grup-2);
     font-weight: 300;
     color: var(--main--black);
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: var(--grup-2);
     transition: var(--smooth2);
     pointer-events: none;
@@ -110,6 +110,7 @@ body.portail-conection form.form-co .form-co--input-cell button.form-co--input-c
     border: none;
     background-color: transparent;
     cursor: pointer;
+    box-shadow: none;
 }
 
 body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show i {
@@ -142,7 +143,7 @@ body.portail-conection form.form-co .btn--submit .alert {
 }
 
 body.portail-conection form.form-co .btn--submit button {
-    font-family: 'Outfit', sans-serif;
+    font-family: "Outfit", sans-serif;
     min-width: min-content;
     width: 42%;
     white-space: nowrap;
@@ -160,7 +161,6 @@ body.portail-conection form.form-co .btn--submit button {
 body.portail-conection form.form-co .btn--submit button:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, .26);
 }
-
 
 body.portail-conection form.form-co ul {
     list-style: none;
@@ -228,7 +228,7 @@ body.portail-conection .bg--waves .waves {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(../images/login/wave--long.svg);
+    background-image: url(../../images/login/wave--long.svg);
     background-size: var(--bg--waves--width);
     background-repeat: repeat-x;
     animation: bg--waves--ltr 26s linear infinite;
@@ -249,7 +249,6 @@ body.portail-conection .bg--waves .waves:nth-child(4) {
     animation: bg--waves--ltr 6s linear infinite reverse;
     opacity: .16;
 }
-
 
 @keyframes bg--waves--ltr {
     0% {

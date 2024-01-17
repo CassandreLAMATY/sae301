@@ -1,0 +1,104 @@
+/* 🟢 ------------------ 🟢 */
+/* 🟢 ----- DETAIL ----- 🟢 */
+/* 🟢 ------------------ 🟢 */
+
+#details {
+    position: absolute;
+    top: 0;
+    right: -100%;
+}
+
+/* 🟢 --- DETAIL HEAD --- 🟢 */
+
+/* Div with go back btn and tag */
+#details .detail--back {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+/* Go back btn */
+#back {
+    font-size: var(--grup1);
+    cursor: pointer;
+}
+
+#details .detail--back p {
+    padding: var(--grup-3) var(--grup-1);
+    font-size: var(--grup);
+}
+
+#details #title_details {
+    color: var(--main--black);
+}
+
+#details .detail--title h2 {
+    font-size: var(--grup2);
+}
+
+#details .detail--title .detail--title--under {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--grup-1);
+}
+
+#details .detail--title .detail--title--under .time_left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--grup-1);
+}
+
+#details .detail--title .detail--title--under .time_left p {
+    width: initial;
+}
+
+/* 🟢 --- DETAIL CONTENT --- 🟢 */
+
+#details .detail--content {
+    display: flex;
+    flex-direction: column;
+    padding: var(--grup1);
+    gap: var(--grup1);
+    background-color: var(--white);
+    border-radius: 6px;
+}
+
+#details .detail--content .detail--content--time {
+    display: flex;
+    justify-content: space-between;
+}
+
+#details .detail--content .detail--content--format {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup-2);
+}
+
+#details .detail--content .detail--content--format-t {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-1);
+    font-weight: 600;
+}
+
+#details .detail--content .detail--content--format-t i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--grup);
+}
+
+#details .detail--content .detail--content--description .detail--content--format-c {
+    width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+#details .detail--content .detail--content--done {
+    outline: solid 1px #6ee014;
+}
+
