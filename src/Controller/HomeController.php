@@ -132,15 +132,12 @@ class HomeController extends AbstractController
                 'cardData' => $cardData,
 
                 'detailsCard' => null,
-<<<<<<< HEAD
                 
                 'notifSeen' => $notifSeen,
                 'notifNotSeen' => $notifNotSeen,
-=======
-                'showParams' => false,
-                'notifications' => $notifications,
->>>>>>> 11-parametres
                 'shouldNotify' => $shouldNotify,
+
+                'showParams' => false,
             ]);
         } else {
             // Utilisateur non connecté,
@@ -189,13 +186,10 @@ class HomeController extends AbstractController
                 $timeColor = 'var(--accent-orange)';
             }
 
-<<<<<<< HEAD
-=======
             if ($dayLeft < 3) {
                 $timeColor = 'var(--accent-red)';
             }
 
->>>>>>> 11-parametres
             if ($type !== null) {
                 $cardData[] = [
                     'card' => $card,
