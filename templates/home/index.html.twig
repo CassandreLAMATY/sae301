@@ -17,17 +17,17 @@
                     {% for item in cardData %}
                         <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
                              style="border-left-color: {{ item.typeColor }} !important;">
-                            <p class="card_id"> {{item.card.getId}}</p>
+                            <p class="card_id"> {{ item.card.getId }}</p>
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.getCrdFrom is not null %}
-                                        Du {{ item.card.getFormattedCrdFrom }} <br> Au
+                                        Du {{ item.card.getFormattedCrdFrom }} <br>Au
                                     {% endif %}
                                     {{ item.card.getFormattedCrdTo }}
                                 </p>
                                 <div class="time_left">
                                     <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
-                                    <p class="days">Dans <br> <span>{{ item.card.getTimeLeft }}</span></p>
+                                    <p class="days">Dans<br><span>{{ item.card.getTimeLeft }}</span></p>
                                 </div>
                             </div>
                             <div class="subject">

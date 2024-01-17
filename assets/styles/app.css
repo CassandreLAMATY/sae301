@@ -452,7 +452,7 @@ main {
 
 .side-list,
 #details {
-    width: min(669px, );
+    width: min(669px, 35vw);
     background-color: var(--list-bg-color);
     outline: 1px solid var(--secondary-gray--02);
     padding: 26px;
@@ -488,6 +488,7 @@ main {
 
 .side-list .items {
     overflow-y: auto;
+    overflow-x: visible;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -552,8 +553,8 @@ main {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    width: min(340px, 17vw);
 }
-
 
 /* .subject h3{
     margin: 0;
@@ -575,9 +576,23 @@ main {
     color: var(--white);
     align-items: center;
     width: max-content;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
-.status p {
+.side-list .subject p.tag {
+    width: min-content;
+}
+
+.side-list .subject h3, .side-list .subject > p {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.side-list .subject > p {
     margin: 0;
 }
 
@@ -590,3 +605,44 @@ main {
 #details #title_details {
     color: var(--main--black);
 }
+
+#details .detail--back {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    outline: red solid 1px;
+}
+
+#details .detail--title {
+    outline: solid 1px darkolivegreen;
+}
+
+#details .detail--title .detail--title--under {
+    outline: solid 1px #FFD540;
+}
+
+#details .detail--content {
+    outline: solid 1px cadetblue;
+}
+
+#details .detail--content .detail--content--time {
+    outline: solid 1px orangered;
+}
+
+#details .detail--content .detail--content--time .detail--content--time--left {
+    outline: solid 1px sandybrown;
+}
+
+#details .detail--content .detail--content--time .detail--content--time--right {
+    outline: solid 1px rebeccapurple;
+}
+
+#details .detail--content .detail--content--format {
+    outline: solid 1px violet;
+}
+
+#details .detail--content .detail--content--done {
+    outline: solid 1px #6EE014;
+}
+
