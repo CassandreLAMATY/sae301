@@ -1,55 +1,126 @@
-<div class="view">
+<!--<div class="view">
     <div class="calendar-view">
         <i class="fa-regular fa-calendar"></i>
     </div>
     <div class="view-list">
         <i class="fa-solid fa-table-list"></i>
     </div>
+</div>-->
+<div id="calendar" data-url="/calendar/data" class="fc fc-media-screen fc-direction-ltr fc-theme-standard">
+    <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
+        <div class="fc-toolbar-chunk">
+            <div class="fc-button-group">
+                <button class="fc-button fc-button-primary calendar-view"><i class="fa-regular fa-calendar"
+                                                                             aria-hidden="true"></i></button>
+                <button class="fc-button fc-button-primary list-view"><i class="fa-solid fa-table-list"
+                                                                         aria-hidden="true"></i></button>
+            </div>
+            <button type="button" title="Aujourd'hui" disabled="" aria-pressed="false"
+                    class="fc-today-button fc-button fc-button-primary">Aujourd'hui
+            </button>
+        </div>
+        <div class="fc-toolbar-chunk"><h2 class="fc-toolbar-title" id="fc-dom-1">janvier 2024</h2></div>
+        <div class="fc-toolbar-chunk">
+            <div class="fc-button-group">
+                <button type="button" title="Précédent" aria-pressed="false"
+                        class="fc-prev-button fc-button fc-button-primary"><span class="fc-icon fc-icon-chevron-left"
+                                                                                 role="img"></span></button>
+                <button type="button" title="Suivant" aria-pressed="false"
+                        class="fc-next-button fc-button fc-button-primary"><span class="fc-icon fc-icon-chevron-right"
+                                                                                 role="img"></span></button>
+            </div>
+            <div class="fc-button-group">
+                <button type="button" title="Semaine" aria-pressed="false"
+                        class="fc-timeGridWeek-button fc-button fc-button-primary">Semaine
+                </button>
+                <button type="button" title="Mois" aria-pressed="true"
+                        class="fc-dayGridMonth-button fc-button fc-button-primary fc-button-active">Mois
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="filter fc-header-toolbar fc-toolbar fc-toolbar-ltr">
+        <div class="fc-toolbar-chunk">
+            <div class="fc-button-group types">
+                <button class="fc-button fc-button-primary" aria-pressed="true">Rendus</button>
+                <button class="fc-button fc-button-primary" aria-pressed="true">Examens</button>
+                <button class="fc-button fc-button-primary" aria-pressed="true">IUT</button>
+                <button class="fc-button fc-button-primary" aria-pressed="true">BDE</button>
+            </div>
+            <div class="fc-button-group statusHomework">
+                <button class="fc-button fc-button-primary" aria-pressed="true"><i class="fa-regular fa-square-check"
+                                                                                   aria-hidden="true"></i> Rendu
+                </button>
+            </div>
+            <div class="fc-button-group statusEvent">
+                <button class="fc-button fc-button-primary" aria-pressed="true"><i class="fa-regular fa-square-check"
+                                                                                   aria-hidden="true"></i> Validés
+                </button>
+            </div>
+            <div class="fc-button-group subject"><select class="fc-button fc-button-primary">
+                    <option value="1">WSA301D - SAE Dév</option>
+                    <option value="2">WSA310 - Portfolio</option>
+                    <option value="3">WRA301 - Anglais</option>
+                    <option value="4">WRA302 - Anglais Renforcé</option>
+                    <option value="5">WRA303D - Design d'expérience</option>
+                    <option value="6">WRA304 - Culture numérique</option>
+                    <option value="7">WRA305D - Stratégies de communication et marketing</option>
+                    <option value="8">WRA306 - Référencement</option>
+                    <option value="9">WRA307 - Expression, communication et rhétorique</option>
+                    <option value="10">WRA308D - Écriture multimédia et narration</option>
+                    <option value="11">WRA309D - Création et design interactif (UI)</option>
+                    <option value="12">WRA310D - Culture artistique</option>
+                    <option value="13">WRA311D - Audiovisuel et Motion design</option>
+                    <option value="14">WRA312D - Développement Front et intégration</option>
+                    <option value="15">WRA313D - Développement Back</option>
+                    <option value="16">WRA314D - Déploiement de services</option>
+                    <option value="17">WRA315 - Représentation et traitement de l'information</option>
+                    <option value="18">WRA316 - Gestion de projet</option>
+                    <option value="19">WRA317 - Economie, gestion et droit du numérique</option>
+                    <option value="20">WRA318 - Projet Personnel et Professionnel</option>
+                    <option value="21">WRA319D - Symfony</option>
+                </select></div>
+        </div>
+    </div>
 </div>
-<div id="section-right">
-    <div class="side-list">
-        <div id="side-list_title">
-            <h2>À Venir</h2>
-        </div>
-        <div class="items">
-            {% for item in cardData %}
-                <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
-                     style="border-left-color: {{ item.typeColor }} !important;">
-                    <p class="card-id">{{item.card.getId}}</p>
-                    <p class="type-id">{{item.card.getCrdTypId.getId}}</p>
-                    <div class="time">
-                        <p class="date">
-                            {% if item.card.getCrdFrom is not null %}
-                                Du {{ item.card.getFormattedCrdFrom }} <br> Au
-                            {% endif %}
-                            {{ item.card.getFormattedCrdTo }}
-                        </p>
-                        <div class="time_left">
-                            <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
-                            <p class="days">{{ item.card.getTimeLeft|raw }}</p>
-                        </div>
-                    </div>
-                    <div class="subject">
-                        <p class="tag"
-                           style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
-                        <h3>{{ item.card.getCrdTitle }}</h3>
-                        <p class="course">{{ item.subjectName }}</p>
-                    </div>
-                    {% if item.typeName is same as('rendu') %}
-                        <!--<div class="status">
-                            <i class="fa-regular fa-square"></i>
-                            <p>À Rendre</p>
-                        </div>-->
-                        <div class="status">
-                            <i class="fa-regular fa-square-check"></i>
-                            <p>Rendu</p>
-                        </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div id="details">
 
+<div class="list">
+    <div class="items">
+        {% for item in cardData %}
+            <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
+                 style="border-left-color: {{ item.typeColor }} !important;">
+                <p class="card-id">{{ item.card.getId }}</p>
+                <p class="type-id">{{ item.card.getCrdTypId.getId }}</p>
+                <div class="time">
+                    <p class="date">
+                        {% if item.card.getCrdFrom is not null %}
+                            Du {{ item.card.getFormattedCrdFrom }} <br> Au
+                        {% endif %}
+                        {{ item.card.getFormattedCrdTo }}
+                    </p>
+                    <div class="time_left">
+                        <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
+                        <p class="days">{{ item.card.getTimeLeft|raw }}</p>
+                    </div>
+                </div>
+                <div class="subject">
+                    <p class="tag"
+                       style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
+                    <h3>{{ item.card.getCrdTitle }}</h3>
+                    <p class="course">{{ item.subjectName }}</p>
+                </div>
+                {% if item.typeName is same as('rendu') %}
+                    <!--<div class="status">
+                        <i class="fa-regular fa-square"></i>
+                        <p>À Rendre</p>
+                    </div>-->
+                    <div class="status">
+                        <i class="fa-regular fa-square-check"></i>
+                        <p>Rendu</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
+</div>
 </div>

@@ -175,8 +175,6 @@ function getCalendar(dataEvents) {
     businessHours: {
       // Jours ouvrés (lundi à vendredi)
       daysOfWeek: [1, 2, 3, 4, 5],
-      startTime: '08:00', // Heure de début de la journée
-      endTime: '18:00',   // Heure de fin de la journée
     },
     allDaySlot: true,
 
@@ -230,6 +228,7 @@ function getDetailsCard(className) {
           throw new Error('Network response was not ok');
         }
         document.getElementById('details').innerHTML = await response.text();
+        console.log(document.getElementById('details'));
 
         let modal = document.getElementById('details');
         modal.style.transform = 'translateX(-100%)';
@@ -353,4 +352,5 @@ function getCalendarView(calendarView, originalMainContent) {
 
     const listView = document.querySelector('.list-view');
     getListView(listView, originalMainContent);
-  });}
+  });
+}

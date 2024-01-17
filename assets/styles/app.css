@@ -696,3 +696,30 @@ main {
 #details #title_details{
     color: var(--main--black);
 }
+
+/*/ ------------------------------------------------------------------------ /*/
+/*/ ------------------------------ GLOBAL LIST ----------------------------- /*/
+/*/ ------------------------------------------------------------------------ /*/
+
+.list-view{
+    flex-direction: column;
+}
+
+.list-view #calendar{
+    height: fit-content;
+}
+
+.list-view .list{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+.list-view .list .items{
+    width: 90%;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
