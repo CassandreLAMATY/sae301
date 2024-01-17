@@ -168,10 +168,6 @@ class HomeController extends AbstractController
                 $timeColor= 'var(--accent-orange)';
             }
 
-            if ($dayLeft < 3) {
-                $timeColor= 'var(--accent-red)';
-            }
-
             if ($type !== null) {
                 $cardData[] = [
                     'card' => $card,
