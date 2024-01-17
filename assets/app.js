@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Créer les boutons de filtres
     const divFilter = document.createElement('div');
     divFilter.classList.add('fc-toolbar-chunk');
+    divFilter.classList.add('filter-nav');
 
     divFilters.appendChild(divFilter);
 
@@ -120,13 +121,21 @@ document.addEventListener('DOMContentLoaded', async function() {
     divFilter.appendChild(subjectDiv);
 
     //créer un input select
-    const select = document.createElement('select');
+    const select = document.createElement('button');
     select.classList.add('fc-button');
     select.classList.add('fc-button-primary');
 
-    select.innerHTML = dataSubject;
+    select.innerHTML = 'Matières <i class="fa-solid fa-angle-down"></i>';
 
     subjectDiv.appendChild(select);
+
+    const selectChoices = document.createElement('div');
+    selectChoices.classList.add('subject-choices');
+
+    subjectDiv.appendChild(selectChoices);
+
+    selectChoices.innerHTML = dataSubject;
+
 
     // FILTRER LES ÉVÉNEMENTS
     for (let i = 1; i <= 4; i++) {

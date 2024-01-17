@@ -18,7 +18,7 @@ class SubjectsDataController extends AbstractController
 
         $options = '';
         foreach ($subjects as $subject) {
-            $options .= '<option value="' . $subject->getId() . '">' . $subject->getSbjName() . '</option>';
+            $options .= '<label for="' . $subject->getId() . '"><input type="checkbox" id="' . $subject->getId() . '" value="'. $subject->getSbjRef() . ' - ' . $subject->getSbjName() .'">' . $subject->getSbjRef() . ' - '  . $subject->getSbjName() . '</label>';
         }
 
         return $this->json($options);

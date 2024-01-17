@@ -176,7 +176,8 @@ header {
 
 /* dropdown */
 .userCard-dropdown,
-.notif-dropdown {
+.notif-dropdown,
+.subject-choices{
     display          : none;
     position         : absolute;
     z-index          : 100;
@@ -488,8 +489,13 @@ main {
 .fc-toolbar-chunk .fc-button-display {
     background-color : var(--accent-yellow);
     color            : var(--main--black);
-    border           : none;
+    border           : solid 2px var(--accent-yellow-shadow);
     text-transform   : capitalize;
+}
+
+.filter-nav .fc-button{
+    background-color : var(--secondary-gray--01) !important;
+    border-color: var(--secondary-gray--02) !important;
 }
 
 .fc .fc-button:disabled {
@@ -772,3 +778,28 @@ main {
     outline : solid 1px #6ee014;
 }
 
+.subject{
+    position: relative;
+}
+
+.subject:hover .subject-choices{
+    display: flex;
+    transition: 0.7s ease-in-out;
+}
+
+.subject-choices{
+    width: max-content;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 3100;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    opacity: 1;
+}
+
+.subject-choices label:hover{
+    cursor: pointer;
+    background-color: var(--accent-yellow);
+}
