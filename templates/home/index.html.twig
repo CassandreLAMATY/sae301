@@ -6,7 +6,7 @@
 
     {% include 'components/header.html.twig' %}
 
-    <main>
+    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
             <div class="side-list">
@@ -17,7 +17,8 @@
                     {% for item in cardData %}
                         <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
                              style="border-left-color: {{ item.typeColor }} !important;">
-                            <p class="card_id"> {{ item.card.getId }}</p>
+                            <p class="card-id">{{item.card.getId}}</p>
+                            <p class="type-id">{{item.card.getCrdTypId.getId}}</p>
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.getCrdFrom is not null %}
@@ -31,10 +32,11 @@
                                 </div>
                             </div>
                             <div class="subject">
-                                <p class="tag"
-                                   style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
-                                <h3>{{ item.card.getCrdTitle }}</h3>
-                                <p class="course">{{ item.subjectName }}</p>
+                                <p class="tag" style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
+                                <div>
+                                    <h3 class="notif-card__title">{{ item.card.getCrdTitle }}</h3>
+                                    <p class="notif-card__subject">{{ item.subjectRef }} - {{ item.subjectName }}</p>
+                                </div>
                             </div>
                             {% if item.typeName is same as('rendu') %}
                                 <!--<div class="status">
@@ -50,9 +52,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div id="details">
-
-            </div>
+            <div id="details"></div>
         </div>
     </main>
 {% endblock %}

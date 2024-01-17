@@ -17,10 +17,10 @@
     --accent-yellow-shadow: #EFB623;
     --accent-orange: #F5AF47;
     --accent-red: #FF4040;
+    --accent-red-shadow: #DE2727;
     --accent-green: #6EE014;
     --accent-blue: #4098FF; /* couleur pour les tags A SUPPRIMER APRÈS */
-
-    --accent-yellow-shadow: #EFB623;
+    --accent-blue-shadow: #1571DD;
 
     /* --- Couleurs Btns --- */
     --btn--done: #9AE08F;
@@ -68,17 +68,33 @@ p {
 }
 
 button {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
 
     margin: unset;
-    padding: unset;
-    border: unset;
+    padding: var(--grup-2) var(--grup);
+    
+    border-radius: var(--grup-2);
+    border: none;
+    background-color: var(--secondary-gray--01);
+    box-shadow: 0 0 0 2px var(--secondary-gray--02);
 
-    background-color: unset;
-
-    font-family: unset;
-    font-size: unset;
+    font-size: var(--grup);
+    font-weight: 600;
     color: unset;
+}
+
+.fc-button {
+    box-shadow: none;
+}
+
+button:hover {
+    background-color: var(--secondary-gray--02);
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 .disabled {
@@ -110,33 +126,95 @@ header {
     gap: var(--grup1);
 }
 
+/* notif menu */
+.notif {
+    box-sizing: border-box;
+    position: relative;
 
-/* dropdowns */
+    font-size: var(--grup1);
+    color: var(--main-black);
+}
+
+.notif-dot {
+    display: none;
+    
+    position: absolute;
+    top: var(--grup-2);
+    right: 0;
+
+    width: var(--grup-2);
+    height: var(--grup-2);
+
+    background-color: var(--accent-orange);
+    border-radius: 50%;
+}
+
+
+
+/* usercard menu */
+.userCard {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: var(--grup);
+}
+
+.userCard__image {
+    width: var(--grup2);
+    height: var(--grup2);
+    border-radius: 50%;
+}
+
+.userCard__name {
+    font-size: var(--grup-1);
+}
+
+.userCard__name > span {
+    font-size: var(--grup);
+    font-weight: 600;
+}
+
+
+
+/* dropdown */
 .userCard-dropdown,
 .notif-dropdown {
     display: none;
-
     position: absolute;
-    z-index: 1;
+    z-index: 100;
 
     padding: var(--grup1);
 
     background-color: var(--white);
     border-radius: var(--grup);
     box-shadow: 0 0 0 2px var(--secondary-gray--02);
+
+    opacity: 0;
+    transition: opacity var(--smooth3);
+    pointer-events: none;
+}
+
+.userCard:hover > .userCard-dropdown,
+.notif:hover > .notif-dropdown {
+    opacity: 1;
+    pointer-events: unset;
 }
 
 .userCard-dropdown {
-    top: 100%;
+    display: unset;
+    top: calc(60px + var(--grup-1));
     right: var(--grup1);
 
     color: var(--secondary-gray--04);
 }
 
 .notif-dropdown {
+    display: grid;
+
     row-gap: var(--grup);
 
-    top: 53px;
+    top: calc(53px + var(--grup-1));
     left: 50%;
     transform: translateX(-50%);
 
@@ -177,38 +255,35 @@ header {
     clip-path: polygon(50% 28%, -10% 100%, 110% 100%);
 }
 
+.active-hover {
+    display: none;
 
-/* notifications */
-
-.notif {
-    box-sizing: border-box;
-    position: relative;
-
-    font-size: var(--grup1);
-    color: var(--main-black);
-}
-
-.notif-dot {
     position: absolute;
-    top: var(--grup-2);
-    right: 0;
+    top: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
 
-    width: var(--grup-2);
-    height: var(--grup-2);
-
-    background-color: var(--accent-orange);
-    border-radius: 50%;
+    width: 300%;
+    max-width: 300px;
+    height: 125%;
 }
 
-.notif:hover > .notif-dropdown {
-    display: grid;
+.notif:hover .active-hover,
+.userCard:hover .active-hover {
+    display: unset;
 }
 
+
+
+/* notif */
 .notif-dropdown > .double-button {
     justify-self: right;
 }
 
 .notif-card {
+    position: relative;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -248,6 +323,30 @@ header {
 
 /* double button */
 
+/* userCard */
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--grup);
+}
+
+.userCard__logout {
+    display: flex;
+    align-items: center;
+    gap: var(--grup-2);
+
+    width: fit-content;
+    margin: var(--grup-1) auto 0 auto;
+
+    font-size: var(--grup);
+    color: var(--secondary-gray--04);
+    text-decoration: none;
+}
+
+
+
+/* double button */
 .double-button {
     display: flex;
     align-items: stretch;
@@ -265,7 +364,6 @@ header {
     padding: var(--grup-2) var(--grup-1);
 
     background-color: var(--secondary-gray--01);
-    box-shadow: 0 0 0 2px var(--secondary-gray--02);
 
     font-size: var(--grup);
 }
@@ -281,16 +379,24 @@ header {
 .see-button {
     z-index: 2;
 
-    background-color: var(--accent-yellow);
-    box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
+    border: none;
 
     font-weight: 600;
     color: var(--main--black);
 }
 
+.see-button__active {
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 0 2px var(--accent-yellow-shadow)!important;
+}
+
+.see-button__active:hover {
+    background-color: var(--accent-yellow-shadow);
+}
+
+
 
 /* tags */
-
 .tags_container {
     display: flex;
     align-items: center;
@@ -318,68 +424,52 @@ header {
 }
 
 .new {
-    color: var(--accent-green) !important;
-    border-color: var(--accent-green) !important;
+    background-color: #6EE01420;
+    border-color: var(--accent-green);
 }
 
 
-.menu-userCard {
+
+/* popup */
+.popup-container {
     display: flex;
-    align-items: center;
-    gap: var(--grup);
+    flex-direction: column;
+    gap: var(--grup1);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    padding: var(--grup1);
+
+    background-color: var(--white);
+    border-radius: var(--grup);
+    box-shadow: 
+        0 0 0 2px var(--secondary-gray--02),
+        0 0 var(--grup-1) #4242423D;
 }
 
-.userCard__image {
-    width: var(--grup2);
-    height: var(--grup2);
-    border-radius: 50%;
-}
-
-.userCard__content-name {
-    font-size: var(--grup-1);
-}
-
-.userCard__content-name > span {
-    font-size: var(--grup);
-    font-weight: 600;
-}
-
-.menu-notif:hover,
-.menu-userCard:hover {
-    cursor: pointer;
-}
-
-.userCard__buttons-container {
+.popup-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--grup);
-}
-
-.userCard__buttons {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: var(--grup-2);
-
-    padding: var(--grup-2) var(--grup);
-    border: solid 2px var(--secondary-gray--02);
-    border-radius: var(--grup-2);
-
-    background-color: var(--secondary-gray--01);
-
-    font-size: var(--grup);
-    font-weight: 600;
 }
 
-.userCard__logout {
-    display: flex;
-    align-items: center;
-    gap: var(--grup-2);
+.popup-container > .buttons-container {
+    justify-content: center;
+    gap: var(--grup-1);
+}
 
-    width: fit-content;
-    margin: var(--grup-1) auto 0 auto;
+.delete-button {
+    background-color: var(--accent-red);
+    box-shadow: 0 0 0 2px var(--accent-red-shadow);
+}
 
-    font-size: var(--grup);
+a:has(> .delete-button) {
+    text-decoration: none;
+    color: var(--white);
 }
 
 
@@ -430,7 +520,8 @@ main {
     position: relative !important;
 }
 
-.card_id {
+.card-id,
+.type-id{
     display: none;
 }
 
@@ -514,7 +605,7 @@ main {
     cursor: pointer;
 }
 
-.side-list .notvalidated {
+.side-list .notvalidated{
     border: dashed 2px var(--secondary-gray--03);
 }
 
@@ -525,7 +616,7 @@ main {
 }
 
 .time .date {
-    font-size: 12px;
+    font-size: var(--grup-1);
     color: var(--grey);
     margin-bottom: 0;
 }
@@ -537,7 +628,7 @@ main {
 }
 
 .time i {
-    font-size: 24px;
+    font-size: 28px;
 }
 
 .time_left .days {
@@ -559,7 +650,8 @@ main {
 
 /* .subject h3{
     margin: 0;
-    font-size: var(--grup);
+    width: fit-content;
+    font-weight: 700;
 }
 
 .subject .course{
@@ -569,11 +661,17 @@ main {
 
 .side-list .status {
     display: flex;
+    align-items: center;
     gap: 5px;
-    background-color: var(--accent-blue);
-    border-radius: 6px;
-    padding: 6px 16px;
+
+    width: max-content;
     height: fit-content;
+    padding: 6px 16px;
+
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px var(--accent-blue-shadow);
+    border-radius: 6px;
+    
     color: var(--white);
     align-items: center;
     width: max-content;
