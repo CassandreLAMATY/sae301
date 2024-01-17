@@ -148,6 +148,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       '.fc-view-harness').innerHTML;
 
     getView(originalCalendarContent);
+    getHomeView()
 
     const btnWeek = document.querySelector('[title="Semaine"]');
     btnWeek.addEventListener('click', function() {
@@ -340,6 +341,7 @@ function getView(originalCalendarContent) {
       const htmlContent = await response.text();
 
       document.querySelector('.fc-view-harness').innerHTML = htmlContent;
+      localStorage.setItem('view', 2);
       for (let i = 1; i <= 4; i++) {
         typeFilter(i);
       }
@@ -361,8 +363,8 @@ function getView(originalCalendarContent) {
   const calendarView = document.querySelector('.calendar-view');
   calendarView.addEventListener('click', async function() {
     try {
-      document.querySelector(
-        '.fc-view-harness').innerHTML = originalCalendarContent;
+      document.querySelector('.fc-view-harness').innerHTML = originalCalendarContent;
+      localStorage.setItem('view', 1);
     } catch (error) {
       console.error('Erreur lors de la récupération du contenu détaillé :',
         error);
@@ -384,4 +386,17 @@ function getView(originalCalendarContent) {
     getDetailsCard('fc-event-main');
 
   });
+}
+
+function getHomeView(){
+
+  if(localStorage.getItem('view') == 2){
+    const listView = document.querySelector('.list-view');
+    listView.click();
+  }
+  else{
+    const calendarView = document.querySelector('.calendar-view');
+    calendarView.click();
+  }
+
 }
