@@ -3,19 +3,34 @@
         <button class="double-button__item"><i class="fa-solid fa-envelope-open"></i></button>
         <button class="double-button__item"><i class="fa-solid fa-gear"></i></button>
     </div>
-
-    {% for item in notifications %}
-        <div class="notif-card" style="{{item.isNotIsSeen() ? '' : 'border: solid 2px var(--accent-yellow-shadow)'}}">
-            <div class="notif-card__content" style="border-left-color: {{ item.getNotType().getTypColor }}!important">
+    {% for item in notifNotSeen %}
+        <div class="notif-card" style="border: solid 2px var(--accent-yellow-shadow)}}">
+            <div class="notif-card__content" style="border-left-color: {{ item.getNuNot().getNotType().getTypColor }}!important">
                 <div class="tags_container">
-                    <p class="tag" style="background-color: {{ item.getNotType().getTypColor }}20; border-color: {{ item.getNotType().getTypColor }}!important">{{ item.getNotType().getTypName }}</p>
+                    <p class="tag" style="background-color: {{ item.getNuNot().getNotType().getTypColor }}20; border-color: {{ item.getNuNot().getNotType().getTypColor }}!important">{{ item.getNuNot().getNotType().getTypName }}</p>
                 </div>
-                <h3 class="notif-card__title">{{ item.getNotTitle() }}</h3>
-                <p class="notif-card__subject">{{ item.getNotSubject().getSbjRef ? item.getNotSubject().getSbjRef : '' }} - {{ item.getNotSubject().getSbjName ? item.getNotSubject().getSbjName : '' }}</p>
+                <h3 class="notif-card__title">{{ item.getNuNot().getNotTitle() }}</h3>
+                <p class="notif-card__subject">{{ item.getNuNot().getNotSubject().getSbjRef ? item.getNuNot().getNotSubject().getSbjRef : '' }} - {{ item.getNuNot().getNotSubject().getSbjName ? item.getNuNot().getNotSubject().getSbjName : '' }}</p>
             </div>
             <div class="double-button">
-                <button class="double-button__item see-button {{item.isNotIsSeen() ? '' : 'see-button__active'}}"><i class="fa-solid fa-eye"></i> Voir</button>
-                <button class="double-button__item delete-button" data-id="{{ item.getNotId() }}"><i class="fa-solid fa-trash-can"></i></button>
+                <button class="double-button__item see-button see-button__active"><i class="fa-solid fa-eye"></i> Voir</button>
+                <button class="double-button__item delete-button" data-id="{{ item.getNuNot().getNotId() }}"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+        </div>
+    {% endfor %}
+    <hr>
+    {% for item in notifSeen %}
+        <div class="notif-card">
+            <div class="notif-card__content" style="border-left-color: {{ item.getNuNot().getNotType().getTypColor }}!important">
+                <div class="tags_container">
+                    <p class="tag" style="background-color: {{ item.getNuNot().getNotType().getTypColor }}20; border-color: {{ item.getNuNot().getNotType().getTypColor }}!important">{{ item.getNuNot().getNotType().getTypName }}</p>
+                </div>
+                <h3 class="notif-card__title">{{ item.getNuNot().getNotTitle() }}</h3>
+                <p class="notif-card__subject">{{ item.getNuNot().getNotSubject().getSbjRef ? item.getNuNot().getNotSubject().getSbjRef : '' }} - {{ item.getNuNot().getNotSubject().getSbjName ? item.getNuNot().getNotSubject().getSbjName : '' }}</p>
+            </div>
+            <div class="double-button">
+                <button class="double-button__item see-button"><i class="fa-solid fa-eye"></i> Voir</button>
+                <button class="double-button__item delete-button" data-id="{{ item.getNuNot().getNotId() }}"><i class="fa-solid fa-trash-can"></i></button>
             </div>
         </div>
     {% endfor %}
