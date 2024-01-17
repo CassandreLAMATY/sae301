@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Notifications;
-use App\Entity\NotifUsers;
 use App\Repository\NotifUsersRepository;
 
 class NotificationsController extends AbstractController

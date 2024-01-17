@@ -40,7 +40,7 @@ class HomeController extends AbstractController
         // Selecting every notification id by user id
         $notifications = $notifUserRepository->findByUserID($user->getUsrId());
         $notifSeen = [];
-        $notifSeen = [];
+        $notifNotSeen = [];
 
         // Creating an array with every notification id
         $shouldNotify = false;
