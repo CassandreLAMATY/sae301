@@ -24,14 +24,12 @@ class HomeController extends AbstractController
 
     #[Route('/', name: 'app_home')]
     public function index(
-        CardsRepository $cardsRepository, 
-        TypesRepository $typesRepository, 
+        CardsRepository $cardsRepository,
+        TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository,
-        NotificationsRepository $notificationsRepository, 
+        NotificationsRepository $notificationsRepository,
         NotifUsersRepository $notifUserRepository
-    ): Response
-    {
-
+    ): Response {
         // -------------------------- NOTIFICATIONS --------------------------//
 
         // Selecting the user
@@ -45,7 +43,7 @@ class HomeController extends AbstractController
         // Creating an array with every notification id
         $shouldNotify = false;
         foreach ($notifications as $notif) {
-            if($notif->isNuSeen()) {
+            if ($notif->isNuSeen()) {
                 $notifSeen[] = $notif;
             } else {
                 $notifNotSeen[] = $notif;
@@ -54,15 +52,13 @@ class HomeController extends AbstractController
 
         // ----------------------- END NOTIFICATIONS ------------------------ //
 
-
-
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
         foreach ($cards as $card) {
             $timeEnd = $card->getCrdTo();
 
-            if($card->getCrdFrom()){
+            if ($card->getCrdFrom()) {
                 $timeEnd = $card->getCrdFrom();
             }
 
@@ -86,12 +82,12 @@ class HomeController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
-            if($dayLeft < 8) {
-                $timeColor= 'var(--accent-orange)';
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
             }
 
             if ($dayLeft < 3) {
-                $timeColor= 'var(--accent-red)';
+                $timeColor = 'var(--accent-red)';
             }
 
             if ($type !== null) {
@@ -117,6 +113,7 @@ class HomeController extends AbstractController
             $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
+
             return $this->render('home/index.html.twig', [
                 'username' => $username,
                 'lastname' => $lastname,
@@ -125,7 +122,7 @@ class HomeController extends AbstractController
                 'cardData' => $cardData,
 
                 'detailsCard' => null,
-                
+
                 'notifSeen' => $notifSeen,
                 'notifNotSeen' => $notifNotSeen,
                 'shouldNotify' => $shouldNotify,
@@ -136,26 +133,53 @@ class HomeController extends AbstractController
         }
     }
 
-    #[Route('/home-list', name: 'app_home_list')]
-    public function getListContent(
+    #[Route('/list', name: 'app_list')]
+    public function list(
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository
-    ): Response
-    {
+        SubjectsRepository $subjectsRepository,
+        NotificationsRepository $notificationsRepository,
+        NotifUsersRepository $notifUserRepository
+    ): Response {
+        // -------------------------- NOTIFICATIONS --------------------------//
+
+        // Selecting the user
+        $user = $this->getUser();
+
+        // Selecting every notification id by user id
+        $notifications = $notifUserRepository->findByUserID($user->getUsrId());
+        $notifSeen = [];
+        $notifSeen = [];
+
+        // Creating an array with every notification id
+        $shouldNotify = false;
+        foreach ($notifications as $notif) {
+            if ($notif->isNuSeen()) {
+                $notifSeen[] = $notif;
+            } else {
+                $notifNotSeen[] = $notif;
+            }
+        }
+
+        // ----------------------- END NOTIFICATIONS ------------------------ //
+
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
         foreach ($cards as $card) {
-
             $timeEnd = $card->getCrdTo();
 
-            if($card->getCrdFrom()){
+            if ($card->getCrdFrom()) {
                 $timeEnd = $card->getCrdFrom();
             }
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
+
+            //if timeEnd is before now, skip this card
+            if ($timeEnd < $now) {
+                continue;
+            }
 
             $typeId = $card->getCrdTypId();
             $type = $typesRepository->find($typeId);
@@ -169,8 +193,12 @@ class HomeController extends AbstractController
 
             $timeColor = 'var(--grey)';
 
-            if($dayLeft < 8) {
-                $timeColor= 'var(--accent-orange)';
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
             }
 
             if ($type !== null) {
@@ -189,8 +217,30 @@ class HomeController extends AbstractController
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
         });
 
-        $content = $this->renderView('home/list.html.twig', ['cardData' => $cardData]);
+        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Utilisateur déjà connecté,
+            $user = $this->getUser();
+            $username = $user->getUsrPseudo();
+            $lastname = $user->getUsrName();
+            $firstname = $user->getUsrFirstname();
+            $email = $user->getUsrMail();
 
-        return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
+            return $this->render('home/list.html.twig', [
+                'username' => $username,
+                'lastname' => $lastname,
+                'firstname' => $firstname,
+                'email' => $email,
+                'cardData' => $cardData,
+
+                'detailsCard' => null,
+
+                'notifSeen' => $notifSeen,
+                'notifNotSeen' => $notifNotSeen,
+                'shouldNotify' => $shouldNotify,
+            ]);
+        } else {
+            // Utilisateur non connecté,
+            return $this->redirectToRoute('app_login');
+        }
     }
 }
