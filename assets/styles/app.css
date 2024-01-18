@@ -18,7 +18,8 @@
     --accent-orange: #f5af47;
     --accent-red: #ff4040;
     --accent-red-shadow: #de2727;
-    --accent-green: #6ee014;
+    --accent-green: #80d030;
+    --accent-green--shadow: #51990a;
     --accent-blue: #4098ff; /* couleur pour les tags A SUPPRIMER APRÈS */
     --accent-blue-shadow: #1571dd;
 
@@ -411,8 +412,14 @@ a:has(> .delete-button) {
 
 main {
     display: flex;
-    gap: 15px;
+    gap: var(--grup);
     height: calc(100vh - var(--grup3));
+}
+
+@media screen and (max-width: 1165px) {
+    main {
+        gap: 0;
+    }
 }
 
 /*/ ------------------------------------------------------------------------ /*/

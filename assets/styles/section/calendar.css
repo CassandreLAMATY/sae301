@@ -5,7 +5,7 @@
 #calendar {
     width: 100%;
     height: calc(100vh - var(--grup4));
-    padding-left: 20px;
+    padding-left: var(--grup);
 }
 
 #calendar button,
@@ -75,4 +75,14 @@
 #calendar .fc-header-toolbar:not(.filter) .fc-timeGridWeek-button {
     padding-left: var(--grup) !important;
     padding-right: var(--grup) !important;
+}
+
+@media screen and (max-width: 1165px) {
+    #calendar {
+        padding: 0 var(--grup);
+    }
+
+    #calendar .fc-header-toolbar:not(.filter) {
+        margin-right: calc(var(--grup2) + var(--grup));
+    }
 }

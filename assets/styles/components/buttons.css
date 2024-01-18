@@ -90,22 +90,29 @@ button.btn--force-single {
 
 /* 🟢 ----- CLASSES VALIDATIONS ----- 🟢 */
 
-button.a-faire {
+button.btn--a-faire {
     background-color: var(--accent-blue);
     box-shadow: 0 0 0 2px var(--accent-blue-shadow);
+    color: var(--main--white);
 }
 
-button.a-faire:hover {
+button.btn--a-faire {
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px var(--accent-blue-shadow);
+    color: var(--main--white);
+}
+
+button.btn--a-faire:hover {
     background-color: var(--accent-blue-shadow);
 }
 
-button.fait {
+button.btn--fait {
     background-color: var(--accent-green);
-    box-shadow: 0 0 0 2px var(--accent-green-shadow);
+    box-shadow: 0 0 0 2px var(--accent-green--shadow);
 }
 
-button.fait:hover {
-    background-color: var(--accent-green-shadow);
+button.btn--fait:hover {
+    background-color: var(--accent-green--shadow);
 }
 
 /* ⚫ ------------------ ⚫ */

@@ -5,7 +5,13 @@
 #details {
     position: absolute;
     top: 0;
-    right: -100%;
+    right: 0;
+    transform: translateX(0%);
+    transition: transform 0.5s ease-in-out;
+}
+
+#details.details--oppenned {
+    transform: translateX(-100%);
 }
 
 /* 🟢 --- DETAIL HEAD --- 🟢 */
@@ -367,3 +373,18 @@
     background-color: var(--accent-yellow);
 }
 
+#details.details--openned {
+    transform: translateX(-100%);
+}
+
+@media screen and (max-width: 1165px) {
+    #details {
+        opacity: 0;
+    }
+
+    #details.details--openned {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+
+}
