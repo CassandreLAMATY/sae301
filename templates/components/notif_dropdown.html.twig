@@ -19,7 +19,11 @@
                     <p class="tag" style="background-color: {{ item.getNuNot().getNotType().getTypColor }}20; border-color: {{ item.getNuNot().getNotType().getTypColor }}!important">{{ item.getNuNot().getNotType().getTypName }}</p>
                 </div>
                 <h3 class="notif-card__title">{{ item.getNuNot().getNotTitle() }}</h3>
-                <p class="notif-card__subject">{{ item.getNuNot().getNotSubject().getSbjRef ? item.getNuNot().getNotSubject().getSbjRef : '' }} - {{ item.getNuNot().getNotSubject().getSbjName ? item.getNuNot().getNotSubject().getSbjName : '' }}</p>
+                {% if item.getNuNot().getNotSubject() %}
+                    <p class="notif-card__subject">{{ item.getNuNot().getNotSubject().getSbjRef ? item.getNuNot().getNotSubject().getSbjRef : '' }} - {{ item.getNuNot().getNotSubject().getSbjName ? item.getNuNot().getNotSubject().getSbjName : '' }}</p>
+                {% else %}
+                    <p class="notif-card__subject">{{ item.getNuNot().getNotContent }}</p>
+                {% endif %}
             </div>
             <div class="double-button">
                 <button class="double-button__item see-button see-button__active"><i class="fa-solid fa-eye"></i> Voir</button>
