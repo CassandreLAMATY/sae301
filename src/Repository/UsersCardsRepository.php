@@ -28,6 +28,19 @@ class UsersCardsRepository extends ServiceEntityRepository
             ->addSelect('c')
             ->andWhere('uc.uc_usr = :id')
             ->setParameter('id', $usr_id)
+            ->orderBy('c.crd_to', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByUserIdNotOutdated($usr_id): array
+    {
+        return $this->createQueryBuilder('uc')
+            ->innerJoin('uc.uc_crd', 'c')
+            ->addSelect('c')
+            ->andWhere('uc.uc_usr = :id')
+            ->setParameter('id', $usr_id)
             ->andWhere('c.crd_to >= :now')
             ->setParameter('now', new \DateTime())
             ->orderBy('c.crd_to', 'ASC')
