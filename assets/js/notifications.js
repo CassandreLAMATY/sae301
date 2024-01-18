@@ -1,10 +1,12 @@
 const notif = document.querySelector('.notif');
 const notifDot = document.querySelector('.notif-dot');
 const dropdown = document.querySelector('.notif-dropdown');
+const notifCards = document.querySelectorAll('.notif-card');
 const deleteButton = document.querySelectorAll('.delete-button');
 const tagNew = document.querySelector('.tag.new');
 const hr = document.querySelector('.notif-separator');
 const noNotif = document.querySelector('.notif-message');
+const readNotif = document.querySelector('.empty-notif');
 
 let timer;
 dropdown.addEventListener('mouseenter', () => {
@@ -36,8 +38,8 @@ deleteButton.forEach(button => {
                 }
                 button.parentElement.parentElement.remove();
 
-                const notifCards = dropdown.querySelectorAll('.notif-card');
-                if (notifCards.length <= 0) {
+                const DnotifCards = dropdown.querySelectorAll('.notif-card');
+                if (DnotifCards.length <= 0) {
                     tagNew.style.display = 'none';
                     hr.style.display = 'none';
                     noNotif.style.display = 'block';
@@ -52,5 +54,26 @@ deleteButton.forEach(button => {
             deleteButtonContent.classList.remove('fa-trash-can');
             deleteButtonContent.classList.add('fa-circle-check');
         }
+    });
+});
+
+readNotif.addEventListener('click', () => {
+    fetch('/notifications/markAllAsRead', {
+        method: 'POST',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Quelque chose s\'est mal passé...');
+        }
+        tagNew.style.display = 'none';
+        hr.style.display = 'none';
+        noNotif.style.display = 'block';
+        notifDot.style.display = 'none';
+        notifCards.forEach(card => {
+            card.remove();
+        });
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'opération, action annulée :', error);
     });
 });
