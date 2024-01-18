@@ -157,8 +157,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     getDetailsCard('fc-event-main');
     getDetailsCard('item');
 
-    const originalCalendarContent = document.querySelector(
-      '.fc-view-harness').innerHTML;
+    const btnCalendar = document.querySelector('.btn-calendar');
+    const btnList = document.querySelector('.btn-list');
+
+    btnCalendar.addEventListener('click', function() {
+      window.location.href = '/home';
+      console.log('ok');
+    });
+
+    btnList.addEventListener('click', function() {
+      window.location.href = '/list';
+    });
 
     const btnWeek = document.querySelector('[title="Semaine"]');
     btnWeek.addEventListener('click', function() {
