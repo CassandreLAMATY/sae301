@@ -156,5 +156,11 @@
                 {% endfor %}
             </div>
         </div>
+        <div style="display: flex; flex-direction: column">
+            {% for week in weekList %}
+                <p>{{ week }}</p>
+            {% endfor %}
+        </div>
+
     </main>
 {% endblock %}

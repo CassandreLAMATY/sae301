@@ -176,11 +176,6 @@ class HomeController extends AbstractController
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            //if timeEnd is before now, skip this card
-            if ($timeEnd < $now) {
-                continue;
-            }
-
             $typeId = $card->getCrdTypId();
             $type = $typesRepository->find($typeId);
 
@@ -217,6 +212,8 @@ class HomeController extends AbstractController
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
         });
 
+        $weekList = $this->generateWeekList();
+
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
             $user = $this->getUser();
@@ -237,10 +234,43 @@ class HomeController extends AbstractController
                 'notifSeen' => $notifSeen,
                 'notifNotSeen' => $notifNotSeen,
                 'shouldNotify' => $shouldNotify,
+                'weekList' => $weekList,
             ]);
         } else {
             // Utilisateur non connecté,
             return $this->redirectToRoute('app_login');
         }
     }
+
+    protected function generateWeekList()
+    {
+        $startDate = new \DateTime('now');
+        $endDate = (clone $startDate)->add(new \DateInterval('P6M'));
+
+        $currentWeek = clone $startDate;
+        $weekList = [];
+
+        // Créer un formateur de date pour le format français
+        $formatter = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+
+        while ($currentWeek < $endDate) {
+            // Formater le début et la fin de la semaine en utilisant le formateur
+            $startOfWeek = $formatter->format($currentWeek);
+            $endOfWeek = $formatter->format((clone $currentWeek)->add(new \DateInterval('P7D')));
+
+            $weekString = sprintf(
+                'Semaine %s - %s / %s',
+                $currentWeek->format('W'),
+                $startOfWeek,
+                $endOfWeek
+            );
+
+            $weekList[] = $weekString;
+
+            $currentWeek->add(new \DateInterval('P7D'));
+        }
+
+        return $weekList;
+    }
+
 }
