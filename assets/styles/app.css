@@ -150,6 +150,8 @@ header {
     border-radius    : 50%;
 }
 
+
+
 /* usercard menu */
 .userCard {
     position    : relative;
@@ -173,6 +175,8 @@ header {
     font-size   : var(--grup);
     font-weight : 600;
 }
+
+
 
 /* dropdown */
 .userCard-dropdown,
@@ -289,6 +293,8 @@ header {
     font-size: var(--grup);
 }
 
+
+
 /* notif */
 .notif-dropdown > .double-button {
     justify-self : right;
@@ -338,6 +344,22 @@ header {
     border: unset;
     border-top: solid 1px var(--secondary-gray--02);
 }
+
+.delete-confirm {
+    display: none;
+    position: absolute;
+    top: calc( 100% + var(--grup-3) );
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: fit-content;
+    text-wrap: nowrap;
+
+    font-size: var(--grup-1);
+    color: var(--accent-red-shadow);
+}
+
+
 
 /* userCard */
 .buttons-container {
@@ -479,6 +501,7 @@ header {
 }
 
 .delete-button {
+    position: relative;
     background-color : var(--accent-red);
     box-shadow       : 0 0 0 2px var(--accent-red-shadow);
 

@@ -55,6 +55,9 @@ deleteButton.forEach(button => {
         if( deleteButtonContent.classList.contains('fa-trash-can') ) {
             deleteButtonContent.classList.remove('fa-trash-can');
             deleteButtonContent.classList.add('fa-circle-check');
+
+            const confirm = button.parentElement.querySelector('.delete-confirm')
+            confirm.style.display = 'block';
         }
     });
 });
