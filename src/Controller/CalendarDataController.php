@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\CardsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,10 +23,10 @@ class CalendarDataController extends AbstractController
                     "title" => $card->getUcCrdId()->getCrdTitle(),
                     'subject' => $card->getUcCrdId()->getCrdSbjId(),
                     'type' => $card->getUcCrdId()->getCrdTypId(),
-
                     'start' => $card->getUcCrdId()->getCrdFrom()->format('Y-m-d'),
                     'end' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
                     'hour' => $card->getUcCrdId()->getCrdTo()->format('H:i'),
+                    "isValidated" => $card->getUcCrdId()->getIsValidated(),
                 ];
                 continue;
             }
@@ -36,12 +35,11 @@ class CalendarDataController extends AbstractController
                 "title" => $card->getUcCrdId()->getCrdTitle(),
                 'subject' => $card->getUcCrdId()->getCrdSbjId(),
                 'type' => $card->getUcCrdId()->getCrdTypId(),
-
-                'end' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
+                'start' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
                 'hour' => $card->getUcCrdId()->getCrdTo()->format('H:i'),
+                "isValidated" => $card->getUcCrdId()->getIsValidated(),
             ];
         }
-
         return $this->json($data);
     }
 }
