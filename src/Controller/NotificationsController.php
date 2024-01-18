@@ -63,29 +63,4 @@ class NotificationsController extends AbstractController
 
         return new Response('marked');
     }
-
-    #[Route('/notifications/selectAllByUser', name: 'app_notifications_readAll', methods: ["GET"])]
-    public function selectAllByUser(
-        NotifUsersRepository $notifUsersRepository
-    ): Response
-    {
-        $user = $this->getUser();
-
-        // select user's notification
-        $nu = $notifUsersRepository->findByUserID($user->getUsrId());
-
-        $notifications = [];
-
-        foreach ($nu as $row) {
-            $notifications[] = [
-                'id' => $row->getNuNot()->getNotId(),
-                'title' => $row->getNuNot()->getNotTitle(),
-                'content' => $row->getNuNot()->getNotContent(),
-                'date' => $row->getNuNot()->getNotDate(),
-                'isSeen' => $row->isNuSeen()
-            ];
-        }
-
-        return $this->json($notifications);
-    }
 } 

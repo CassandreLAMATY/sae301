@@ -12,7 +12,7 @@ class NotifService {
         // Creating an array with every notification id
         $shouldNotify = false;
         foreach ($notifications as $notif) {
-            if ($notif->isNuSeen() == true) {
+            if ($notif->isNuSeen() == false) {
                 $shouldNotify = true;
             }
             if($notif->isNuSeen()) {

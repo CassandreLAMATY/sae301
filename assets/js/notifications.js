@@ -2,6 +2,8 @@ const notif = document.querySelector('.notif');
 const notifDot = document.querySelector('.notif-dot');
 const dropdown = document.querySelector('.notif-dropdown');
 const notifCards = document.querySelectorAll('.notif-card');
+const newNotif = document.querySelectorAll('.new-notif');
+const separator = document.querySelector('.notif-separator');
 const deleteButton = document.querySelectorAll('.delete-button');
 const tagNew = document.querySelector('.tag.new');
 const hr = document.querySelector('.notif-separator');
@@ -67,10 +69,16 @@ readNotif.addEventListener('click', () => {
         }
         tagNew.style.display = 'none';
         hr.style.display = 'none';
-        noNotif.style.display = 'block';
         notifDot.style.display = 'none';
-        notifCards.forEach(card => {
-            card.remove();
+        console.log(newNotif);
+        newNotif.forEach(card => {
+            separator.parentNode.insertBefore(card, separator.nextSibling);
+
+            card.classList.remove('new-notif');
+            card.classList.add('old-notif');
+            card.style.border = "none";
+            card.style.boxShadow = "0 0 0 2px var(--secondary-gray--02)";
+            card.querySelector('.see-button').classList.remove('see-button__active');
         });
     })
     .catch(error => {

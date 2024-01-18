@@ -13,7 +13,7 @@
     
     {# NEW NOTIFICATIONS #}
     {% for item in notifNotSeen %}
-        <div class="notif-card" style="border: solid 2px var(--accent-yellow-shadow)">
+        <div class="new-notif notif-card" style="border: solid 2px var(--accent-yellow-shadow)">
             <div class="notif-card__content" style="border-left-color: {{ item.getNuNot().getNotType().getTypColor }}!important">
                 <div class="tags_container">
                     <p class="tag" style="background-color: {{ item.getNuNot().getNotType().getTypColor }}20; border-color: {{ item.getNuNot().getNotType().getTypColor }}!important">{{ item.getNuNot().getNotType().getTypName }}</p>
@@ -28,13 +28,13 @@
         </div>
     {% endfor %}
 
-    {% if notifNotSeen is not empty %}
+    {% if notifNotSeen is not empty and notifSeen is not empty %}
         <hr class="notif-separator">
     {% endif %}
 
     {# OLD NOTIFICATIONS #}
     {% for item in notifSeen %}
-        <div class="notif-card">
+        <div class="old-notif notif-card">
             <div class="notif-card__content" style="border-left-color: {{ item.getNuNot().getNotType().getTypColor }}!important">
                 <div class="tags_container">
                     <p class="tag" style="background-color: {{ item.getNuNot().getNotType().getTypColor }}20; border-color: {{ item.getNuNot().getNotType().getTypColor }}!important">{{ item.getNuNot().getNotType().getTypName }}</p>
@@ -56,3 +56,12 @@
     {# NO NOTIFICATION #}
     <p class="notif-message" style="{% if notifNotSeen is empty and notifSeen is empty %} display: block; {% endif %}">Aucune notification pour l'instant...</p>
 </div>
+    
+<script>
+    const _notifCards = document.querySelectorAll('.notif-card');
+
+    if (_notifCards.length > 6) {
+        const lastNotifCards = Array.from(_notifCards).slice(6);
+        lastNotifCards.forEach(card => card.remove());
+    }
+</script>
