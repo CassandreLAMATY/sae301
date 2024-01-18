@@ -9,6 +9,17 @@
 
 ////////////////////////////// CALENDAR //////////////////////////////
 document.addEventListener('DOMContentLoaded', async function() {
+  if(document.getElementById('main-list')) {
+    const btnCalendar = document.querySelector('.btn-calendar');
+    btnCalendar.addEventListener('click', function() {
+      window.location.href = '/';
+    });
+
+    for (let i = 1; i <= 4; i++) {
+      typeFilter(i);
+    }
+  }
+
   if (document.getElementById('calendar')) {
     const dataSubject = await fetch('/subjects/data').
       then(response => response.json());
@@ -115,7 +126,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // FILTRER LES ÉVÉNEMENTS
     for (let i = 1; i <= 4; i++) {
-      console.log('events');
       typeFilter(i);
     }
 
@@ -160,10 +170,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const btnCalendar = document.querySelector('.btn-calendar');
     const btnList = document.querySelector('.btn-list');
 
-    btnCalendar.addEventListener('click', function() {
-      window.location.href = '/home';
-      console.log('ok');
-    });
+
 
     btnList.addEventListener('click', function() {
       window.location.href = '/list';
