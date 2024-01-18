@@ -60,6 +60,13 @@ document.addEventListener('DOMContentLoaded', async function() {
       const slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
       thirdToolbarChunk.removeChild(slideBtn);
       thirdToolbarChunk.appendChild(slideBtn);
+      slideBtn = thirdToolbarChunk.querySelector('.fc-button-group');
+
+      slideBtn.addEventListener('click', function() {
+        for (let i = 1; i <= 4; i++) {
+          typeFilter(i);
+        }
+      });
 
       // METTRE LE BOUTON TODAY À DROITE
       const todayBtn = firstToolbarChunk.querySelector('.fc-today-button');
@@ -81,6 +88,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Créer les boutons de filtres
     const divFilter = document.createElement('div');
     divFilter.classList.add('fc-toolbar-chunk');
+    divFilter.classList.add('filter-nav');
 
     divFilters.appendChild(divFilter);
 
@@ -110,13 +118,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     divFilter.appendChild(subjectDiv);
 
     //créer un input select
-    const select = document.createElement('select');
+    const select = document.createElement('button');
     select.classList.add('fc-button');
     select.classList.add('fc-button-primary');
 
-    select.innerHTML = dataSubject;
+    select.innerHTML = 'Matières <i class="fa-solid fa-angle-down"></i>';
 
     subjectDiv.appendChild(select);
+
+    const selectChoices = document.createElement('div');
+    selectChoices.classList.add('subject-choices');
+
+    subjectDiv.appendChild(selectChoices);
+
+    selectChoices.innerHTML = dataSubject;
 
     // FILTRER LES ÉVÉNEMENTS
     for (let i = 1; i <= 4; i++) {
@@ -132,8 +147,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const response = await fetch('/home-list');
         const htmlContent = await response.text();
 
-// Now, you can use the HTML content as needed
-        console.log(htmlContent);
+    getView(originalCalendarContent);
+    getHomeView()
 
         document.querySelector('main').innerHTML = htmlContent;
       } catch (error) {
@@ -258,40 +273,117 @@ function typeFilter(typeId) {
   const btnsTypes = document.querySelectorAll('.types button');
   const btnType = typeId - 1;
 
-  btnsTypes[btnType].addEventListener('click', function() {
-    const events = document.querySelectorAll('.fc-event-main');
-    const eventsList = document.querySelectorAll('.item');
+  const isPressed = localStorage.getItem('typeId[' + typeId + ']') !== null;
+  btnsTypes[btnType].setAttribute('aria-pressed', isPressed ? 'true' : 'false');
 
-    if (this.getAttribute('aria-pressed') === 'true') {
-      events.forEach(event => {
-        if (event.querySelector('.type-id').innerHTML == typeId) {
-          event.parentNode.style.display = 'none';
-        }
-      });
-      eventsList.forEach(eventList => {
-        if (eventList.querySelector('.type-id').innerHTML == typeId) {
-          eventList.style.display = 'none';
-        }
-      });
-      this.setAttribute('aria-pressed', 'false');
+  hideElement(typeId, isPressed);
+
+  btnsTypes[btnType].addEventListener('click', function() {
+    if (localStorage.getItem('typeId[' + typeId + ']')) {
+      localStorage.removeItem('typeId[' + typeId + ']');
     } else {
-      events.forEach(event => {
-        if (event.querySelector('.type-id').innerHTML == typeId) {
-          event.parentNode.style.display = 'block';
-        }
-      });
-      eventsList.forEach(eventList => {
-        if (eventList.querySelector('.type-id').innerHTML == typeId) {
-          eventList.style.display = 'grid';
-        }
-      });
-      this.setAttribute('aria-pressed', 'true');
+      localStorage.setItem('typeId[' + typeId + ']', typeId);
     }
+
+    // Passer isPressed à la fonction hideElement
+    hideElement(typeId, !isPressed);
   });
 }
 
-function changeVew(){
+function hideElement(typeId, isPressed) {
+  const events = document.querySelectorAll('.fc-event-main');
+  const eventsList = document.querySelectorAll('.item');
 
-
+  if (isPressed) {
+    events.forEach(event => {
+      if (event.querySelector('.type-id').innerHTML == typeId) {
+        event.parentNode.style.display = 'none';
+      }
+    });
+    eventsList.forEach(eventList => {
+      if (eventList.querySelector('.type-id').innerHTML == typeId) {
+        eventList.style.display = 'none';
+      }
+    });
+  } else {
+    events.forEach(event => {
+      if (event.querySelector('.type-id').innerHTML == typeId) {
+        event.parentNode.style.display = 'block';
+      }
+    });
+    eventsList.forEach(eventList => {
+      if (eventList.querySelector('.type-id').innerHTML == typeId) {
+        eventList.style.display = 'grid';
+      }
+    });
+  }
 }
 
+function getView(originalCalendarContent) {
+  const listView = document.querySelector('.list-view');
+
+  listView.addEventListener('click', async function() {
+    try {
+      const response = await fetch('/home-list');
+      const htmlContent = await response.text();
+
+      document.querySelector('.fc-view-harness').innerHTML = htmlContent;
+      localStorage.setItem('view', 2);
+      for (let i = 1; i <= 4; i++) {
+        typeFilter(i);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du contenu détaillé :',
+        error);
+    }
+
+    const detailsCard = document.getElementById('section-right');
+    detailsCard.style.display = 'none';
+
+    const btnCalendar = document.querySelector('.btn-calendar');
+    btnCalendar.classList.toggle('fc-button-active');
+
+    const btnList = document.querySelector('.btn-list');
+    btnList.classList.toggle('fc-button-active');
+  });
+
+  const calendarView = document.querySelector('.calendar-view');
+  calendarView.addEventListener('click', async function() {
+    try {
+      document.querySelector('.fc-view-harness').innerHTML = originalCalendarContent;
+      localStorage.setItem('view', 1);
+    } catch (error) {
+      console.error('Erreur lors de la récupération du contenu détaillé :',
+        error);
+    }
+
+    for (let i = 1; i <= 4; i++) {
+      typeFilter(i);
+    }
+
+    const detailsCard = document.getElementById('section-right');
+    detailsCard.style.display = 'block';
+
+    const btnCalendar = document.querySelector('.btn-calendar');
+    btnCalendar.classList.toggle('fc-button-active');
+
+    const btnList = document.querySelector('.btn-list');
+    btnList.classList.toggle('fc-button-active');
+
+    getDetailsCard('fc-event-main');
+
+  });
+}
+
+function getHomeView(){
+
+  if(localStorage.getItem('view') == 2){
+    const listView = document.querySelector('.list-view');
+    listView.click();
+  }
+  else{
+    const calendarView = document.querySelector('.calendar-view');
+    calendarView.click();
+  }
+
+}

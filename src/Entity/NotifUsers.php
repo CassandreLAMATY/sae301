@@ -21,6 +21,9 @@ class NotifUsers
     #[ORM\JoinColumn(referencedColumnName: "usr_id", nullable: false)]
     private ?Users $nu_usr = null;
 
+    #[ORM\Column]
+    private ?bool $nu_is_seen = null;
+
     public function getId(): ?int
     {
         return $this->nu_id;
@@ -46,6 +49,18 @@ class NotifUsers
     public function setNuUsr(?Users $nu_usr): static
     {
         $this->nu_usr = $nu_usr;
+
+        return $this;
+    }
+
+    public function isNuSeen(): ?bool
+    {
+        return $this->nu_is_seen;
+    }
+
+    public function setNuIsSeen(bool $nu_is_seen): static
+    {
+        $this->nu_is_seen = $nu_is_seen;
 
         return $this;
     }

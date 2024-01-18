@@ -45,32 +45,34 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         // Selecting every notification id by user id
-        $nu = $notifUserRepository->findByUserID($user->getUsrId());
+        $notifications = $notifUserRepository->findByUserID($user->getUsrId());
+        $notifSeen = [];
+        $notifNotSeen = [];
 
         // Creating an array with every notification id
-        $notificationsId = [];
-        foreach ($nu as $notif) {
-            $notificationsId[] = $notif->getNuNot();
-        }
-
-        $notifications = $notificationsRepository->findById($notificationsId);
-
         $shouldNotify = false;
-        foreach ($notifications as $notification) {
-            if (!$notification->isNotIsSeen()) {
-                $shouldNotify = true;
+        foreach ($notifications as $notif) {
+            if ($notif->isNuSeen()) {
+                $notifSeen[] = $notif;
+            } else {
+                $notifNotSeen[] = $notif;
             }
         }
 
         // ----------------------- END NOTIFICATIONS ------------------------ //
 
-
+        // ------------------------------ CARDS ------------------------------//
 
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
         foreach ($cards as $card) {
             $timeEnd = $card->getCrdTo();
+
+            if ($card->getCrdFrom()) {
+                $timeEnd = $card->getCrdFrom();
+            }
+
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
@@ -130,9 +132,11 @@ class HomeController extends AbstractController
                 'cardData' => $cardData,
 
                 'detailsCard' => null,
-                'showParams' => false,
-                'notifications' => $notifications,
+
+                'notifSeen' => $notifSeen,
+                'notifNotSeen' => $notifNotSeen,
                 'shouldNotify' => $shouldNotify,
+                'showParams' => false,
             ]);
         } else {
             // Utilisateur non connecté,
@@ -150,7 +154,13 @@ class HomeController extends AbstractController
         $cardData = [];
 
         foreach ($cards as $card) {
+
             $timeEnd = $card->getCrdTo();
+
+            if ($card->getCrdFrom()) {
+                $timeEnd = $card->getCrdFrom();
+            }
+
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
