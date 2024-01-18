@@ -130,7 +130,9 @@ class HomeController extends AbstractController
     public function getListContent(
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository
+        SubjectsRepository $subjectsRepository,
+        NotifUsersRepository $notifUserRepository,
+        NotifService $notificationsService
     ): Response {
         $cards = $cardsRepository->findAll();
         $cardData = [];
@@ -193,7 +195,7 @@ class HomeController extends AbstractController
             // Utilisateur déjà connecté,
             $user = $this->getUser();
             $username = $user->getUsrPseudo();
-            $name = $user->getUsrName();
+            $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
             $email = $user->getUsrMail();
             $homeworkReminder = $user->isUsrHomeworkReminder();
@@ -238,7 +240,7 @@ class HomeController extends AbstractController
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
-                'name' => $name,
+                'lastname' => $lastname,
                 'firstname' => $firstname,
                 'email' => $email,
                 'cardData' => $cardData,
@@ -249,6 +251,10 @@ class HomeController extends AbstractController
                 'modifReminder' => $modifReminder,
                 'cookies' => $cookies,
                 'detailsCard' => null,
+
+                'notifSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifSeen'],
+                'notifNotSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifNotSeen'],
+                'shouldNotify' => $notificationsService->getUserNotifications($user, $notifUserRepository)['shouldNotify'],
             ]);
         } else {
             // Utilisateur non connecté,
