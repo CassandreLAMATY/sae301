@@ -25,6 +25,7 @@ class CalendarDataController extends AbstractController
                     'subject' => $card->getCrdSbjId(),
                     'type' => $card->getCrdTypId(),
                     'id' => $card->getId(),
+                    'isValidated' => $card->getIsValidated(),
                 ];
                 continue;
             }
@@ -35,6 +36,7 @@ class CalendarDataController extends AbstractController
                 'subject' => $card->getCrdSbjId(),
                 'type' => $card->getCrdTypId(),
                 'id' => $card->getId(),
+                'isValidated' => $card->getIsValidated(),
             ];
         }
 
