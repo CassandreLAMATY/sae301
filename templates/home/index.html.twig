@@ -3,32 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    {#<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            console.log('Document ready');
-            // Initialisation : Cache le formulaire
-            $('#createCardFormContainer').hide();
 
-
-
-            // Charge le formulaire de création de carte en AJAX
-            $.get('{{ path('create_cards') }}', function(response) {
-                $('#createCardFormContainer').html(response);
-            });
-
-            // Ajoute un gestionnaire d'événement pour le clic sur le bouton
-            $('#toggleCreateCardForm').click(function() {
-                $('#createCardFormContainer').toggle();
-                $('.items').toggle();
-                $('#side-list_title').toggle();
-                console.log('End of document ready');
-
-            });
-
-        });
-
-    </script>#}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             console.log('Document ready');
@@ -91,15 +66,16 @@
 
 
     {% include 'components/header.html.twig' %}
-
+    <button id="toggleCreateCardForm">Créer une carte-------------------</button>
     <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
-            <div class="side-list">
-                <button id="toggleCreateCardForm">Créer une carte-------------------</button>
-                <div id="createCardFormContainer" class="card">
 
-                </div>
+            <div class="side-list">
+
+
+
+                <div id="createCardFormContainer" class="card"></div>
                 <div id="side-list_title">
                     <h2>À Venir</h2>
                 </div>

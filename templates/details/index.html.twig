@@ -1,4 +1,5 @@
 {% if detailsCard %}
+
     {% for item in detailsCard %}
         <div class='detail--back'>
             <button id="back"><i class="fa-solid fa-arrow-right-long"></i></button>
@@ -43,12 +44,12 @@
                     {% endif %}
                 </div>
                 <div class='detail--content--time--right double-button'>
-                    <button class='double-button__item'><i class="fa-solid fa-pen"></i>Modifier</button>
+                    <button class='double-button__item'><i class="fa-solid fa-pen "></i>Modifier</button>
                     <button class='double-button__item signalement'><i class="fa-solid fa-flag"></i></button>
                 </div>
             </div>
             <div class='detail--content--subject detail--content--format'>
-                <p class='detail--content--format-t'><i class="fa-solid fa-book"></i>Matière</p>
+                <p class='detail--content--format-t'><i class="fa-solid fa-book modify-button"></i>Matière</p>
                 <p class='detail--content--format-c'>{{ item.subjectName }}</p>
             </div>
             {% if  item.card.getCrdDesc %}

@@ -26,25 +26,11 @@
 {{ form_label(form.crd_sbj,'Matière de l\'évènement : ') }}
     {{ form_widget(form.crd_sbj) }}
 </div>
+<div id="label_crd_grp">
+    {{ form_label(form.crd_grp,'Groupe de l\'évènement : ') }}
+    {{ form_widget(form.crd_grp) }}
+</div>
     <button type="submit">Valider</button>
 {{ form_end(form) }}
 
-{#
-<script>
-    document.getElementById('cards_crd_typ').addEventListener('change', function() {
-        var selectedValue = this.value;
-        console.log(selectedValue);
-        // Masquez ou affichez le champ crd_sbj en fonction du choix
-        if (selectedValue === '1'|| selectedValue=== '2') {
-            document.getElementById('label_crd_sbj').style.display = 'block';
-            document.getElementById('label_crd_from').style.display = 'none';
-        } else if (selectedValue === '3'|| selectedValue=== '4') {
-            document.getElementById('label_crd_from').style.display = 'block';
-            document.getElementById('label_crd_sbj').style.display = 'none';
-        } else {
-            // Affichez les deux champs ou effectuez d'autres actions si nécessaire
-            document.getElementById('cards_crd_sbj').style.display = 'none';
-            document.getElementById('cards_crd_from').style.display = 'none';
-        }
-    });
-</script>#}
+

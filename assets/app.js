@@ -245,6 +245,7 @@ function getDetailsCard(className) {
 
       }).then(data => {
         console.log('Success:', data);
+        console.log(eventId);
       }).catch(error => {
         console.error('Error:', error);
       });
@@ -252,6 +253,38 @@ function getDetailsCard(className) {
     });
   }
 }
+function modifyCard(className) {
+  let modifyButtons = document.getElementsByClassName(className);
+  for (let i = 0; i < modifyButtons.length; i++) {
+    modifyButtons[i].addEventListener('click', function() {
+      let eventId = this.dataset.eventId;
+
+      // Effectuez une requête POST pour modifier la carte
+      fetch('/modify-cards/' + eventId, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ eventId: eventId }),
+      })
+
+          .then(async (response) => {
+            console.log(eventId);
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            // Gérez la réponse comme nécessaire
+            console.log(await response.text());
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+    });
+  }
+}
+
+// Utilisation : Appelez cette fonction avec la classe de vos boutons de modification
+modifyCard('modify-button');
 
 function createFilter(className, nbFiltersOptions) {
 
