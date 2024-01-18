@@ -67,13 +67,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       //retirer les évenements
 
       slideBtn.addEventListener('click', function() {
-        console.log('slide')
+        console.log('slide');
         for (let i = 1; i <= 4; i++) {
           const btnsTypes = document.querySelectorAll('.types button');
           const btnType = i - 1;
           const isPressed = localStorage.getItem('typeId[' + i + ']') !== null;
           console.log(isPressed, i);
-          btnsTypes[btnType].setAttribute('aria-pressed', isPressed ? 'true' : 'false');
+          btnsTypes[btnType].setAttribute('aria-pressed',
+            isPressed ? 'false' : 'true');
 
           hideType(i, isPressed);
         }
@@ -112,10 +113,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     btnTypes[2].innerHTML = 'IUT';
     btnTypes[3].innerHTML = 'BDE';
 
-
     // FILTRER LES ÉVÉNEMENTS
     for (let i = 1; i <= 4; i++) {
-      console.log('events')
+      console.log('events');
       typeFilter(i);
     }
 
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       '.fc-view-harness').innerHTML;
 
     getView(originalCalendarContent);
-    getHomeView()
+    //getHomeView()
 
     const btnWeek = document.querySelector('[title="Semaine"]');
     btnWeek.addEventListener('click', function() {
@@ -184,8 +184,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     );
   }
 });
-
-
 
 function getCalendar(dataEvents) {
   let calendarEl = document.getElementById('calendar');
@@ -292,7 +290,7 @@ function createFilter(className, nbFiltersOptions) {
     filterBtn.classList.add('fc-button');
     filterBtn.classList.add('fc-button-primary');
 
-    filterBtn.setAttribute('aria-pressed', 'true');
+    filterBtn.setAttribute('aria-pressed', 'false');
 
     filterDiv.appendChild(filterBtn);
   }
@@ -304,21 +302,29 @@ function typeFilter(typeId) {
   const btnType = typeId - 1;
 
   const isPressed = localStorage.getItem('typeId[' + typeId + ']') !== null;
-  console.log(isPressed, typeId);
-  btnsTypes[btnType].setAttribute('aria-pressed', isPressed ? 'true' : 'false');
+
+  btnsTypes[btnType].setAttribute('aria-pressed', isPressed ? 'false' : 'true');
+
+  if (btnsTypes[btnType].getAttribute('aria-pressed') === 'true') {
+    btnsTypes[btnType].classList.add('btn--active');
+  } else {
+    btnsTypes[btnType].classList.remove('btn--active');
+  }
 
   hideType(typeId, isPressed);
 
+  btnsTypes[btnType].addEventListener('click', function() {
 
-  btnsTypes[btnType].addEventListener('click', function(event) {
-    console.log('ok');
-    console.log(event)
     const isPressed = localStorage.getItem('typeId[' + typeId + ']') !== null;
-console.log(isPressed, typeId);
+
     if (isPressed) {
       localStorage.removeItem('typeId[' + typeId + ']');
+      this.setAttribute('aria-pressed', 'true');
+      btnsTypes[btnType].classList.add('btn--active');
     } else {
       localStorage.setItem('typeId[' + typeId + ']', typeId);
+      this.setAttribute('aria-pressed', 'false');
+      btnsTypes[btnType].classList.remove('btn--active');
     }
 
     hideType(typeId, !isPressed);
@@ -352,6 +358,50 @@ function hideType(typeId, isPressed) {
       }
     });
   }
+}
+
+function getView(originalCalendarContent) {
+
+  const listView = document.querySelector('.list-view');
+  const calendarView = document.querySelector('.calendar-view');
+
+  const isCalendarView = localStorage.getItem('view') === 1;
+
+  listView.setAttribute('aria-pressed', isCalendarView ? 'true' : 'false');
+  calendarView.setAttribute('aria-pressed', isCalendarView ? 'false' : 'true');
+
+  changeView(isCalendarView, originalCalendarContent);
+
+  listView.addEventListener('click', async function() {
+
+    if (isCalendarView) {
+      localStorage.setItem('view', 1);
+    } else {
+      localStorage.setItem('view', 2);
+    }
+
+    await changeView(isCalendarView, originalCalendarContent);
+  });
+
+  calendarView.addEventListener('click', async function() {
+
+    if (isCalendarView) {
+      localStorage.setItem('view', 2);
+    } else {
+      localStorage.setItem('view', 1);
+    }
+
+    await changeView(isCalendarView, originalCalendarContent);
+  });
+}
+
+function changeView(isCalendarView, originalCalendarContent) {
+
+  const response = fetch('/home-list');
+  const htmlContent = response.text();
+
+  document.querySelector('.fc-view-harness').innerHTML = htmlContent;
+
 }
 
 function validatedFilter() {
@@ -392,7 +442,8 @@ function hideNotValidated(isPressed) {
     });
   }
 }
-function getView(originalCalendarContent) {
+
+/*function getView(originalCalendarContent) {
   const listView = document.querySelector('.list-view');
 
   listView.addEventListener('click', async function() {
@@ -467,16 +518,16 @@ function getView(originalCalendarContent) {
     getDetailsCard('fc-event-main');
 
   });
-}
+}*/
 
-function getHomeView(){
+function getHomeView() {
 
-  if(localStorage.getItem('view') == 2){
+  if (localStorage.getItem('view') == 2) {
     const listView = document.querySelector('.list-view');
     listView.click();
   }
 
-  if(localStorage.getItem('view') == 1){
+  if (localStorage.getItem('view') == 1) {
     const calendarView = document.querySelector('.calendar-view');
     calendarView.click();
   }
