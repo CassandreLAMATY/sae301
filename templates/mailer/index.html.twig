@@ -1,0 +1,94 @@
+{# templates/mailer/index.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Content</title>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #424242;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+        }
+
+        header > img {
+            height: 86px;
+            width: 271px;
+        }
+
+        main {
+            background-color: #FFFFFF;
+            width: 700px;
+            margin: 0 auto;
+            margin-top: 26px;
+            border-radius: 22px;
+            border: 1px solid #C0C5CA;
+            padding-bottom: 30px;
+        }
+
+        main > div {
+            padding: 20px 24.5px 0 24.5px;
+        }
+
+        section {
+            background-color: #FFD540;
+            width: 611px;
+            height: auto;
+            margin: auto;
+            border-radius: 4px;
+            margin-top: 30px;
+            box-shadow: 6px 6px 0px #424242;
+            padding: 20px;
+        }
+
+        section > h2 {
+            font-weight: 400;
+            font-size: 20px;
+            text-align: center;
+            padding-bottom: 25px;
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 24px;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        p {
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{{ asset('images/mail/calendra.png') }}" alt="">
+    </header>
+    <main>
+        <h1>Tu as reçu une nouvelle notification !</h1>
+        <section>
+            <h2>{{ mail_title }}</h2>
+            <p>Titre : {{ crd_title }}</p>
+            <p>Type : {{ typ_name }}</p>
+            <p>Description : {{ crd_desc }}</p>
+            <p>Matière : {{ sbj_name }}</p>
+            <p>Date : {{ crd_date }}</p>
+            <p>Heure : {{ crd_time }}</p>
+        </section>
+        {% if usr_name != " " %}
+        <div>
+            <p>{{ action_by }} {{ usr_name }}</p>
+            <p>Promo : {{ usr_semester }}</p>
+            <p>Groupe : {{ usr_group }}</p>
+            <p>Le : {{ crd_modif_date }}</p>
+            <p>À : {{ crd_modif_time }}</p>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>
