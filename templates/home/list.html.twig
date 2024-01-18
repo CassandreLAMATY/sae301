@@ -1,21 +1,20 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Home{% endblock %}
-
-{% block body %}
-
-    {% include 'components/header.html.twig' %}
-
-    <main class="main-list">
-        <div class="list--head">
-            <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
-                <div class="fc-toolbar-chunk">
-                    <div class="fc-button-group">
-                        <button class="fc-button fc-button-primary calendar-view btn-calendar "><i
-                                    class="fa-regular fa-calendar" aria-hidden="true"></i></button>
-                        <button class="fc-button fc-button-primary btn-list list-view fc-button-active"><i class="fa-solid fa-table-list"
-                                                                                          aria-hidden="true"></i>
-                        </button>
+<div id='a-venir' class="list">
+    <div class="items">
+        {% for item in cardData %}
+            <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
+                 style="border-left-color: {{ item.typeColor }} !important;">
+                <p class="card-id">{{ item.card.getId }}</p>
+                <p class="type-id">{{ item.card.getCrdTypId.getId }}</p>
+                <div class="time">
+                    <p class="date">
+                        {% if item.card.getCrdFrom is not null %}
+                            Du {{ item.card.getSmallCrdFrom }} <br> Au
+                        {% endif %}
+                        {{ item.card.getSmallCrdTo }}
+                    </p>
+                    <div class="time_left">
+                        <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
+                        <p class="days">{{ item.card.getTimeLeft|raw }}</p>
                     </div>
                     <button type="button" title="Aujourd'hui" disabled="" aria-pressed="false"
                             class="fc-today-button fc-button fc-button-primary">Aujourd'hui
