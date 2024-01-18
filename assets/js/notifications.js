@@ -1,12 +1,16 @@
 const notif = document.querySelector('.notif');
 const notifDot = document.querySelector('.notif-dot');
+
 const dropdown = document.querySelector('.notif-dropdown');
 const notifCards = document.querySelectorAll('.notif-card');
 const newNotif = document.querySelectorAll('.new-notif');
+
 const separator = document.querySelector('.notif-separator');
+
+const deleteAllButton = document.querySelector('.delete-all-button');
 const deleteButton = document.querySelectorAll('.delete-button');
+
 const tagNew = document.querySelector('.tag.new');
-const hr = document.querySelector('.notif-separator');
 const noNotif = document.querySelector('.notif-message');
 const readNotif = document.querySelector('.empty-notif');
 
@@ -43,7 +47,7 @@ deleteButton.forEach(button => {
                 const DnotifCards = dropdown.querySelectorAll('.notif-card');
                 if (DnotifCards.length <= 0) {
                     tagNew.style.display = 'none';
-                    hr.style.display = 'none';
+                    separator.style.display = 'none';
                     noNotif.style.display = 'block';
                     notifDot.style.display = 'none';
                 }
@@ -62,6 +66,25 @@ deleteButton.forEach(button => {
     });
 });
 
+deleteAllButton.addEventListener('click', () => {
+    fetch('/notifications/deleteAll', {
+        method: 'DELETE'
+    }).then(res => {
+        if( !res.ok ) {
+            throw new Error('Quelque chose s\'est mal passé...');
+        }
+        notifCards.forEach(card => {
+            card.remove();
+        });
+        tagNew.style.display = 'none';
+        separator.style.display = 'none';
+        noNotif.style.display = 'block';
+        notifDot.style.display = 'none';
+    }).catch(error => {
+        console.error('Erreur lors de l\'opération, action annulée :', error);
+    });
+});
+
 readNotif.addEventListener('click', () => {
     fetch('/notifications/markAllAsRead', {
         method: 'POST',
@@ -71,7 +94,7 @@ readNotif.addEventListener('click', () => {
             throw new Error('Quelque chose s\'est mal passé...');
         }
         tagNew.style.display = 'none';
-        hr.style.display = 'none';
+        separator.style.display = 'none';
         notifDot.style.display = 'none';
         console.log(newNotif);
         newNotif.forEach(card => {

@@ -41,6 +41,26 @@ class NotificationsController extends AbstractController
         return new Response('not found');
     }
 
+    #[Route('/notifications/deleteAll', name: 'app_notifications_deleteAll', methods: ["DELETE"])]
+    public function deleteAll(
+        EntityManagerInterface $entityManager, 
+        NotifUsersRepository $notifUsersRepository
+    ): Response
+    {
+        $user = $this->getUser();
+
+        // select user's notification
+        $nu = $notifUsersRepository->findByUserID($user->getUsrId());
+
+        foreach ($nu as $row) {
+            $entityManager->remove($row);
+        }
+
+        $entityManager->flush();
+
+        return new Response('deleted');
+    }
+
     #[Route('/notifications/markAllAsRead', name: 'app_notifications_readAll', methods: ["POST"])]
     public function markAllAsRead(
         EntityManagerInterface $entityManager, 
