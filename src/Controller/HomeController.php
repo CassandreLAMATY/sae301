@@ -61,7 +61,7 @@ class HomeController extends AbstractController
 
         // ----------------------- END NOTIFICATIONS ------------------------ //
 
-
+        // ------------------------------ CARDS ------------------------------//
 
         $cards = $cardsRepository->findAll();
         $cardData = [];

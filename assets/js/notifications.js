@@ -3,7 +3,6 @@ const dropdown = document.querySelector('.notif-dropdown');
 const deleteButton = document.querySelectorAll('.delete-button');
 
 let timer;
-
 dropdown.addEventListener('mouseenter', () => {
     clearTimeout(timer);
     dropdown.classList.add('dropdown-visible');
