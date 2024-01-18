@@ -51,6 +51,10 @@
     --opacity: 68%;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     background-color: var(--body-bg-color);
     padding: 0;
