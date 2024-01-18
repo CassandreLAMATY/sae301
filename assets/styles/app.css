@@ -415,67 +415,6 @@ main {
     height: calc(100vh - var(--grup3));
 }
 
-/* --------------------------- */
-/* ----- 📆 CALENDAR 📆 ----- */
-/* --------------------------- */
-
-#calendar {
-    width: 100%;
-    height: calc(100vh - var(--grup4));
-    padding-left: 20px;
-}
-
-#calendar button,
-.fc-toolbar-chunk .fc-button-display {
-    background-color: var(--accent-yellow);
-    color: var(--main--black);
-    border: solid 2px var(--accent-yellow-shadow);
-    text-transform: capitalize;
-}
-
-.filter-nav .fc-button {
-    background-color: var(--secondary-gray--01) !important;
-    border-color: var(--secondary-gray--02) !important;
-}
-
-.fc .fc-button:disabled {
-    opacity: 1;
-}
-
-.filter .fc-button {
-    font-size: 0.9em !important;
-}
-
-.fc-button-active {
-    background-color: var(--accent-yellow-shadow) !important;
-}
-
-#calendar td.gridcell .fc-daygrid-day-events {
-    display: flex;
-    flex-direction: column;
-}
-
-#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness {
-    position: relative !important;
-}
-
-.card-id,
-.type-id {
-    display: none;
-}
-
-.fc-toolbar-chunk {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.fc-toolbar-chunk .fc-button-display {
-    display: flex;
-    padding: 0.4em 0.65em;
-    gap: 10px;
-}
-
 /*/ ------------------------------------------------------------------------ /*/
 /*/ -------------------------------- PARAMS -------------------------------- /*/
 /*/ ------------------------------------------------------------------------ /*/
@@ -507,7 +446,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 10px 0px 0px;
+    padding: 10px 10px 0 0;
     font-size: 24px;
     justify-self: flex-end;
 }
@@ -518,24 +457,23 @@ main {
 
 #params_pop-up h2 {
     overflow: hidden;
-    color: var(--secondary--gray--04, #6b6b6b);
+    color: var(--secondary-gray--04, #6b6b6b);
     text-align: center;
     text-overflow: ellipsis;
-    font-family: Outfit;
+    font-family: Outfit, sans-serif;
     font-size: var(--grup1);
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    margin: 0 auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     padding-top: 5px;
 }
 
 #params_pop-up h3 {
     overflow: hidden;
-    color: var(--secondary--gray--04, #6b6b6b);
+    color: var(--secondary-gray--04, #6b6b6b);
     text-overflow: ellipsis;
-    font-family: Outfit;
+    font-family: Outfit, sans-serif;
     font-size: var(--grup);
     font-style: normal;
     font-weight: 600;
@@ -559,7 +497,7 @@ main {
 
 .params_pop-up_row p {
     margin: 0;
-    color: var(--secondary--gray--04, #6b6b6b);
+    color: var(--secondary-gray--04, #6b6b6b);
 }
 
 #params_pop-up_main_section {
@@ -568,7 +506,7 @@ main {
 
 #params_pop-up_main_section > hr {
     width: 70%;
-    color: var(--secondary--gray--04, #6b6b6b);
+    color: var(--secondary-gray--04, #6b6b6b);
     margin: 20px 0;
 }
 
@@ -578,7 +516,7 @@ main {
 }
 
 #params_pop-up_saveButton {
-    margin: auto;
+    margin: 20px auto 0;
     padding: 8px 16px;
     background-color: var(--accent-yellow);
     border-radius: 4px;
@@ -586,5 +524,4 @@ main {
     color: var(--main--black);
     font-size: var(--grup);
     cursor: pointer;
-    margin-top: 20px;
 }

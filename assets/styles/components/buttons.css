@@ -5,13 +5,14 @@
 button {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: var(--grup-2);
 
     margin: unset;
     padding: var(--grup-2) var(--grup);
 
     border-radius: var(--grup-2);
-    border: none;
+    border: none !important;
     background-color: var(--secondary-gray--01);
     box-shadow: 0 0 0 2px var(--secondary-gray--02);
 
@@ -26,23 +27,65 @@ button:hover {
     background-color: var(--secondary-gray--02);
 }
 
-/* 🔴 --------------------------- 🔴 */
 /* 🟡 ----- CLASSES SIMPLES ----- 🟡 */
-/* 🟡 --------------------------- 🟡 */
 
-button.no-outline {
+button.btn--wider {
+    padding-left: var(--grup) !important;
+    padding-right: var(--grup) !important;
+}
+
+.btn--wider > button {
+    padding-left: var(--grup) !important;
+    padding-right: var(--grup) !important;
+}
+
+button.btn--no-outline {
     outline: none;
     box-shadow: none;
     border: none;
 }
 
-button.highlighted {
+button.btn--darker {
+    background-color: var(--secondary-gray--02);
+    box-shadow: 0 0 0 2px var(--secondary-gray--03);
+}
+
+button.btn--highlighted {
     background-color: var(--accent-yellow);
     box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
 }
 
-button.highlighted:hover {
-    background-color: var(--accent-yellow-shadow);
+button.btn--highlighted:hover {
+    background-color: var(--accent-yellow-shadow) !important;
+}
+
+button.btn--signalement {
+    color: var(--accent-red);
+}
+
+/* 🟡 ----- CONCATENATED BTNS ----- 🟡 */
+
+.concatinated-btns {
+    position: relative;
+
+    display: flex;
+    align-items: stretch;
+
+    width: fit-content;
+    height: fit-content;
+}
+
+.concatinated-btns button:first-of-type:not(.btn--force-single) {
+    border-radius: var(--grup-2) 0 0 var(--grup-2);
+}
+
+.concatinated-btns button:last-of-type:not(.btn--force-single) {
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+}
+
+.concatinated-btns button:only-of-type,
+button.btn--force-single {
+    border-radius: var(--grup-2) !important;
 }
 
 /* 🟢 ----- CLASSES VALIDATIONS ----- 🟢 */
@@ -68,9 +111,6 @@ button.fait:hover {
 /* ⚫ ------------------ ⚫ */
 /* ⚫ ----- AUTRES ----- ⚫ */
 /* ⚫ ------------------ ⚫ */
-.fc-button {
-    box-shadow: none;
-}
 
 .double-button {
     position: relative;
@@ -102,10 +142,6 @@ button.fait:hover {
 
 .double-button__item:last-child {
     border-radius: 0 var(--grup-2) var(--grup-2) 0;
-}
-
-.double-button__item.signalement {
-    color: var(--accent-red);
 }
 
 .see-button {

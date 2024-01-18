@@ -138,26 +138,27 @@
     overflow: hidden;
 }
 
+/*
 @media screen and (max-width: 1500px) {
-    .side-list,
-    #details {
-        width: 500px;
-    }
+   .side-list,
+   #details {
+       width: 500px;
+   }
 
-    .side-list .subject h3.notif-card__title,
-    .side-list .subject > p.notif-card__subject {
-        max-width: 175px;
-    }
+   .side-list .subject h3.notif-card__title,
+   .side-list .subject > p.notif-card__subject {
+       max-width: 175px;
+   }
 }
 
 @media screen and (max-width: 1500px) {
-    .side-list,
-    #details {
-        width: 450px;
-    }
+   .side-list,
+   #details {
+       width: 450px;
+   }
 
-    .side-list .subject h3.notif-card__title,
-    .side-list .subject > p.notif-card__subject {
-        max-width: 100px;
-    }
+   .side-list .subject h3.notif-card__title,
+   .side-list .subject > p.notif-card__subject {
+       max-width: 100px;
+   }
 }

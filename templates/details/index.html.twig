@@ -1,7 +1,7 @@
 {% if detailsCard %}
     {% for item in detailsCard %}
         <div class='detail--back'>
-            <button class='no-outline' id="back"><i class="fa-solid fa-arrow-right-long"></i></button>
+            <button class='btn--no-outline' id="back"><i class="fa-solid fa-arrow-right-long"></i></button>
             <p class='tag'
                style='border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20'>{{ item.typeName }}</p>
         </div>
@@ -36,7 +36,7 @@
 
                 <div class='detail--content--time--right double-button'>
                     <button class='double-button__item'><i class="fa-solid fa-pen"></i>Modifier</button>
-                    <button class='double-button__item signalement'><i class="fa-solid fa-flag"></i></button>
+                    <button class='double-button__item btn--signalement'><i class="fa-solid fa-flag"></i></button>
                 </div>
             </div>
 
