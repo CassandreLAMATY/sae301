@@ -55,13 +55,7 @@ class CardsType extends AbstractType
                 ],
                 'attr' => ['id' => 'crd_grp'],
                 'required' => true,
-                'mapped' => false,
             ]);
-
-
-
-
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

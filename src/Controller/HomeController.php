@@ -206,15 +206,16 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Enregistrez les données dans la base de données ici
             $card = $form->getData();
+           // dd($request->request->all()['cards']['crd_grp']);
 
             $card->setCrdCreatedAt(new \DateTimeImmutable());
             $card->setIsValidated(0);
 
             // remplir les userscards avec les bonnes conditions
             $users = $usersRepository->findBy($conditionsTP);
-            if ($card['crd_grp'] === 'TD') {
+            //$crd_grpValue = $request->request->all()['crd_grp'];
+            if($card->getCrdGrp() === 1) {
                 $users = $usersRepository->findBy($conditionsTD);
-
             }
             // Créez un tableau pour stocker les ID des utilisateurs
             $usersId = [];

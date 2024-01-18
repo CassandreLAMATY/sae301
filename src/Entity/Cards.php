@@ -15,6 +15,8 @@ class Cards
     #[ORM\Column]
     private ?int $crd_id = null;
 
+    private ?int $crd_grp = null;
+
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $crd_created_at = null;
 
@@ -208,4 +210,16 @@ class Cards
 
         return $this;
     }
+
+    public function getCrdGrp(): ?int
+    {
+        return $this->crd_grp;
+    }
+
+    public function setCrdGrp(?int $crd_grp = null): void
+    {
+        $this->crd_grp = $crd_grp;
+    }
+
+
 }
