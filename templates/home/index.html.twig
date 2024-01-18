@@ -14,32 +14,32 @@
                     <h2>À Venir</h2>
                 </div>
                 <div class="items">
-                    {% for item in cardData %}
-                        <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
-                             style="border-left-color: {{ item.typeColor }} !important;">
-                            <p class="card-id">{{ item.card.getId }}</p>
-                            <p class="type-id">{{ item.card.getCrdTypId.getId }}</p>
+                    {% for item in cardsData %}
+                        <div class="item {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
+                             style="border-left-color: {{ item.params.typeColor }} !important;">
+                            <p class="card-id">{{ item.card.id }}</p>
+                            <p class="type-id">{{ item.card.typeId }}</p>
                             <div class="time">
                                 <p class="date">
-                                    {% if item.card.getCrdFrom is not null %}
-                                        Du {{ item.card.getSmallCrdFrom }} <br>Au
+                                    {% if item.card.stringFrom is not null %}
+                                        Du {{ item.card.stringFrom }} <br>Au
                                     {% endif %}
-                                    {{ item.card.getSmallCrdTo }}
+                                    {{ item.card.stringTo }}
                                 </p>
                                 <div class="time_left">
-                                    <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
-                                    <p class="days">{{ item.card.getTimeLeft|raw }}</p>
+                                    <i class="fa-solid fa-hourglass-half" style="color:{{ item.params.timeColor }}"></i>
+                                    <p class="days">{{ item.card.timeLeft|raw }}</p>
                                 </div>
                             </div>
                             <div class="subject">
                                 <p class="tag"
-                                   style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
+                                   style="border-color: {{ item.params.typeColor }}; background-color: {{ item.params.typeColor }}20">{{ item.params.typeName }}</p>
                                 <div>
-                                    <h3 class="notif-card__title">{{ item.card.getCrdTitle }}</h3>
-                                    <p class="notif-card__subject">{{ item.subjectRef }} - {{ item.subjectName }}</p>
+                                    <h3 class="notif-card__title">{{ item.card.title }}</h3>
+                                    <p class="notif-card__subject">{{ item.card.ref }} - {{ item.card.subject }}</p>
                                 </div>
                             </div>
-                            {% if item.typeName is same as('rendu') %}
+                            {% if item.params.typeName is same as('rendu') %}
                                 <!--<div class="status">
                                     <i class="fa-regular fa-square"></i>
                                     <p>À Rendre</p>

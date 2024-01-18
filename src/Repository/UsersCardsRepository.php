@@ -21,11 +21,16 @@ class UsersCardsRepository extends ServiceEntityRepository
         parent::__construct($registry, UsersCards::class);
     }
 
-    public function findByUserID($usr_id): array
+    public function findByUserId($usr_id): array
     {
         return $this->createQueryBuilder('uc')
+            ->innerJoin('uc.uc_crd', 'c')
+            ->addSelect('c')
             ->andWhere('uc.uc_usr = :id')
             ->setParameter('id', $usr_id)
+            ->andWhere('c.crd_to >= :now')
+            ->setParameter('now', new \DateTime())
+            ->orderBy('c.crd_to', 'ASC')
             ->getQuery()
             ->getResult()
         ;

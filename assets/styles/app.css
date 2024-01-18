@@ -632,6 +632,7 @@ main {
 }
 
 .side-list .notvalidated {
+    background-color: #FFFFFF99;
     border : dashed 2px var(--secondary-gray--03);
 }
 
