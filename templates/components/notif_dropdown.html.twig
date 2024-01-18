@@ -54,10 +54,5 @@
     {% endfor %}
 
     {# NO NOTIFICATION #}
-    {% if notifNotSeen is empty and notifSeen is empty %}
-        <p class="notif-message">Aucune notification pour l'instant...</p>
-    {% endif %}
-
-
-    <script src="{{ asset('/js/notifications.js') }}"></script>
+    <p class="notif-message" style="{% if notifNotSeen is empty and notifSeen is empty %} display: block; {% endif %}">Aucune notification pour l'instant...</p>
 </div>

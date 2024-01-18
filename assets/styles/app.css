@@ -284,6 +284,8 @@ header {
 }
 
 .notif-message {
+    display: none;
+    
     font-size: var(--grup);
 }
 

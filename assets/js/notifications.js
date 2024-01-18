@@ -1,6 +1,10 @@
 const notif = document.querySelector('.notif');
+const notifDot = document.querySelector('.notif-dot');
 const dropdown = document.querySelector('.notif-dropdown');
 const deleteButton = document.querySelectorAll('.delete-button');
+const tagNew = document.querySelector('.tag.new');
+const hr = document.querySelector('.notif-separator');
+const noNotif = document.querySelector('.notif-message');
 
 let timer;
 dropdown.addEventListener('mouseenter', () => {
@@ -31,6 +35,14 @@ deleteButton.forEach(button => {
                     throw new Error('Quelque chose s\'est mal passé...');
                 }
                 button.parentElement.parentElement.remove();
+
+                const notifCards = dropdown.querySelectorAll('.notif-card');
+                if (notifCards.length <= 0) {
+                    tagNew.style.display = 'none';
+                    hr.style.display = 'none';
+                    noNotif.style.display = 'block';
+                    notifDot.style.display = 'none';
+                }
             }).catch(error => {
                 console.error('Erreur lors de l\'opération, action annulée :', error);
             });

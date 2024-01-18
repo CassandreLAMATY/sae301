@@ -3,7 +3,9 @@
     <div class="header-menu">
         <div class="notif">
             <i class="fa-solid fa-bell"></i>
-            <div class="notif-dot" style="display: {{ shouldNotify ? 'block' : '' }}"></div>
+            {% if notifNotSeen is not empty %}
+                <div class="notif-dot" style="display: {{ shouldNotify ? '' : 'block' }}"></div>
+            {% endif %}
             <div class="active-hover"></div>
             {% include 'components/notif_dropdown.html.twig' %}
         </div>
@@ -19,4 +21,6 @@
             {% include 'components/userCard_dropdown.html.twig' %}
         </div>
     </div>
+
+    <script src="{{ asset('/js/notifications.js') }}"></script>
 </header>

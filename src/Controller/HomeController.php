@@ -16,6 +16,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
+use App\Service\NotifService;
+
 
 class HomeController extends AbstractController
 {
@@ -36,30 +38,9 @@ class HomeController extends AbstractController
         SubjectsRepository $subjectsRepository,
         EntityManagerInterface $entityManager,
         NotificationsRepository $notificationsRepository,
-        NotifUsersRepository $notifUserRepository
+        NotifUsersRepository $notifUserRepository,
+        NotifService $notificationsService
     ): Response {
-
-        // -------------------------- NOTIFICATIONS --------------------------//
-
-        // Selecting the user
-        $user = $this->getUser();
-
-        // Selecting every notification id by user id
-        $notifications = $notifUserRepository->findByUserID($user->getUsrId());
-        $notifSeen = [];
-        $notifNotSeen = [];
-
-        // Creating an array with every notification id
-        $shouldNotify = false;
-        foreach ($notifications as $notif) {
-            if($notif->isNuSeen()) {
-                $notifSeen[] = $notif;
-            } else {
-                $notifNotSeen[] = $notif;
-            }
-        }
-
-        // ----------------------- END NOTIFICATIONS ------------------------ //
 
         // ------------------------------ CARDS ------------------------------//
 
@@ -133,9 +114,10 @@ class HomeController extends AbstractController
 
                 'detailsCard' => null,
                 
-                'notifSeen' => $notifSeen,
-                'notifNotSeen' => $notifNotSeen,
-                'shouldNotify' => $shouldNotify,
+                'notifSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifSeen'],
+                'notifNotSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifNotSeen'],
+                'shouldNotify' => $notificationsService->getUserNotifications($user, $notifUserRepository)['shouldNotify'],
+
                 'showParams' => false,
             ]);
         } else {
@@ -246,12 +228,12 @@ class HomeController extends AbstractController
             //     $entityManager->flush();
             // }
 
-            return $this->forward(ParamsController::class . '::index', [
+            /* return $this->forward(ParamsController::class . '::index', [
                 'request' => $request,
                 // 'cardsRepository' => $cardsRepository, // Pass any other dependencies needed in ParamsController
                 // 'typesRepository' => $typesRepository,
                 // 'subjectsRepository' => $subjectsRepository,
-            ]);
+            ]); */
 
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
