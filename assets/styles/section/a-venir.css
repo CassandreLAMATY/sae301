@@ -17,6 +17,10 @@
     border-radius: var(--grup-2) 0 0 var(--grup-2);
 }
 
+#btn--close--avenir {
+    display: none;
+}
+
 .side-list,
 #details {
     background-color: var(--list-bg-color);
@@ -30,7 +34,7 @@
 }
 
 #a-venir {
-    transition: transform 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
 }
 
 .side-list .side-list_title {
@@ -153,27 +157,28 @@
 }
 
 @media screen and (max-width: 1165px) {
-    .side-list,
+    #section-right {
+        z-index: 10;
+        transform: translateX(3px)
+    }
+
     #a-venir,
     #details {
-        z-index: 5;
         position: absolute;
         transform: translateX(100%);
         width: 60vw;
     }
 
-    #btn--open--avenir {
+    #btn--open--avenir, #btn--close--avenir {
         display: flex;
     }
 
     #a-venir {
         transform: translateX(0%);
-        opacity: 0;
     }
 
     #a-venir.a-venir--openned {
-        transform: translateX(-100%);
-        opacity: 1;
+        transform: translateX(calc(-100% - 3px));
     }
 }
 

@@ -7,7 +7,7 @@
     top: 0;
     right: 0;
     transform: translateX(0%);
-    transition: transform 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
 }
 
 #details.details--oppenned {
@@ -365,7 +365,6 @@
     display: none;
     flex-direction: column;
     gap: 5px;
-    opacity: 1;
 }
 
 .subject-choices label:hover {
@@ -378,13 +377,7 @@
 }
 
 @media screen and (max-width: 1165px) {
-    #details {
-        opacity: 0;
-    }
-
     #details.details--openned {
-        transform: translateX(0%);
-        opacity: 1;
+        transform: translateX(calc(0% - 3px));
     }
-
 }
