@@ -85,7 +85,8 @@ class HomeController extends AbstractController
         UsersCardsRepository $userCardsRepository,
 
         NotifService $notificationsService,
-        UserCardsService $userCardsService
+        UserCardsService $userCardsService,
+        DateTimeConverter $dateTimeConverter
     ): Response {
         $showParams = true;
 
@@ -97,7 +98,7 @@ class HomeController extends AbstractController
             $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
 
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
 
             $homeworkReminder = $user->isUsrHomeworkReminder();
             $examReminder = $user->isUsrExamReminder();
