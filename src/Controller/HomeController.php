@@ -168,7 +168,7 @@ class HomeController extends AbstractController
         if($this->getUser()){
             $user = $this->getUser();
 
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
             $content = $this->renderView('home/list.html.twig', ['cardsData' => $cardsData]);
 
             return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
