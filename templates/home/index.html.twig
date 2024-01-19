@@ -17,6 +17,8 @@
                 <div class="items">
                     {% for item in cardData %}
                         <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
+                             card-id="{{ item.card.getId }}"
+                             type-id="{{ item.card.getCrdTypId.getId }}"
                              style="border-left-color: {{ item.typeColor }} !important;">
                             <p class="card-id">{{ item.card.getId }}</p>
                             <p class="type-id">{{ item.card.getCrdTypId.getId }}</p>

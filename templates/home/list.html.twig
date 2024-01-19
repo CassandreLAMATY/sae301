@@ -120,7 +120,7 @@
         <div class="list">
             <div class="items">
                 {% for item in cardData %}
-                    <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}" card-id="{{ item.card.getId }}" type-id="{{ item.card.getCrdTypId.getId }}"
+                    <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}" data-card-id="{{ item.card.getId }}" data-type-id="{{ item.card.getCrdTypId.getId }}"
                          style="border-left-color: {{ item.typeColor }} !important;">
                         <div class="time">
                             <p class="date">

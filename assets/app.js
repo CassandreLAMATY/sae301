@@ -271,7 +271,6 @@ function getDetailsCard(className) {
   for (let i = 0; i < eventDiv.length; i++) {
     eventDiv[i].addEventListener('click', function() {
       let eventId = this.getAttribute('card-id');
-      console.log(eventId);
       fetch('/details', {
         method: 'POST',
         headers: {
@@ -368,7 +367,8 @@ function hideType(typeId, isPressed) {
 
   if (isPressed) {
     events.forEach(event => {
-      if (event.getAttribute('type-id') == typeId) {
+      const eventCard = event.querySelector('.event-card')
+      if (eventCard.getAttribute('type-id') == typeId) {
         event.parentNode.style.display = 'none';
       }
     });
@@ -379,7 +379,8 @@ function hideType(typeId, isPressed) {
     });
   } else {
     events.forEach(event => {
-      if (event.getAttribute('type-id') == typeId) {
+      const eventCard = event.querySelector('.event-card')
+      if (eventCard.getAttribute('type-id') == typeId) {
         event.parentNode.style.display = 'block';
       }
     });
