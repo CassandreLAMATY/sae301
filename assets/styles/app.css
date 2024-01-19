@@ -614,7 +614,8 @@ main {
     cursor : pointer;
 }
 
-.side-list .notvalidated {
+.side-list .notvalidated,
+.fc-event-main .notvalidated {
     border : dashed 2px var(--secondary-gray--03);
 }
 
