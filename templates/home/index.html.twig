@@ -6,11 +6,14 @@
 
     {{ include('components/header.html.twig') }}
 
-    <main class="main">
+   <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
-            <div class="side-list">
+            <button id="btn--open--avenir" class='btn--a-faire' onclick='openAVenir()'>
+                <i class="fa-regular fa-clock"></i></button>
+            <div id='a-venir' class="side-list">
                 <div id="side-list_title">
+                    <button id="btn--close--avenir" class='btn--a-faire' onclick='closeAVenir()'><i class="fa-regular fa-clock"></i></button>
                     <h2>À Venir</h2>
                 </div>
                 <div class="items">
