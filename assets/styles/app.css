@@ -534,9 +534,14 @@ main {
 #section-right {
     position : relative;
 }
-
+#createCardFormContainer{
+    position : absolute;
+    top      : 0;
+    right    : -100%;
+    z-index: 1000;
+}
 .side-list,
-#details {
+.details {
     width            : min(669px, 35vw);
     background-color : var(--list-bg-color);
     outline          : 1px solid var(--secondary-gray--02);
@@ -548,7 +553,7 @@ main {
     border-radius    : var(--grup1) 0 0 var(--grup1);
 }
 
-#details {
+.details {
     position : absolute;
     top      : 0;
     right    : -100%;
@@ -559,14 +564,14 @@ main {
 }
 
 .side-list .side-list_title,
-#details #title_details {
+.details #title_details {
     background-color : var(--list-h-bg-color);
     border-radius    : 6px;
     padding          : 16px 42px;
 }
 
 .side-list h2,
-#details h2 {
+.details h2 {
     font-size : var(--grup1);
     margin    : 0;
 }

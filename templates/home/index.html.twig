@@ -24,16 +24,20 @@
 
                     // Ajoute un gestionnaire d'événement pour le clic sur le bouton après le chargement AJAX
                     document.querySelector('#toggleCreateCardForm').addEventListener('click', function() {
-                        createCardFormContainer.style.display = (createCardFormContainer.style.display === 'none') ? 'block' : 'none';
-                        let modal = document.getElementById('details');
+                        createCardFormContainer.style.display = 'block';
+                        let modalcreate = document.getElementById('createCardFormContainer');
+                        let modaldetails = document.getElementById('details');
                         console.log('animation');
-                        modal.style.transform = 'translateX(-100%)';
-                        modal.style.transition = 'transform 0.5s ease-in-out';
+                        setTimeout(function() {
+                        modalcreate.style.transform = 'translateX(-100%)';
+                        modalcreate.style.transition = 'transform 0.5s ease-in-out';
+                        modaldetails.style.transform = 'translateX(0)';
+                        }, 100);
 
-                        let backBtn = document.getElementById('back');
+                        let backBtn = document.getElementById('create-back');
                         if (backBtn) {
                             backBtn.addEventListener('click', function() {
-                                modal.style.transform = 'translateX(0)';
+                                modalcreate.style.transform = 'translateX(0)';
                             });
                         }
                     });
@@ -83,7 +87,7 @@
 
 
     {% include 'components/header.html.twig' %}
-    <button id="toggleCreateCardForm">Créer une carte-------------------</button>
+    <button id="toggleCreateCardForm">Créer une carte</button>
     <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
@@ -134,10 +138,9 @@
                     {% endfor %}
                 </div>
             </div>
-            <div id="details">
-                <div id="createCardFormContainer" class="card">
+            <div id="createCardFormContainer" class="details"></div>
 
-                </div>
+            <div id="details" class="details">
             </div>
         </div>
     </main>

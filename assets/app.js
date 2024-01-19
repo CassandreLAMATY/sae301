@@ -235,8 +235,11 @@ function getDetailsCard(className) {
         console.log(document.getElementById('details'));
 
         let modal = document.getElementById('details');
+        let modalcreate = document.getElementById('createCardFormContainer');
+
         modal.style.transform = 'translateX(-100%)';
         modal.style.transition = 'transform 0.5s ease-in-out';
+        modalcreate.style.transform = 'translateX(0)'
 
         let backBtn = document.getElementById('back');
         if (backBtn) {
