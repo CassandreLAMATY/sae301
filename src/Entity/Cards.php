@@ -43,7 +43,7 @@ class Cards
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::SMALLINT, nullable: true)]
     private ?int $validated_by = null;
 
-    public function getId(): ?int
+    public function getCrdId(): ?int
     {
         return $this->crd_id;
     }

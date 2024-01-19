@@ -10,29 +10,29 @@
    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
-            <div class="side-list">
+            <button id="btn--open--avenir" class='btn--a-faire' onclick='openAVenir()'>
+                <i class="fa-regular fa-clock"></i></button>
+            <div id='a-venir' class="side-list">
                 <div id="side-list_title">
                     <button id="btn--close--avenir" class='btn--a-faire' onclick='closeAVenir()'><i class="fa-regular fa-clock"></i></button>
                     <h2>À Venir</h2>
                 </div>
                 <div class="items">
-                    {% for item in cardData %}
-                        <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
-                             card-id="{{ item.card.getId }}"
-                             type-id="{{ item.card.getCrdTypId.getId }}"
-                             style="border-left-color: {{ item.typeColor }} !important;">
-                            <p class="card-id">{{ item.card.getId }}</p>
-                            <p class="type-id">{{ item.card.getCrdTypId.getId }}</p>
+                    {% for item in cardsData %}
+                        <div class="item {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
+                             style="border-left-color: {{ item.params.typeColor }} !important;">
+                            <p class="card-id">{{ item.card.id }}</p>
+                            <p class="type-id">{{ item.card.typeId }}</p>
                             <div class="time">
                                 <p class="date">
-                                    {% if item.card.getCrdFrom is not null %}
-                                        Du {{ item.card.getSmallCrdFrom }} <br>Au
+                                    {% if item.card.stringFrom is not null %}
+                                        Du {{ item.card.stringFrom }} <br>Au
                                     {% endif %}
-                                    {{ item.card.getSmallCrdTo }}
+                                    {{ item.card.stringTo }}
                                 </p>
                                 <div class="time_left">
-                                    <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
-                                    <p class="days">{{ item.card.getTimeLeft|raw }}</p>
+                                    <i class="fa-solid fa-hourglass-half" style="color:{{ item.params.timeColor }}"></i>
+                                    <p class="days">{{ item.card.timeLeft|raw }}</p>
                                 </div>
                             </div>
                             <div class="subject">
@@ -43,7 +43,7 @@
                                     <p class="notif-card__subject">{{ item.card.ref }} - {{ item.card.subject }}</p>
                                 </div>
                             </div>
-                            {% if item.typeName is same as('rendu') %}
+                            {% if item.params.typeName is same as('rendu') %}
                                 <!--<div class="status">
                                     <i class="fa-regular fa-square"></i>
                                     <p>À Rendre</p>
@@ -58,8 +58,13 @@
                     {% endfor %}
                 </div>
             </div>
-            <div id="details"></div>
+            <div id="createCardFormContainer" class="details"></div>
+
+            <div id="details" class="details">
+            </div>
         </div>
+        {# params pop-up #}
+        <div id="params" style="display:none"></div>
     </main>
 
 {# TODO : refactor code #}

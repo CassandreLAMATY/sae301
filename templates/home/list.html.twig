@@ -122,7 +122,7 @@
             {% for week in weekList %}
                 <div class="week items">
                     <p>{{ week.weekString }}</p>
-                    {% for item in cardData %}
+                    {% for item in cardsData %}
                         {% if item.startTime >= week.startOfWeek and item.startTime <= week.endOfWeek or item.endTime >= week.startOfWeek and item.endTime <= week.endOfWeek %}
                             <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
                                  data-card-id="{{ item.card.getId }}" data-type-id="{{ item.card.getCrdTypId.getId }}"

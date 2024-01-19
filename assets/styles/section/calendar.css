@@ -1,0 +1,91 @@
+/* 📆 ------------------------------ 📆 */
+/* 📆 ---------- CALENDAR ---------- 📆 */
+/* 📆 ------------------------------ 📆 */
+
+#calendar {
+    width: 100%;
+    height: calc(100vh - var(--grup4));
+    padding-left: var(--grup);
+}
+
+#calendar button,
+.fc-toolbar-chunk .fc-button-display {
+    background-color: var(--accent-yellow);
+    color: var(--main--black);
+    border: solid 2px var(--accent-yellow-shadow);
+    text-transform: capitalize;
+}
+
+.filter-nav .fc-button {
+    background-color: var(--secondary-gray--01) !important;
+    border-color: var(--secondary-gray--02) !important;
+}
+
+.fc .fc-button:disabled {
+    opacity: 1;
+}
+
+.filter .fc-button {
+    font-size: 0.9em !important;
+}
+
+.fc-button-active {
+    background-color: var(--accent-yellow-shadow) !important;
+
+}
+
+#calendar td.gridcell .fc-daygrid-day-events {
+    display: flex;
+    flex-direction: column;
+}
+
+#calendar td.gridcell .fc-daygrid-day-events .fc-daygrid-event-harness {
+    position: relative !important;
+}
+
+.card-id,
+.type-id {
+    display: none;
+}
+
+.fc-toolbar-chunk {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fc-toolbar-chunk .fc-button-display {
+    display: flex;
+    padding: 0.4em 0.65em;
+    gap: 10px;
+}
+
+/* 📆 ---------- BTNS ---------- 📆 */
+
+#calendar .fc-header-toolbar:not(.filter) button {
+    height: 39px;
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
+}
+
+#calendar .fc-header-toolbar:not(.filter) button:hover {
+    background-color: var(--accent-yellow-shadow) !important;
+}
+
+#calendar .fc-header-toolbar:not(.filter) .fc-timeGridWeek-button {
+    padding-left: var(--grup) !important;
+    padding-right: var(--grup) !important;
+}
+
+.fc-button-group.types button {
+}
+
+@media screen and (max-width: 1165px) {
+    #calendar {
+        padding: 0 var(--grup);
+    }
+
+    #calendar .fc-header-toolbar:not(.filter) {
+        margin-right: calc(var(--grup2) + var(--grup));
+    }
+}
