@@ -1,9 +1,12 @@
 <header class="header">
     <img src="{{ asset('images/logo.svg') }}" alt="logo iut">
     <div class="header-menu">
+        <button class="add-event"><i class="fa-solid fa-circle-plus"></i>Ajouter un évènement</button>
         <div class="notif">
             <i class="fa-solid fa-bell"></i>
-            <div class="notif-dot" style="display: {{ shouldNotify ? 'block' : '' }}"></div>
+            {% if notifNotSeen is not empty %}
+                <div class="notif-dot" style="display: {{ shouldNotify ? 'block' : '' }}"></div>
+            {% endif %}
             <div class="active-hover"></div>
             {% include 'components/notif_dropdown.html.twig' %}
         </div>
@@ -19,4 +22,6 @@
             {% include 'components/userCard_dropdown.html.twig' %}
         </div>
     </div>
+
+    <script src="{{ asset('/js/notifications.js') }}"></script>
 </header>

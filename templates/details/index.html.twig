@@ -18,6 +18,16 @@
             </div>
         </div>
 
+        <div style="background-color: white">
+            <div>
+                <div>
+                    <div>
+                        <p><i class="fa-solid fa-book"></i> Matière</p>
+                        <p>{{ item.subjectName }}</p>
+                </div>
+            </div>
+        </div>
+
         <div class='detail--content {{ item.card.getIsValidated() ? '' : 'notvalidated' }}'
              style='border-left: solid 6px {{ item.typeColor }};'>
 

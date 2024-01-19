@@ -19,7 +19,7 @@ class Types
     #[ORM\Column(length: 9)]
     private ?string $typ_color = null;
 
-    public function getId(): ?int
+    public function getTypId(): ?int
     {
         return $this->typ_id;
     }

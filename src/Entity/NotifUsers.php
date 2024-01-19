@@ -58,7 +58,7 @@ class NotifUsers
         return $this->nu_is_seen;
     }
 
-    public function setNuIsSeen(bool $nu_is_seen): static
+    public function setIsNuSeen(bool $nu_is_seen): static
     {
         $this->nu_is_seen = $nu_is_seen;
 

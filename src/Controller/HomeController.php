@@ -2,25 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CardsRepository;
+use Symfony\Bundle\SecurityBundle\Security;
+use Doctrine\ORM\EntityManagerInterface;
+
 use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
-use App\Repository\NotificationsRepository;
-use App\Repository\UsersRepository;
 use App\Repository\NotifUsersRepository;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UsersCardsRepository;
+
+
+use App\Service\NotifService;
+use App\Service\UserCardsService;
+use App\Service\DateTimeConverter;
 
 
 class HomeController extends AbstractController
 {
-    private $entityManager;
     protected $security;
+    protected $entityManager;
 
     public function __construct(Security $security, EntityManagerInterface $entityManager)
     {
@@ -30,112 +32,43 @@ class HomeController extends AbstractController
 
     #[Route('/', name: 'app_home')]
     public function index(
-        Request $request,
-        CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository,
-        EntityManagerInterface $entityManager,
-        NotificationsRepository $notificationsRepository,
-        NotifUsersRepository $notifUserRepository
+        NotifUsersRepository $notifUserRepository,
+        UsersCardsRepository $userCardsRepository,
+
+        NotifService $notificationsService,
+        UserCardsService $userCardsService,
+        DateTimeConverter $dateTimeConverter
     ): Response {
 
-        // -------------------------- NOTIFICATIONS --------------------------//
-
-        // Selecting the user
-        $user = $this->getUser();
-
-        // Selecting every notification id by user id
-        $notifications = $notifUserRepository->findByUserID($user->getUsrId());
-        $notifSeen = [];
-        $notifNotSeen = [];
-
-        // Creating an array with every notification id
-        $shouldNotify = false;
-        foreach ($notifications as $notif) {
-            if($notif->isNuSeen()) {
-                $notifSeen[] = $notif;
-            } else {
-                $notifNotSeen[] = $notif;
-            }
-        }
-
-        // ----------------------- END NOTIFICATIONS ------------------------ //
-
-
-
-        $cards = $cardsRepository->findAll();
-        $cardData = [];
-
-        foreach ($cards as $card) {
-            $timeEnd = $card->getCrdTo();
-
-            if($card->getCrdFrom()){
-                $timeEnd = $card->getCrdFrom();
-            }
-
-            $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
-            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
-
-            //if timeEnd is before now, skip this card
-            if ($timeEnd < $now) {
-                continue;
-            }
-
-            $typeId = $card->getCrdTypId();
-            $type = $typesRepository->find($typeId);
-
-            $subjectId = $card->getCrdSbjId();
-            $subject = $subjectsRepository->find($subjectId);
-
-            $timeleft = $now->diff($timeEnd);
-            $dayLeft = $timeleft->format('%a');
-            $dayLeft = (int)$dayLeft;
-
-            $timeColor = 'var(--grey)';
-
-            if ($dayLeft < 8) {
-                $timeColor = 'var(--accent-orange)';
-            }
-
-            if ($dayLeft < 3) {
-                $timeColor = 'var(--accent-red)';
-            }
-
-            if ($type !== null) {
-                $cardData[] = [
-                    'card' => $card,
-                    'typeName' => $type->getTypName(),
-                    'typeColor' => $type->getTypColor(),
-                    'subjectRef' => $subject->getSbjRef(),
-                    'subjectName' => $subject->getSbjName(),
-                    'timeColor' => $timeColor,
-                ];
-            }
-        }
-
-        usort($cardData, function ($a, $b) {
+        // ------------------------------ CARDS ------------------------------//
+        /* usort($cardData, function ($a, $b) {
             return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
-        });
+        }); */
 
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
             $user = $this->getUser();
+            // User data
             $username = $user->getUsrPseudo();
             $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
-            $email = $user->getUsrMail();
+
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+
             return $this->render('home/index.html.twig', [
                 'username' => $username,
                 'lastname' => $lastname,
                 'firstname' => $firstname,
-                'email' => $email,
-                'cardData' => $cardData,
 
+                'cardsData' => $cardsData,
                 'detailsCard' => null,
                 
-                'notifSeen' => $notifSeen,
-                'notifNotSeen' => $notifNotSeen,
-                'shouldNotify' => $shouldNotify,
+                'notifSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifSeen'],
+                'notifNotSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifNotSeen'],
+                'shouldNotify' => $notificationsService->getUserNotifications($user, $notifUserRepository)['shouldNotify'],
+
                 'showParams' => false,
             ]);
         } else {
@@ -146,69 +79,27 @@ class HomeController extends AbstractController
 
     #[Route('/home-list', name: 'app_home_list')]
     public function getListContent(
-        CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository
+        SubjectsRepository $subjectsRepository,
+        NotifUsersRepository $notifUserRepository,
+        UsersCardsRepository $userCardsRepository,
+
+        NotifService $notificationsService,
+        UserCardsService $userCardsService,
+        DateTimeConverter $dateTimeConverter
     ): Response {
-        $cards = $cardsRepository->findAll();
-        $cardData = [];
-
-        foreach ($cards as $card) {
-
-            $timeEnd = $card->getCrdTo();
-
-            if($card->getCrdFrom()){
-                $timeEnd = $card->getCrdFrom();
-            }
-
-            $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
-            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
-
-            $typeId = $card->getCrdTypId();
-            $type = $typesRepository->find($typeId);
-
-            $subjectId = $card->getCrdSbjId();
-            $subject = $subjectsRepository->find($subjectId);
-
-            $timeleft = $now->diff($timeEnd);
-            $dayLeft = $timeleft->format('%a');
-            $dayLeft = (int)$dayLeft;
-
-            $timeColor = 'var(--grey)';
-
-            if ($dayLeft < 8) {
-                $timeColor = 'var(--accent-orange)';
-            }
-
-            if ($dayLeft < 3) {
-                $timeColor = 'var(--accent-red)';
-            }
-
-            if ($type !== null) {
-                $cardData[] = [
-                    'card' => $card,
-                    'typeName' => $type->getTypName(),
-                    'typeColor' => $type->getTypColor(),
-                    'subjectRef' => $subject->getSbjRef(),
-                    'subjectName' => $subject->getSbjName(),
-                    'timeColor' => $timeColor,
-                ];
-            }
-        }
-
         $showParams = true;
-
-        usort($cardData, function ($a, $b) {
-            return $a['card']->getCrdTo() <=> $b['card']->getCrdTo();
-        });
 
         if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // Utilisateur déjà connecté,
             $user = $this->getUser();
+
             $username = $user->getUsrPseudo();
-            $name = $user->getUsrName();
+            $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
-            $email = $user->getUsrMail();
+
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+
             $homeworkReminder = $user->isUsrHomeworkReminder();
             $examReminder = $user->isUsrExamReminder();
             $newReminder = $user->isUsrNewReminder();
@@ -241,34 +132,48 @@ class HomeController extends AbstractController
             //     $entityManager->flush();
             // }
 
-            return $this->forward(ParamsController::class . '::index', [
+            /* return $this->forward(ParamsController::class . '::index', [
                 'request' => $request,
                 // 'cardsRepository' => $cardsRepository, // Pass any other dependencies needed in ParamsController
                 // 'typesRepository' => $typesRepository,
                 // 'subjectsRepository' => $subjectsRepository,
-            ]);
+            ]); */
 
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
-                'name' => $name,
+                'lastname' => $lastname,
                 'firstname' => $firstname,
-                'email' => $email,
-                'cardData' => $cardData,
+
+                'cardsData' => $cardsData,
+                'detailsCard' => null,
+
+                'notifSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifSeen'],
+                'notifNotSeen' => $notificationsService->getUserNotifications($user, $notifUserRepository)['notifNotSeen'],
+                'shouldNotify' => $notificationsService->getUserNotifications($user, $notifUserRepository)['shouldNotify'],
+
                 'showParams' => $showParams,
                 'homeworkReminder' => $homeworkReminder,
                 'examReminder' => $examReminder,
                 'newReminder' => $newReminder,
                 'modifReminder' => $modifReminder,
+
                 'cookies' => $cookies,
-                'detailsCard' => null,
             ]);
         } else {
             // Utilisateur non connecté,
             return $this->redirectToRoute('app_login');
         }
-        $content = $this->renderView('home/list.html.twig', ['cardData' => $cardData]);
 
-        return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
+        if($this->getUser()){
+            $user = $this->getUser();
+
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+            $content = $this->renderView('home/list.html.twig', ['cardsData' => $cardsData]);
+
+            return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
+        }
+
+        return $this->redirectToRoute('app_login');
     }
 }
