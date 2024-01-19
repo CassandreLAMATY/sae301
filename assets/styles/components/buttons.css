@@ -1,0 +1,206 @@
+/* 🔴 ------------------- 🔴 */
+/* 🔴 ----- BUTTONS ----- 🔴 */
+/* 🔴 ------------------- 🔴 */
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--grup-2);
+
+    margin: unset;
+    padding: var(--grup-2) var(--grup);
+
+    border-radius: var(--grup-2);
+    border: none !important;
+    background-color: var(--secondary-gray--01);
+    box-shadow: 0 0 0 2px var(--secondary-gray--02);
+
+    font-size: var(--grup);
+    font-weight: 600;
+    color: unset;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--secondary-gray--02);
+}
+
+/* 🟡 ----- CLASSES SIMPLES ----- 🟡 */
+
+button.btn--wider {
+    padding-left: var(--grup) !important;
+    padding-right: var(--grup) !important;
+}
+
+.btn--wider > button {
+    padding-left: var(--grup) !important;
+    padding-right: var(--grup) !important;
+}
+
+button.btn--no-outline {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+button.btn--darker {
+    background-color: var(--secondary-gray--02);
+    box-shadow: 0 0 0 2px var(--secondary-gray--03);
+}
+
+button.btn--highlighted {
+    background-color: var(--accent-yellow);
+    box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
+}
+
+button.btn--highlighted:hover {
+    background-color: var(--accent-yellow-shadow) !important;
+}
+
+button.btn--signalement {
+    color: var(--accent-red);
+}
+
+/* 🟡 ----- CONCATENATED BTNS ----- 🟡 */
+
+.concatinated-btns {
+    position: relative;
+
+    display: flex;
+    align-items: stretch;
+
+    width: fit-content;
+    height: fit-content;
+}
+
+.concatinated-btns button:first-of-type:not(.btn--force-single) {
+    border-radius: var(--grup-2) 0 0 var(--grup-2);
+}
+
+.concatinated-btns button:last-of-type:not(.btn--force-single) {
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+}
+
+.concatinated-btns button:only-of-type,
+button.btn--force-single {
+    border-radius: var(--grup-2) !important;
+}
+
+/* 🟢 ----- CLASSES VALIDATIONS ----- 🟢 */
+
+button.btn--a-faire {
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px var(--accent-blue-shadow);
+    color: var(--main--white);
+}
+
+button.btn--a-faire {
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px var(--accent-blue-shadow);
+    color: var(--main--white);
+}
+
+button.btn--a-faire:hover {
+    background-color: var(--accent-blue-shadow);
+}
+
+button.btn--fait {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 0 2px var(--accent-green--shadow);
+}
+
+button.btn--fait:hover {
+    background-color: var(--accent-green--shadow);
+}
+
+/* ⚫ ------------------ ⚫ */
+/* ⚫ ----- AUTRES ----- ⚫ */
+/* ⚫ ------------------ ⚫ */
+
+.double-button {
+    position    : relative;
+
+    display     : flex;
+    align-items : stretch;
+
+    width       : fit-content;
+    height      : fit-content;
+
+    color       : var(--secondary-gray--04);
+}
+
+.double-button__item {
+    display          : flex;
+    align-items      : center;
+
+    padding          : var(--grup-2) var(--grup-1);
+    gap              : var(--grup-2);
+
+    background-color : var(--secondary-gray--01);
+
+    font-size        : var(--grup);
+}
+
+.double-button__item:first-child {
+    border-radius : var(--grup-2) 0 0 var(--grup-2);
+}
+
+.double-button__item:last-child {
+    border-radius : 0 var(--grup-2) var(--grup-2) 0;
+}
+
+.double-button__item.signalement {
+    color : var(--accent-red);
+}
+
+.see-button {
+    z-index     : 2;
+
+    border      : none;
+
+    font-weight : 600;
+    color       : var(--main--black);
+}
+
+.see-button__active {
+    background-color : var(--accent-yellow);
+    box-shadow       : 0 0 0 2px var(--accent-yellow-shadow) !important;
+}
+
+.see-button__active:hover {
+    background-color : var(--accent-yellow-shadow);
+}
+
+.delete-button,
+.delete-all-button {
+    position: relative;
+    
+    background-color : var(--accent-red);
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+    box-shadow       : 0 0 0 2px var(--accent-red-shadow);
+
+    color            : var(--secondary-gray--01);
+}
+
+.delete-button-desactivated,
+.empty-notif-desactivated {
+    background-color : var(--secondary-gray--01);
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+    box-shadow       : 0 0 0 2px var(--secondary-gray--02);
+
+    color: var(--secondary-gray--03);
+}
+
+.delete-button-desactivated:hover,
+.empty-notif-desactivated:hover {
+    background-color: var(--secondary-gray--01);
+
+    cursor: not-allowed;
+}
+
+.delete-button:hover,
+.delete-all-button:hover {
+    background-color : var(--accent-red-shadow);
+}

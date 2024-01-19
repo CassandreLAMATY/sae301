@@ -21,28 +21,31 @@ class UsersCardsRepository extends ServiceEntityRepository
         parent::__construct($registry, UsersCards::class);
     }
 
-//    /**
-//     * @return UsersCards[] Returns an array of UsersCards objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByUserId($usr_id): array
+    {
+        return $this->createQueryBuilder('uc')
+            ->innerJoin('uc.uc_crd', 'c')
+            ->addSelect('c')
+            ->andWhere('uc.uc_usr = :id')
+            ->setParameter('id', $usr_id)
+            ->orderBy('c.crd_to', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?UsersCards
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByUserIdNotOutdated($usr_id): array
+    {
+        return $this->createQueryBuilder('uc')
+            ->innerJoin('uc.uc_crd', 'c')
+            ->addSelect('c')
+            ->andWhere('uc.uc_usr = :id')
+            ->setParameter('id', $usr_id)
+            ->andWhere('c.crd_to >= :now')
+            ->setParameter('now', new \DateTime())
+            ->orderBy('c.crd_to', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

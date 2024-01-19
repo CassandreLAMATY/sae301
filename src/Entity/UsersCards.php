@@ -17,9 +17,6 @@ class UsersCards
     #[ORM\Column]
     private ?bool $uc_done = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $uc_reminder = null;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: "usr_id")]
     private ?Users $uc_usr = null;
@@ -41,18 +38,6 @@ class UsersCards
     public function setUcDone(bool $uc_done): static
     {
         $this->uc_done = $uc_done;
-
-        return $this;
-    }
-
-    public function getUcReminder(): ?\DateTimeInterface
-    {
-        return $this->uc_reminder;
-    }
-
-    public function setUcReminder(?\DateTimeInterface $uc_reminder): static
-    {
-        $this->uc_reminder = $uc_reminder;
 
         return $this;
     }

@@ -20,23 +20,4 @@ class NotificationsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Notifications::class);
     }
-
-    public function findById($id): array
-    {
-        $notifications = [];
-        foreach ($id as $notifId) {
-            $_notifications = $this->createQueryBuilder('n')
-                ->innerJoin('n.not_type', 't', 'WITH', 'n.not_type = t.typ_id')
-                ->innerJoin('n.not_subject', 's', 'WITH', 'n.not_subject = s.sbj_id')
-                ->andWhere('n.not_id = :id')
-                ->setParameter('id', $notifId)
-                ->getQuery()
-                ->getResult()
-            ;
-
-            $notifications[] = $_notifications[0];
-        }
-
-        return $notifications;
-    }
 }

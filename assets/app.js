@@ -1,3 +1,4 @@
+
 /**
  * Welcome to your app's main JavaScript file!
  *
@@ -172,7 +173,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     //créer un input select
     const select = document.createElement('button');
     select.classList.add('fc-button');
-    select.classList.add('fc-button-primary');
+    select.classList.add('fc-button-primary', 'btn--force-single');
 
     select.innerHTML = 'Matières <i class="fa-solid fa-angle-down"></i>';
 
@@ -295,13 +296,12 @@ function getDetailsCard(className) {
         console.log(document.getElementById('details'));
 
         let modal = document.getElementById('details');
-        modal.style.transform = 'translateX(-100%)';
-        modal.style.transition = 'transform 0.5s ease-in-out';
+        modal.classList.add('details--openned');
 
         let backBtn = document.getElementById('back');
         if (backBtn) {
           backBtn.addEventListener('click', function() {
-            modal.style.transform = 'translateX(0)';
+            modal.classList.remove('details--openned');
           });
         }
 
