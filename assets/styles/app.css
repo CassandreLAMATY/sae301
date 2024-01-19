@@ -500,21 +500,36 @@ header {
     gap             : var(--grup-1);
 }
 
-.delete-button {
+.delete-button,
+.delete-all-button {
     position: relative;
+    
     background-color : var(--accent-red);
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
     box-shadow       : 0 0 0 2px var(--accent-red-shadow);
 
     color            : var(--secondary-gray--01);
 }
 
-.delete-button:hover {
-    background-color : var(--accent-red-shadow);
+.delete-button-desactivated,
+.empty-notif-desactivated {
+    background-color : var(--secondary-gray--01);
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+    box-shadow       : 0 0 0 2px var(--secondary-gray--02);
+
+    color: var(--secondary-gray--03);
 }
 
-a:has(> .delete-button) {
-    text-decoration : none;
-    color           : var(--white);
+.delete-button-desactivated:hover,
+.empty-notif-desactivated:hover {
+    background-color: var(--secondary-gray--01);
+
+    cursor: not-allowed;
+}
+
+.delete-button:hover,
+.delete-all-button:hover {
+    background-color : var(--accent-red-shadow);
 }
 
 /*---------MAIN----------*/

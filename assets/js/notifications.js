@@ -67,22 +67,41 @@ deleteButton.forEach(button => {
 });
 
 deleteAllButton.addEventListener('click', () => {
-    fetch('/notifications/deleteAll', {
-        method: 'DELETE'
-    }).then(res => {
-        if( !res.ok ) {
-            throw new Error('Quelque chose s\'est mal passé...');
-        }
-        notifCards.forEach(card => {
-            card.remove();
+    let deleteButtonContent = deleteAllButton.querySelector('i');
+    const confirm = deleteAllButton.parentElement.querySelector('.delete-confirm');
+
+    if( deleteButtonContent.classList.contains('fa-circle-check') ) {
+        fetch('/notifications/deleteAll', {
+            method: 'DELETE'
+        }).then(res => {
+            if( !res.ok ) {
+                throw new Error('Quelque chose s\'est mal passé...');
+            }
+            notifCards.forEach(card => {
+                card.remove();
+            });
+            tagNew.style.display = 'none';
+            separator.style.display = 'none';
+            noNotif.style.display = 'block';
+            notifDot.style.display = 'none';
+            confirm.style.display = 'none';
+
+            deleteButtonContent.classList.remove('fa-circle-check');
+            deleteButtonContent.classList.add('fa-trash-can');
+
+            deleteAllButton.classList.add('delete-button-desactivated');
+            deleteAllButton.classList.remove('delete-all-button');
+        }).catch(error => {
+            console.error('Erreur lors de l\'opération, action annulée :', error);
         });
-        tagNew.style.display = 'none';
-        separator.style.display = 'none';
-        noNotif.style.display = 'block';
-        notifDot.style.display = 'none';
-    }).catch(error => {
-        console.error('Erreur lors de l\'opération, action annulée :', error);
-    });
+    }
+
+    if( deleteButtonContent.classList.contains('fa-trash-can') ) {
+        deleteButtonContent.classList.remove('fa-trash-can');
+        deleteButtonContent.classList.add('fa-circle-check');
+
+        confirm.style.display = 'block';
+    }
 });
 
 readNotif.addEventListener('click', () => {
@@ -106,6 +125,9 @@ readNotif.addEventListener('click', () => {
             card.style.boxShadow = "0 0 0 2px var(--secondary-gray--02)";
             card.querySelector('.see-button').classList.remove('see-button__active');
         });
+
+        readNotif.classList.add('empty-notif-desactivated');
+        readNotif.classList.remove('empty-notif');
     })
     .catch(error => {
         console.error('Erreur lors de l\'opération, action annulée :', error);

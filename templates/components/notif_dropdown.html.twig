@@ -6,8 +6,18 @@
             {% endif %}
         </div>
         <div class="double-button">
-            <button class="double-button__item empty-notif" title="Marquer toutes les notifications comme lues"><i class="fa-solid fa-envelope-open"></i></button>
-            <button class="double-button__item delete-all-button" title="Supprimer toutes les notifications"><i class="fa-solid fa-trash-can"></i></button>
+            {% if notifNotSeen is empty %}
+                <button class="double-button__item empty-notif-desactivated" title="Marquer toutes les notifications comme lues"><i class="fa-solid fa-envelope-open"></i></button>
+            {% else %}
+                <button class="double-button__item empty-notif" title="Marquer toutes les notifications comme lues"><i class="fa-solid fa-envelope-open"></i></button>
+            {% endif %}
+
+            {% if notifNotSeen is empty and notifSeen is empty %}
+                <button class="double-button__item delete-button-desactivated" title="Supprimer toutes les notifications"><i class="fa-solid fa-trash-can"></i></button>
+            {% else %}
+                <button class="double-button__item delete-all-button" title="Supprimer toutes les notifications"><i class="fa-solid fa-trash-can"></i></button>
+            {% endif %}
+            <span class="delete-confirm">Confirmer la suppression ?</span>
         </div>
     </div>
     
@@ -28,14 +38,15 @@
             <div class="double-button">
                 <button class="double-button__item see-button see-button__active"><i class="fa-solid fa-eye"></i> Voir</button>
                 <button class="double-button__item delete-button" data-id="{{ item.getNuNot().getNotId() }}"><i class="fa-solid fa-trash-can" title="Supprimer la notification"></i></button>
-                <span class="delete-confirm">Comfirmer la suppression</span>
                 <span class="delete-confirm">Confirmer la suppression ?</span>
             </div>
         </div>
     {% endfor %}
 
-    {% if notifNotSeen is not empty and notifSeen is not empty %}
-        <hr class="notif-separator">
+    {% if notifNotSeen is not empty %}
+        {% if notifSeen is not empty %}
+            <hr class="notif-separator">
+        {% endif %}
     {% endif %}
 
     {# OLD NOTIFICATIONS #}
