@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     for (let i = 1; i <= 4; i++) {
       typeFilter(i);
     }
+
+    validatedFilter()
   }
 
   if (document.getElementById('calendar')) {
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
       const btnCookies = document.querySelector('.btn-cookies');
       btnCookies.addEventListener('click', function() {
-        localStorage.setItem('cookies', 'true');
+        localStorage.setItem('cookies', '1');
         cookiesDiv.style.display = 'none';
         cookiesDiv.style.opacity = '0';
       });
@@ -168,7 +170,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     divFilter.appendChild(subjectDiv);
 
-    //validatedFilter();
+    validatedFilter()
 
     //créer un input select
     const select = document.createElement('button');
@@ -259,7 +261,7 @@ function getCalendar(dataEvents) {
         arg.event.extendedProps.hour;
 
       eventDiv.setAttribute('card-id', arg.event.id );
-      eventDiv.setAttribute('is-validated', arg.event.extendedProps.isValidated);
+      eventDiv.setAttribute('isvalidated', arg.event.extendedProps.isValidated);
       eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId );
 
       eventDiv.style.borderLeft = '5px solid ' +
@@ -370,7 +372,6 @@ function typeFilter(typeId) {
     hideType(typeId, !isPressed);
   });
 }
-
 function hideType(typeId, isPressed) {
   const events = document.querySelectorAll('.fc-event-main');
   const eventsList = document.querySelectorAll('.item');
@@ -396,6 +397,72 @@ function hideType(typeId, isPressed) {
     });
     eventsList.forEach(eventList => {
       if (eventList.getAttribute('type-id') == typeId) {
+        eventList.style.display = 'grid';
+      }
+    });
+  }
+}
+
+function validatedFilter() {
+
+  const btnValidated = document.querySelector('.statusEvent button');
+
+  const isPressed = localStorage.getItem('isValidated') !== null;
+
+  btnValidated.setAttribute('aria-pressed', isPressed ? 'true' : 'false');
+
+  if (btnValidated.getAttribute('aria-pressed') === 'true') {
+    btnValidated.classList.add('btn--active');
+  } else {
+    btnValidated.classList.remove('btn--active');
+  }
+
+  hideValidated(isPressed);
+
+  btnValidated.addEventListener('click', function() {
+
+    const isPressed = localStorage.getItem('isValidated') !== null;
+
+    if (isPressed) {
+      localStorage.removeItem('isValidated');
+      this.setAttribute('aria-pressed', 'false');
+      btnValidated.classList.remove('btn--active');
+    } else {
+      localStorage.setItem('isValidated', 1);
+      this.setAttribute('aria-pressed', 'true');
+      btnValidated.classList.add('btn--active');
+    }
+
+    console.log(!isPressed);
+    hideValidated(!isPressed);
+  });
+}
+function hideValidated(isPressed) {
+  const events = document.querySelectorAll('.fc-event-main');
+  const eventsList = document.querySelectorAll('.item');
+
+  if (isPressed) {
+    events.forEach(event => {
+      const eventCard = event.querySelector('.event-card')
+
+      if (eventCard.getAttribute('isvalidated') == 0) {
+        event.parentNode.style.display = 'none';
+      }
+    });
+    eventsList.forEach(eventList => {
+      if (eventList.getAttribute('isvalidated') == 0) {
+        eventList.style.display = 'none';
+      }
+    });
+  } else {
+    events.forEach(event => {
+      const eventCard = event.querySelector('.event-card')
+      if (eventCard.getAttribute('isvalidated') == 0) {
+        event.parentNode.style.display = 'block';
+      }
+    });
+    eventsList.forEach(eventList => {
+      if (eventList.getAttribute('isvalidated') == 0) {
         eventList.style.display = 'grid';
       }
     });

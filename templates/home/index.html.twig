@@ -23,6 +23,7 @@
                         <div class="item {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
                              card-id="{{ item.card.id }}"
                              type-id="{{ item.card.typeId }}"
+                             isValidated="{{ item.card.isValidated }}"
                              style="border-left-color: {{ item.params.typeColor }} !important;">
                             <div class="time">
                                 <p class="date">
@@ -78,7 +79,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
       var optionButton = document.getElementById('optionButton');
-      var optionButtonIcon = document.getElementById('optionButtonIcon');
+
 
       var paramsForm = document.getElementById('paramsForm');
 
@@ -86,9 +87,9 @@
         openParamsPopUp();
       });
 
-      optionButtonIcon.addEventListener('click', function() {
+      /*optionButtonIcon.addEventListener('click', function() {
         openParamsPopUp();
-      });
+      });*/
 
       async function openParamsPopUp() {
         const params = document.getElementById('params');
