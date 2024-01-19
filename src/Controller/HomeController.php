@@ -77,7 +77,7 @@ class HomeController extends AbstractController
         }
     }
 
-    #[Route('/home-list', name: 'app_home_list')]
+    #[Route('/list', name: 'app_home_list')]
     public function getListContent(
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository,
@@ -98,6 +98,7 @@ class HomeController extends AbstractController
             $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
 
+            $weekList = $this->generateWeekList();
             $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
 
             $homeworkReminder = $user->isUsrHomeworkReminder();
@@ -106,45 +107,13 @@ class HomeController extends AbstractController
             $modifReminder = $user->isUsrModifReminder();
             $cookies = $user->isUsrCookies();
 
-            // if ($request->isMethod('POST')) {
-            //     if ($request->request->has('homeworkReminder')) {
-            //         $homeworkReminder = !$homeworkReminder;
-            //         $user->setUsrHomeworkReminder($homeworkReminder);
-            //     }
-            //     if ($request->request->has('examReminder')) {
-            //         $examReminder = !$examReminder;
-            //         $user->setUsrExamReminder($examReminder);
-            //     }
-            //     if ($request->request->has('newReminder')) {
-            //         $newReminder = !$newReminder;
-            //         $user->setUsrNewReminder($newReminder);
-            //     }
-            //     if ($request->request->has('modifReminder')) {
-            //         $modifReminder = !$modifReminder;
-            //         $user->setUsrModifReminder($modifReminder);
-            //     }
-            //     if ($request->request->has('cookies')) {
-            //         $cookies = !$cookies;
-            //         $user->setUsrCookies($cookies);
-            //     }
-
-            //     $entityManager->persist($user);
-            //     $entityManager->flush();
-            // }
-
-            /* return $this->forward(ParamsController::class . '::index', [
-                'request' => $request,
-                // 'cardsRepository' => $cardsRepository, // Pass any other dependencies needed in ParamsController
-                // 'typesRepository' => $typesRepository,
-                // 'subjectsRepository' => $subjectsRepository,
-            ]); */
-
-            return $this->render('home/index.html.twig', [
+            return $this->render('home/list.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
                 'lastname' => $lastname,
                 'firstname' => $firstname,
 
+                'weekList' => $weekList,
                 'cardsData' => $cardsData,
                 'detailsCard' => null,
 
@@ -175,5 +144,45 @@ class HomeController extends AbstractController
         }
 
         return $this->redirectToRoute('app_login');
+    }
+
+    protected function generateWeekList()
+    {
+        $startDate = new \DateTime('now');
+        $endDate = (clone $startDate)->add(new \DateInterval('P6M'));
+
+        $currentWeek = clone $startDate;
+        $currentWeek->modify('this week'); // Récupérer le début de la semaine actuelle
+
+        $weekList = [];
+
+        // Créer un formateur de date pour le format français
+        $formatter = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+
+        while ($currentWeek < $endDate) {
+            $startOfWeek = clone $currentWeek;
+            $endOfWeek = clone $currentWeek;
+
+            // Trouver le dimanche de la semaine
+            $endOfWeek->modify('sunday');
+
+            $weekString = sprintf(
+                'Semaine %s - %s / %s',
+                $startOfWeek->format('W'),
+                $formatter->format($startOfWeek),
+                $formatter->format($endOfWeek)
+            );
+
+            // Ajouter la date de début et de fin de la semaine à la structure
+            $weekList[] = [
+                'weekString' => $weekString,
+                'startOfWeek' => $startOfWeek->format('Y-m-d'),
+                'endOfWeek' => $endOfWeek->format('Y-m-d'),
+            ];
+
+            $currentWeek->modify('next week'); // Passer à la semaine suivante
+        }
+
+        return $weekList;
     }
 }

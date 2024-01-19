@@ -20,7 +20,6 @@
 
         <div class='detail--content {{ item.card.getIsValidated() ? '' : 'notvalidated' }}'
              style='border-left: solid 6px {{ item.typeColor }};'>
-
             <div class='detail--content--time'>
                 <div class='detail--content--time--left detail--content--format'>
                     <p class='detail--content--format-t'><i class="fa-solid fa-calendar-days"></i> Date</p>
@@ -33,30 +32,25 @@
                         <p class='detail--content--format-c'>Le {{ item.card.getFormattedCrdTo }}</p>
                     {% endif %}
                 </div>
-
                 <div class='detail--content--time--right double-button'>
                     <button class='double-button__item'><i class="fa-solid fa-pen"></i>Modifier</button>
-                    <button class='double-button__item btn--signalement'><i class="fa-solid fa-flag"></i></button>
+                    <button class='double-button__item signalement'><i class="fa-solid fa-flag"></i></button>
                 </div>
             </div>
-
             <div class='detail--content--subject detail--content--format'>
                 <p class='detail--content--format-t'><i class="fa-solid fa-book"></i>Matière</p>
                 <p class='detail--content--format-c'>{{ item.subjectName }}</p>
             </div>
-
             {% if  item.card.getCrdDesc %}
                 <div class='detail--content--description detail--content--format'>
                     <p class='detail--content--format-t'><i class="fa-solid fa-paragraph"></i> Description</p>
                     <p class='detail--content--format-c'>{{ item.card.getCrdDesc }}</p>
                 </div>
             {% endif %}
-
             <div class='detail--content--done status'>
                 <i class="fa-regular fa-square"></i>
                 <p>Rendu</p>
             </div>
-
         </div>
     {% endfor %}
 {% endif %}
