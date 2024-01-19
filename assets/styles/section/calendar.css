@@ -77,9 +77,13 @@
     padding-right: var(--grup) !important;
 }
 
-.fc-button-group.types button.btn--active {
+#calendar .fc-header-toolbar.filter button:hover {
+    background-color: var(--secondary-gray--02) !important;
+}
+
+.fc-button-group.types {
     display: flex;
-    gap: 4px;
+    gap: 2px;
 }
 
 .fc-button-group.types button.btn--active {
