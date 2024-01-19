@@ -511,7 +511,14 @@ a:has(> .delete-button) {
 
 main {
     display: flex;
-    transition: 0.7s ease-in-out;
+    gap: var(--grup);
+    height: calc(100vh - var(--grup3));
+}
+
+@media screen and (max-width: 1165px) {
+    main {
+        gap: 0;
+    }
 }
 
 .subject-choices{

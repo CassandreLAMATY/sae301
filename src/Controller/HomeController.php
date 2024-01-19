@@ -107,39 +107,6 @@ class HomeController extends AbstractController
             $modifReminder = $user->isUsrModifReminder();
             $cookies = $user->isUsrCookies();
 
-            // if ($request->isMethod('POST')) {
-            //     if ($request->request->has('homeworkReminder')) {
-            //         $homeworkReminder = !$homeworkReminder;
-            //         $user->setUsrHomeworkReminder($homeworkReminder);
-            //     }
-            //     if ($request->request->has('examReminder')) {
-            //         $examReminder = !$examReminder;
-            //         $user->setUsrExamReminder($examReminder);
-            //     }
-            //     if ($request->request->has('newReminder')) {
-            //         $newReminder = !$newReminder;
-            //         $user->setUsrNewReminder($newReminder);
-            //     }
-            //     if ($request->request->has('modifReminder')) {
-            //         $modifReminder = !$modifReminder;
-            //         $user->setUsrModifReminder($modifReminder);
-            //     }
-            //     if ($request->request->has('cookies')) {
-            //         $cookies = !$cookies;
-            //         $user->setUsrCookies($cookies);
-            //     }
-
-            //     $entityManager->persist($user);
-            //     $entityManager->flush();
-            // }
-
-            /* return $this->forward(ParamsController::class . '::index', [
-                'request' => $request,
-                // 'cardsRepository' => $cardsRepository, // Pass any other dependencies needed in ParamsController
-                // 'typesRepository' => $typesRepository,
-                // 'subjectsRepository' => $subjectsRepository,
-            ]); */
-
             return $this->render('home/list.html.twig', [
                 'controller_name' => 'HomeController',
                 'username' => $username,
