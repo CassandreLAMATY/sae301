@@ -37,8 +37,10 @@
     transition: 0.5s ease-in-out;
 }
 
-.side-list .side-list_title {
-    color: white;
+.a-venir--tittle {
+    display: flex;
+    gap: var(--grup);
+    align-items: center;
 }
 
 .side-list .side-list_title,
@@ -117,18 +119,40 @@
 .side-list .subject {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .side-list .subject p.tag {
     margin-bottom: 5px;
 }
 
-.side-list .subject h3.notif-card__title,
-.side-list .subject > p.notif-card__subject {
+.side-list .subject > div h3.notif-card__title,
+.side-list .subject > div p.notif-card__subject {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 275px;
+    max-width: 16vw;
+}
+
+@media screen and (max-width: 1500px) {
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 14vw;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 12vw;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 10vw;
+    }
 }
 
 .side-list .subject > p {
@@ -149,8 +173,6 @@
     border-radius: 6px;
 
     color: var(--white);
-    align-items: center;
-    width: max-content;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -180,29 +202,4 @@
     #a-venir.a-venir--openned {
         transform: translateX(calc(-100% - 3px));
     }
-}
-
-/*
-@media screen and (max-width: 1500px) {
-   .side-list,
-   #details {
-       width: 500px;
-   }
-
-   .side-list .subject h3.notif-card__title,
-   .side-list .subject > p.notif-card__subject {
-       max-width: 175px;
-   }
-}
-
-@media screen and (max-width: 1500px) {
-   .side-list,
-   #details {
-       width: 450px;
-   }
-
-   .side-list .subject h3.notif-card__title,
-   .side-list .subject > p.notif-card__subject {
-       max-width: 100px;
-   }
 }

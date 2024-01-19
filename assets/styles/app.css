@@ -52,7 +52,7 @@
 }
 
 html {
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 body {
@@ -102,8 +102,6 @@ header {
     gap: var(--grup1);
 }
 
-
-
 /* notif menu */
 .notif {
     box-sizing: border-box;
@@ -126,8 +124,6 @@ header {
     background-color: var(--accent-orange);
     border-radius: 50%;
 }
-
-
 
 /* usercard menu */
 .userCard {
@@ -152,8 +148,6 @@ header {
     font-size: var(--grup);
     font-weight: 600;
 }
-
-
 
 /* dropdown */
 .userCard-dropdown,
@@ -266,11 +260,9 @@ header {
 
 .notif-message {
     display: none;
-    
+
     font-size: var(--grup);
 }
-
-
 
 /* notif */
 .notif-dropdown > .double-button {
@@ -325,7 +317,7 @@ header {
 .delete-confirm {
     display: none;
     position: absolute;
-    top: calc( 100% + var(--grup-3) );
+    top: calc(100% + var(--grup-3));
     left: 50%;
     transform: translateX(-50%);
 
@@ -335,8 +327,6 @@ header {
     font-size: var(--grup-1);
     color: var(--accent-red-shadow);
 }
-
-
 
 /* userCard */
 .buttons-container {
@@ -358,8 +348,6 @@ header {
     color: var(--secondary-gray--04);
     text-decoration: none;
 }
-
-
 
 /* tags */
 .tags_container {
@@ -392,8 +380,6 @@ header {
     background-color: #ffd54020;
     border-color: var(--accent-yellow);
 }
-
-
 
 /* popup */
 .popup-container {
@@ -441,8 +427,6 @@ a:has(> .delete-button) {
     text-decoration: none;
     color: var(--white);
 }
-
-
 
 /*---------MAIN----------*/
 
