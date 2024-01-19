@@ -120,51 +120,87 @@ button.btn--fait:hover {
 /* ⚫ ------------------ ⚫ */
 
 .double-button {
-    position: relative;
+    position    : relative;
 
-    display: flex;
-    align-items: stretch;
+    display     : flex;
+    align-items : stretch;
 
-    width: fit-content;
-    height: fit-content;
+    width       : fit-content;
+    height      : fit-content;
 
-    color: var(--secondary-gray--04);
+    color       : var(--secondary-gray--04);
 }
 
 .double-button__item {
-    display: flex;
-    align-items: center;
+    display          : flex;
+    align-items      : center;
 
-    padding: var(--grup-2) var(--grup-1);
-    gap: var(--grup-2);
+    padding          : var(--grup-2) var(--grup-1);
+    gap              : var(--grup-2);
 
-    background-color: var(--secondary-gray--01);
+    background-color : var(--secondary-gray--01);
 
-    font-size: var(--grup);
+    font-size        : var(--grup);
 }
 
 .double-button__item:first-child {
-    border-radius: var(--grup-2) 0 0 var(--grup-2);
+    border-radius : var(--grup-2) 0 0 var(--grup-2);
 }
 
 .double-button__item:last-child {
-    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+    border-radius : 0 var(--grup-2) var(--grup-2) 0;
+}
+
+.double-button__item.signalement {
+    color : var(--accent-red);
 }
 
 .see-button {
-    z-index: 2;
+    z-index     : 2;
 
-    border: none;
+    border      : none;
 
-    font-weight: 600;
-    color: var(--main--black);
+    font-weight : 600;
+    color       : var(--main--black);
 }
 
 .see-button__active {
-    background-color: var(--accent-yellow);
-    box-shadow: 0 0 0 2px var(--accent-yellow-shadow) !important;
+    background-color : var(--accent-yellow);
+    box-shadow       : 0 0 0 2px var(--accent-yellow-shadow) !important;
 }
 
 .see-button__active:hover {
-    background-color: var(--accent-yellow-shadow);
+    background-color : var(--accent-yellow-shadow);
+}
+
+.delete-button,
+.delete-all-button {
+    position: relative;
+    
+    background-color : var(--accent-red);
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+    box-shadow       : 0 0 0 2px var(--accent-red-shadow);
+
+    color            : var(--secondary-gray--01);
+}
+
+.delete-button-desactivated,
+.empty-notif-desactivated {
+    background-color : var(--secondary-gray--01);
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
+    box-shadow       : 0 0 0 2px var(--secondary-gray--02);
+
+    color: var(--secondary-gray--03);
+}
+
+.delete-button-desactivated:hover,
+.empty-notif-desactivated:hover {
+    background-color: var(--secondary-gray--01);
+
+    cursor: not-allowed;
+}
+
+.delete-button:hover,
+.delete-all-button:hover {
+    background-color : var(--accent-red-shadow);
 }
