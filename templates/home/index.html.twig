@@ -15,15 +15,30 @@
             // Charge le formulaire de création de carte en AJAX
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '{{ path('create_cards') }}', true);
+            console.log('Formulaire preprechargé');
             xhr.onload = function() {
+                console.log('Formulaire prechargé');
                 if (xhr.status === 200) {
+                    console.log('Formulaire chargé');
                     createCardFormContainer.innerHTML = xhr.responseText;
 
                     // Ajoute un gestionnaire d'événement pour le clic sur le bouton après le chargement AJAX
                     document.querySelector('#toggleCreateCardForm').addEventListener('click', function() {
                         createCardFormContainer.style.display = (createCardFormContainer.style.display === 'none') ? 'block' : 'none';
+                        let modal = document.getElementById('details');
+                        console.log('animation');
+                        modal.style.transform = 'translateX(-100%)';
+                        modal.style.transition = 'transform 0.5s ease-in-out';
 
-                        var items = document.querySelector('.items');
+                        let backBtn = document.getElementById('back');
+                        if (backBtn) {
+                            backBtn.addEventListener('click', function() {
+                                modal.style.transform = 'translateX(0)';
+                            });
+                        }
+                    });
+
+                        /*var items = document.querySelector('.items');
                         if (items) {
                             items.style.display = (items.style.display === 'none') ? 'block' : 'none';
                         }
@@ -31,10 +46,9 @@
                         var sideListTitle = document.querySelector('#side-list_title');
                         if (sideListTitle) {
                             sideListTitle.style.display = (sideListTitle.style.display === 'none') ? 'block' : 'none';
-                        }
+                        }*/
 
-                        console.log('End of document ready');
-                    });
+
 
                     // Ajoute un gestionnaire d'événement pour le changement sur cards_crd_typ après le chargement AJAX
                     document.getElementById('cards_crd_typ').addEventListener('change', function() {
@@ -58,9 +72,12 @@
                         }
                     });
                 }
-            };
+            }
             xhr.send();
+
         });
+
+
     </script>
 
 
@@ -73,9 +90,6 @@
 
             <div class="side-list">
 
-
-
-                <div id="createCardFormContainer" class="card"></div>
                 <div id="side-list_title">
                     <h2>À Venir</h2>
                 </div>
@@ -120,7 +134,11 @@
                     {% endfor %}
                 </div>
             </div>
-            <div id="details"></div>
+            <div id="details">
+                <div id="createCardFormContainer" class="card">
+
+                </div>
+            </div>
         </div>
     </main>
 {% endblock %}

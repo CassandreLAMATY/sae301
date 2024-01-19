@@ -213,12 +213,14 @@ function getCalendar(dataEvents) {
   });
   calendar.render();
 }
-
+/*la function getDetails card qui recupere une class pour récuperer les données que tu veux envoyer à ton controller et donc a ton template
+c'est aussi cette function qui gère l'animation*/
 function getDetailsCard(className) {
   let eventDiv = document.getElementsByClassName(className);
   for (let i = 0; i < eventDiv.length; i++) {
     eventDiv[i].addEventListener('click', function() {
       let eventId = this.querySelector('.card-id').innerHTML;
+        //console.log(eventId);
       fetch('/details', {
         method: 'POST',
         headers: {
