@@ -10,9 +10,11 @@
 ////////////////////////////// CALENDAR //////////////////////////////
 document.addEventListener('DOMContentLoaded', async function() {
   if (document.getElementById('main-list')) {
+
     const btnCalendar = document.querySelector('.btn-calendar');
     btnCalendar.addEventListener('click', function() {
       window.location.href = '/';
+      localStorage.setItem('view', '1');
     });
 
     for (let i = 1; i <= 4; i++) {
@@ -36,6 +38,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         cookiesDiv.style.display = 'none';
         cookiesDiv.style.opacity = '0';
       });
+    }
+
+    if(localStorage.getItem('view') === '2'){
+      window.location.href = '/list';
     }
 
     const dataSubject = await fetch('/subjects/data').
@@ -187,6 +193,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     btnList.addEventListener('click', function() {
       window.location.href = '/list';
+      localStorage.setItem('view', '2');
     });
 
     const btnWeek = document.querySelector('[title="Semaine"]');
