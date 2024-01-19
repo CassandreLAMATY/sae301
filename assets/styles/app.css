@@ -177,7 +177,8 @@ header {
 /* dropdown */
 .userCard-dropdown,
 .notif-dropdown,
-.subject-choices{
+.subject-choices,
+.cookies{
     display          : none;
     position         : absolute;
     z-index          : 100;
@@ -808,3 +809,33 @@ main {
     cursor: pointer;
     background-color: var(--accent-yellow);
 }
+
+/*---------COOKIES----------*/
+
+.cookies{
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+    display: flex;
+    opacity: 1;
+    gap: 20px;
+    width: fit-content;
+    padding: 20px;
+}
+
+.cookies > div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.cookies-title{
+    font-weight: bold;
+    font-size: var(--grup1);
+}
+.cookies-choice{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: end;
+}
+

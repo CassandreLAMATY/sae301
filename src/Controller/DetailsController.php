@@ -56,8 +56,8 @@ class DetailsController extends AbstractController {
             }
         }
 
-        return $this->render('details/index.html.twig', ['detailsCard' => $cardData,
-
+        return $this->render('details/index.html.twig', [
+            'detailsCard' => $cardData,
         ]);
     }
 }
