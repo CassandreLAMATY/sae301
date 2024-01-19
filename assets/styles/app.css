@@ -23,14 +23,16 @@
     --accent-blue: #4098ff; /* couleur pour les tags A SUPPRIMER APRÈS */
     --accent-blue-shadow: #1571dd;
 
-    /* --- Couleurs Btns --- */
-    --btn--done: #9ae08f;
-
     --main-black: #424242;
     --secondary-gray--01: #f0f4f8;
     --secondary-gray--02: #e5e9ed;
     --secondary-gray--03: #c0c5ca;
     --secondary-gray--04: #6b6b6b;
+
+    --type--rendu: #4098ff;
+    --type--examen: #ffa740;
+    --type--iut: #d940ff;
+    --type--bde: #ff4086;
 
     --grup6: 17.94rem; /* 288px */
     --grup5: 11.09rem; /* 177px */
