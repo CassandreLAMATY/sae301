@@ -16,9 +16,10 @@
             justify-content: center;
         }
 
-        header > img {
-            height: 86px;
-            width: 271px;
+        header > h1 {
+            font-size: 64px;
+            font-weight: 800;
+            margin: 0;
         }
 
         main {
@@ -46,14 +47,14 @@
             padding: 20px;
         }
 
-        section > h2 {
+        section > h3 {
             font-weight: 400;
             font-size: 20px;
             text-align: center;
             padding-bottom: 25px;
         }
 
-        h1 {
+        h2 {
             font-weight: 600;
             font-size: 24px;
             text-align: center;
@@ -67,12 +68,12 @@
 </head>
 <body>
     <header>
-        <img src="{{ asset('images/mail/calendra.png') }}" alt="">
+        <h1>calendra</h1>
     </header>
     <main>
-        <h1>Tu as reçu une nouvelle notification !</h1>
+        <h2>Tu as reçu une nouvelle notification !</h1>
         <section>
-            <h2>{{ mail_title }}</h2>
+            <h3>{{ mail_title }}</h2>
             <p>Titre : {{ crd_title }}</p>
             <p>Type : {{ typ_name }}</p>
             <p>Description : {{ crd_desc }}</p>
