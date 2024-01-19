@@ -6,6 +6,8 @@
 
     {{ include('components/header.html.twig') }}
 
+    <button id="toggleCreateCardForm">Créer une carte</button>
+
    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
@@ -154,7 +156,20 @@
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    const aVenir = document.getElementById('a-venir');
+    const toggleCreate = document.getElementById('toggleCreateCardForm');
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '{{ path('create_cards') }}', true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            toggleCreate.addEventListener('click', function() {
+                aVenir.innerHTML = xhr.responseText;
+            });
+        }
+    }
+
+/*     document.addEventListener("DOMContentLoaded", function() {
         console.log('Document ready');
 
         // Initialisation : Cache le formulaire
@@ -170,6 +185,7 @@
             if (xhr.status === 200) {
                 console.log('Formulaire chargé');
                 createCardFormContainer.innerHTML = xhr.responseText;
+                console.log(createCardFormContainer.innerHTML);
 
                 // Ajoute un gestionnaire d'événement pour le clic sur le bouton après le chargement AJAX
                 document.querySelector('#toggleCreateCardForm').addEventListener('click', function() {
@@ -178,9 +194,9 @@
                     let modaldetails = document.getElementById('details');
                     console.log('animation');
                     setTimeout(function() {
-                    modalcreate.style.transform = 'translateX(-100%)';
-                    modalcreate.style.transition = 'transform 0.5s ease-in-out';
-                    modaldetails.style.transform = 'translateX(0)';
+                        modalcreate.style.transform = 'translateX(-100%)';
+                        modalcreate.style.transition = 'transform 0.5s ease-in-out';
+                        modaldetails.style.transform = 'translateX(0)';
                     }, 100);
 
                     let backBtn = document.getElementById('create-back');
@@ -191,15 +207,6 @@
                     }
                 });
 
-                    /*var items = document.querySelector('.items');
-                    if (items) {
-                        items.style.display = (items.style.display === 'none') ? 'block' : 'none';
-                    }
-
-                    var sideListTitle = document.querySelector('#side-list_title');
-                    if (sideListTitle) {
-                        sideListTitle.style.display = (sideListTitle.style.display === 'none') ? 'block' : 'none';
-                    }*/
 
 
 
@@ -226,7 +233,7 @@
                 });
             }
         }
-        xhr.send();
+        xhr.send(); */
     });
 </script>
 {# fin script #}

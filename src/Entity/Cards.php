@@ -248,11 +248,6 @@ class Cards
         return $this;
     }
 
-    public function getCrdId(): ?int
-    {
-        return $this->crd_id;
-    }
-
     public function getIsValidated(): ?int
     {
         return $this->is_validated;

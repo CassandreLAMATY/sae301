@@ -33,8 +33,8 @@ class CalendarDataController extends AbstractController
             $data[] = [
                 "id" => $card->getUcCrdId()->getCrdId(),
                 "title" => $card->getUcCrdId()->getCrdTitle(),
-                'subject' => $card->getUcCrdId()->getCrdSbjId(),
-                'type' => $card->getUcCrdId()->getCrdTypId(),
+                'subject' => $card->getUcCrdId()->getCrdSbj(),
+                'type' => $card->getUcCrdId()->getCrdTyp(),
                 'start' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
                 'hour' => $card->getUcCrdId()->getCrdTo()->format('H:i'),
                 "isValidated" => $card->getUcCrdId()->getIsValidated(),

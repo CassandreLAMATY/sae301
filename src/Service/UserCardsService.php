@@ -21,10 +21,10 @@ class UserCardsService {
                 "to" => $card->getUcCrdId()->getCrdTo(),
                 "stringTo" => $dateTimeConverter->convertToString($card->getUcCrdId()->getCrdTo()),
                 "timeLeft" => $card->getUcCrdId()->getTimeLeft(),
-                "type" => $card->getUcCrdId()->getCrdTypId()->getTypName(),
-                "typeId" => $card->getUcCrdId()->getCrdTypId()->getTypId(),
-                "ref" => $card->getUcCrdId()->getCrdSbjId()->getSbjRef(),
-                "subject" => $card->getUcCrdId()->getCrdSbjId()->GetSbjName(),
+                "type" => $card->getUcCrdId()->getCrdTyp()->getTypName(),
+                "typeId" => $card->getUcCrdId()->getCrdTyp()->getTypId(),
+                "ref" => $card->getUcCrdId()->getCrdSbj()->getSbjRef(),
+                "subject" => $card->getUcCrdId()->getCrdSbj()->GetSbjName(),
                 "isValidated" => $card->getUcCrdId()->getIsValidated(),
             ];
 
@@ -39,10 +39,10 @@ class UserCardsService {
 
             //if timeEnd is before now, skip this card
             if ($timeEnd > $now) {
-                $typeId = $card->getUcCrdId()->getCrdTypId();
+                $typeId = $card->getUcCrdId()->getCrdTyp();
                 $type = $typesRepository->find($typeId);
 
-                $subjectId = $card->getUcCrdId()->getCrdSbjId();
+                $subjectId = $card->getUcCrdId()->getCrdSbj();
                 $subject = $subjectsRepository->find($subjectId);
 
                 $timeleft = $now->diff($timeEnd);

@@ -16,10 +16,14 @@ use App\Repository\UsersCardsRepository;
 use App\Repository\UsersRepository;
 use App\Repository\CardsRepository;
 
-
 use App\Service\NotifService;
 use App\Service\UserCardsService;
 use App\Service\DateTimeConverter;
+
+use App\Entity\Cards;
+use App\Entity\UsersCards;
+
+use App\Form\CardsType;
 
 
 class HomeController extends AbstractController
@@ -204,7 +208,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/create-cards', name: 'create_cards')]
-    public function createCardForm(Request $request, EntityManagerInterface $entityManager, SubjectsRepository $subjectsRepository, UsersRepository $usersRepository): Response
+    public function createCardForm(Request $request, EntityManagerInterface $entityManager, SubjectsRepository $subjectsRepository, UsersRepository $usersRepository, CardsType $cardsType): Response
     {
         $card = new Cards();
         // usertp = les user avec usr_tp identique que celui de l'user connecté
@@ -212,7 +216,7 @@ class HomeController extends AbstractController
         $currentUserSemester = $this->getUser()->getUsrSemester();
         $currentUserTp = $this->getUser()->getUsrTp();
         $currentUserOtherTpOfTd = $this->getOtherTpOfTd($currentUserTp);
-// Construisez les conditions sous forme de tableau associatif
+        // Construisez les conditions sous forme de tableau associatif
         $conditionsTD = [
             'usr_semester' => $currentUserSemester,
             'usr_tp' => [$currentUserTp,$currentUserOtherTpOfTd],
