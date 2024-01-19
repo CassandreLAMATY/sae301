@@ -9,7 +9,7 @@
 
 ////////////////////////////// CALENDAR //////////////////////////////
 document.addEventListener('DOMContentLoaded', async function() {
-  if(document.getElementById('main-list')) {
+  if (document.getElementById('main-list')) {
     const btnCalendar = document.querySelector('.btn-calendar');
     btnCalendar.addEventListener('click', function() {
       window.location.href = '/';
@@ -21,6 +21,23 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   if (document.getElementById('calendar')) {
+    const cookies = !!localStorage.getItem('cookies');
+
+    if (!cookies) {
+      const cookiesDiv = document.querySelector('.cookies');
+      setTimeout(function() {
+        cookiesDiv.style.display = 'flex';
+        cookiesDiv.style.opacity = '1';
+      }, 500);
+
+      const btnCookies = document.querySelector('.btn-cookies');
+      btnCookies.addEventListener('click', function() {
+        localStorage.setItem('cookies', 'true');
+        cookiesDiv.style.display = 'none';
+        cookiesDiv.style.opacity = '0';
+      });
+    }
+
     const dataSubject = await fetch('/subjects/data').
       then(response => response.json());
 
@@ -78,18 +95,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       //retirer les évenements
 
       slideBtn.addEventListener('click', function() {
-        console.log('slide');
         for (let i = 1; i <= 4; i++) {
           const btnsTypes = document.querySelectorAll('.types button');
           const btnType = i - 1;
-          const isPressed = localStorage.getItem('typeId[' + i + ']') !== null;
-          console.log(isPressed, i);
+          const isPressed = localStorage.getItem('typeId[' + i + ']') !==
+            null;
           btnsTypes[btnType].setAttribute('aria-pressed',
             isPressed ? 'false' : 'true');
 
           hideType(i, isPressed);
         }
-        //validatedFilter();
       });
 
       // METTRE LE BOUTON TODAY À DROITE
@@ -169,8 +184,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     const btnCalendar = document.querySelector('.btn-calendar');
     const btnList = document.querySelector('.btn-list');
-
-
 
     btnList.addEventListener('click', function() {
       window.location.href = '/list';
@@ -316,7 +329,8 @@ function typeFilter(typeId) {
 
   const isPressed = localStorage.getItem('typeId[' + typeId + ']') !== null;
 
-  btnsTypes[btnType].setAttribute('aria-pressed', isPressed ? 'false' : 'true');
+  btnsTypes[btnType].setAttribute('aria-pressed',
+    isPressed ? 'false' : 'true');
 
   if (btnsTypes[btnType].getAttribute('aria-pressed') === 'true') {
     btnsTypes[btnType].classList.add('btn--active');

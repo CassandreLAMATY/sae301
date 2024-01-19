@@ -820,17 +820,15 @@ main {
     position: fixed;
     bottom: 50px;
     left: 50px;
-    display: flex;
-    opacity: 1;
     gap: 20px;
     width: fit-content;
     padding: 20px;
+    pointer-events: all;
 }
 
 .cookies > div{
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 .cookies-title{
     font-weight: bold;
@@ -838,8 +836,8 @@ main {
 }
 .cookies-choice{
     display: flex;
-    gap: 20px;
     width: 100%;
     justify-content: end;
+    margin-top: 10px;
 }
 
