@@ -57,7 +57,10 @@
                     {% endfor %}
                 </div>
             </div>
-            <div id="details"></div>
+            <div id="createCardFormContainer" class="details"></div>
+
+            <div id="details" class="details">
+            </div>
         </div>
         {# params pop-up #}
         <div id="params" style="display:none"></div>
@@ -70,6 +73,8 @@
         color: #4098FF !important; /* Change this to your desired color */
     }
 </style>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var optionButton = document.getElementById('optionButton');
@@ -145,6 +150,83 @@
             });
         }
        
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log('Document ready');
+
+        // Initialisation : Cache le formulaire
+        var createCardFormContainer = document.querySelector('#createCardFormContainer');
+        createCardFormContainer.style.display = 'none';
+
+        // Charge le formulaire de création de carte en AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '{{ path('create_cards') }}', true);
+        console.log('Formulaire preprechargé');
+        xhr.onload = function() {
+            console.log('Formulaire prechargé');
+            if (xhr.status === 200) {
+                console.log('Formulaire chargé');
+                createCardFormContainer.innerHTML = xhr.responseText;
+
+                // Ajoute un gestionnaire d'événement pour le clic sur le bouton après le chargement AJAX
+                document.querySelector('#toggleCreateCardForm').addEventListener('click', function() {
+                    createCardFormContainer.style.display = 'block';
+                    let modalcreate = document.getElementById('createCardFormContainer');
+                    let modaldetails = document.getElementById('details');
+                    console.log('animation');
+                    setTimeout(function() {
+                    modalcreate.style.transform = 'translateX(-100%)';
+                    modalcreate.style.transition = 'transform 0.5s ease-in-out';
+                    modaldetails.style.transform = 'translateX(0)';
+                    }, 100);
+
+                    let backBtn = document.getElementById('create-back');
+                    if (backBtn) {
+                        backBtn.addEventListener('click', function() {
+                            modalcreate.style.transform = 'translateX(0)';
+                        });
+                    }
+                });
+
+                    /*var items = document.querySelector('.items');
+                    if (items) {
+                        items.style.display = (items.style.display === 'none') ? 'block' : 'none';
+                    }
+
+                    var sideListTitle = document.querySelector('#side-list_title');
+                    if (sideListTitle) {
+                        sideListTitle.style.display = (sideListTitle.style.display === 'none') ? 'block' : 'none';
+                    }*/
+
+
+
+                // Ajoute un gestionnaire d'événement pour le changement sur cards_crd_typ après le chargement AJAX
+                document.getElementById('cards_crd_typ').addEventListener('change', function() {
+                    var selectedValue = this.value;
+                    console.log(selectedValue);
+
+                    // Masquer ou afficher les champs crd_sbj et crd_from en fonction du choix
+                    var labelCrdSbj = document.getElementById('label_crd_sbj');
+                    var labelCrdFrom = document.getElementById('label_crd_from');
+
+                    if (selectedValue === '1' || selectedValue === '2') {
+                        labelCrdSbj.style.display = 'block';
+                        labelCrdFrom.style.display = 'none';
+                    } else if (selectedValue === '3' || selectedValue === '4') {
+                        labelCrdFrom.style.display = 'block';
+                        labelCrdSbj.style.display = 'none';
+                    } else {
+                        // Afficher les deux champs ou effectuer d'autres actions si nécessaire
+                        labelCrdSbj.style.display = 'none';
+                        labelCrdFrom.style.display = 'none';
+                    }
+                });
+            }
+        }
+        xhr.send();
     });
 </script>
 {# fin script #}

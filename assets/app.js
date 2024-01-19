@@ -237,12 +237,14 @@ function getCalendar(dataEvents) {
   });
   calendar.render();
 }
-
+/*la function getDetails card qui recupere une class pour récuperer les données que tu veux envoyer à ton controller et donc a ton template
+c'est aussi cette function qui gère l'animation*/
 function getDetailsCard(className) {
   let eventDiv = document.getElementsByClassName(className);
   for (let i = 0; i < eventDiv.length; i++) {
     eventDiv[i].addEventListener('click', function() {
       let eventId = this.querySelector('.card-id').innerHTML;
+        //console.log(eventId);
       fetch('/details', {
         method: 'POST',
         headers: {
@@ -258,6 +260,11 @@ function getDetailsCard(className) {
 
         let modal = document.getElementById('details');
         modal.classList.add('details--openned');
+        let modalcreate = document.getElementById('createCardFormContainer');
+
+        modal.style.transform = 'translateX(-100%)';
+        modal.style.transition = 'transform 0.5s ease-in-out';
+        modalcreate.style.transform = 'translateX(0)'
 
         let backBtn = document.getElementById('back');
         if (backBtn) {
@@ -268,6 +275,7 @@ function getDetailsCard(className) {
 
       }).then(data => {
         console.log('Success:', data);
+        console.log(eventId);
       }).catch(error => {
         console.error('Error:', error);
       });
@@ -275,6 +283,38 @@ function getDetailsCard(className) {
     });
   }
 }
+function modifyCard(className) {
+  let modifyButtons = document.getElementsByClassName(className);
+  for (let i = 0; i < modifyButtons.length; i++) {
+    modifyButtons[i].addEventListener('click', function() {
+      let eventId = this.dataset.eventId;
+
+      // Effectuez une requête POST pour modifier la carte
+      fetch('/modify-cards/' + eventId, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ eventId: eventId }),
+      })
+
+          .then(async (response) => {
+            console.log(eventId);
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            // Gérez la réponse comme nécessaire
+            console.log(await response.text());
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+    });
+  }
+}
+
+// Utilisation : Appelez cette fonction avec la classe de vos boutons de modification
+modifyCard('modify-button');
 
 function createFilter(className, nbFiltersOptions) {
 
