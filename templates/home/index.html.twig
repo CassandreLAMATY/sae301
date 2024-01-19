@@ -13,18 +13,17 @@
             <button id="btn--open--avenir" class='btn--a-faire' onclick='openAVenir()'>
                 <i class="fa-regular fa-clock"></i></button>
             <div id='a-venir' class="side-list">
-                <div id="side-list_title" class="a-venir--tittle">
-                    <button id="btn--close--avenir" class='btn--darker btn--close-menu' onclick='closeAVenir()'>
-                        <i class="fa-solid fa-arrow-right-long"></i>
-                    </button>
+                <div id="side-list_title">
+                    <button id="btn--close--avenir" class='btn--a-faire' onclick='closeAVenir()'><i
+                                class="fa-regular fa-clock"></i></button>
                     <h2>À Venir</h2>
                 </div>
                 <div class="items">
                     {% for item in cardsData %}
                         <div class="item {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
+                             card-id="{{ item.card.id }}"
+                             type-id="{{ item.card.typeId }}"
                              style="border-left-color: {{ item.params.typeColor }} !important;">
-                            <p class="card-id">{{ item.card.id }}</p>
-                            <p class="type-id">{{ item.card.typeId }}</p>
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.stringFrom is not null %}
@@ -72,86 +71,87 @@
     {# TODO : refactor code #}
     {# script to close the pop-up with the close icon #}
     <style>
-        .fa-toggle-on {
-            color: #4098FF !important; /* Change this to your desired color */
-        }
+    .fa-toggle-on {
+        color: #4098FF !important; /* Change this to your desired color */
+    }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var optionButton = document.getElementById('optionButton');
-            var optionButtonIcon = document.getElementById('optionButtonIcon');
+    document.addEventListener('DOMContentLoaded', function() {
+      var optionButton = document.getElementById('optionButton');
+      var optionButtonIcon = document.getElementById('optionButtonIcon');
 
-            var paramsForm = document.getElementById('paramsForm');
+      var paramsForm = document.getElementById('paramsForm');
 
-            optionButton.addEventListener('click', function () {
-                openParamsPopUp();
-            });
+      optionButton.addEventListener('click', function() {
+        openParamsPopUp();
+      });
 
-            optionButtonIcon.addEventListener('click', function () {
-                openParamsPopUp();
-            });
+      optionButtonIcon.addEventListener('click', function() {
+        openParamsPopUp();
+      });
 
-            async function openParamsPopUp() {
-                const params = document.getElementById('params')
-                const reponse = await fetch('{{ path('app_home_params') }}');
-                params.innerHTML = await reponse.text()
-                console.log('params loaded 2')
-                params.style.display = 'flex';
+      async function openParamsPopUp() {
+        const params = document.getElementById('params');
+        const reponse = await fetch('{{ path('app_home_params') }}');
+        params.innerHTML = await reponse.text();
+        console.log('params loaded 2');
+        params.style.display = 'flex';
 
+        var closeIcon = document.querySelector('#params_pop-up_top_section i.fa-xmark');
+        var saveButton = document.getElementById('params_pop-up_saveButton');
 
-                var closeIcon = document.querySelector('#params_pop-up_top_section i.fa-xmark');
-                var saveButton = document.getElementById('params_pop-up_saveButton');
-
-                closeIcon.addEventListener('click', function () {
-                    // Close the params div by hiding it or removing it from the DOM
-                    //paramsDiv.style.display = 'none'; // You can use 'block', 'inline', etc. if you want to show it again
-                    // Alternatively, you can remove the entire div from the DOM
-                    params.style.display = 'none';
-                });
-
-                saveButton.addEventListener('click', function () {
-                    // Serialize form data to send
-                    var formData = new FormData();
-                    formData.append('homeworkReminder', document.getElementById('homeworkToggle').classList.contains('fa-toggle-on') ? true : false)
-                    formData.append('examReminder', document.getElementById('examToggle').classList.contains('fa-toggle-on') ? true : false);
-                    formData.append('newReminder', document.getElementById('newToggle').classList.contains('fa-toggle-on') ? true : false);
-                    formData.append('modifReminder', document.getElementById('modifToggle').classList.contains('fa-toggle-on') ? true : false);
-                    formData.append('cookies', document.getElementById('cookiesToggle').classList.contains('fa-toggle-on') ? true : false);
-
-                    // Send an AJAX request
-                    fetch('{{ path('app_home_params') }}', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Handle the response as needed
-                            console.log(data);
-                            params.style.display = 'none';
-                            // You can close the pop-up or update the UI based on the response
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                });
-
-                // Toggle between fa-toggle-off and fa-toggle-on when params_pop-up_row is clicked
-                var paramsRows = document.querySelectorAll('.params_pop-up_row');
-                paramsRows.forEach(function (row) {
-                    row.addEventListener('click', function () {
-                        var toggleIcon = row.querySelector('i.fa-solid');
-                        if (toggleIcon.classList.contains('fa-toggle-off')) {
-                            toggleIcon.classList.remove('fa-toggle-off');
-                            toggleIcon.classList.add('fa-toggle-on');
-                        } else {
-                            toggleIcon.classList.remove('fa-toggle-on');
-                            toggleIcon.classList.add('fa-toggle-off');
-                        }
-                    });
-                });
-            }
-
+        closeIcon.addEventListener('click', function() {
+          // Close the params div by hiding it or removing it from the DOM
+          //paramsDiv.style.display = 'none'; // You can use 'block', 'inline', etc. if you want to show it again
+          // Alternatively, you can remove the entire div from the DOM
+          params.style.display = 'none';
         });
+
+        saveButton.addEventListener('click', function() {
+          // Serialize form data to send
+          var formData = new FormData();
+          formData.append('homeworkReminder',
+            document.getElementById('homeworkToggle').classList.contains('fa-toggle-on') ? true : false);
+          formData.append('examReminder',
+            document.getElementById('examToggle').classList.contains('fa-toggle-on') ? true : false);
+          formData.append('newReminder',
+            document.getElementById('newToggle').classList.contains('fa-toggle-on') ? true : false);
+          formData.append('modifReminder',
+            document.getElementById('modifToggle').classList.contains('fa-toggle-on') ? true : false);
+          formData.append('cookies',
+            document.getElementById('cookiesToggle').classList.contains('fa-toggle-on') ? true : false);
+
+          // Send an AJAX request
+          fetch('{{ path('app_home_params') }}', {
+            method: 'POST',
+            body: formData,
+          }).then(response => response.json()).then(data => {
+            // Handle the response as needed
+            console.log(data);
+            params.style.display = 'none';
+            // You can close the pop-up or update the UI based on the response
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+        });
+
+        // Toggle between fa-toggle-off and fa-toggle-on when params_pop-up_row is clicked
+        var paramsRows = document.querySelectorAll('.params_pop-up_row');
+        paramsRows.forEach(function(row) {
+          row.addEventListener('click', function() {
+            var toggleIcon = row.querySelector('i.fa-solid');
+            if (toggleIcon.classList.contains('fa-toggle-off')) {
+              toggleIcon.classList.remove('fa-toggle-off');
+              toggleIcon.classList.add('fa-toggle-on');
+            } else {
+              toggleIcon.classList.remove('fa-toggle-on');
+              toggleIcon.classList.add('fa-toggle-off');
+            }
+          });
+        });
+      }
+
+    });
     </script>
     {# fin script #}
     {# script to close the pop-up with the close icon #}
