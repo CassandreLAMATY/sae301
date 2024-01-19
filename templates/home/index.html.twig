@@ -6,8 +6,6 @@
 
     {{ include('components/header.html.twig') }}
 
-    <button id="toggleCreateCardForm">Créer une carte</button>
-
    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
@@ -158,7 +156,7 @@
 <script>
     const aVenir = document.getElementById('a-venir');
     const aVenirInner = aVenir.innerHTML;
-    const toggleCreate = document.getElementById('toggleCreateCardForm');
+    const toggleCreate = document.querySelector('.add-event');
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '{{ path('create_cards') }}', true);
