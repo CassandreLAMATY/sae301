@@ -249,7 +249,7 @@ function getCalendar(dataEvents) {
     eventContent: function(arg) {
       const eventDiv = document.createElement('div');
       eventDiv.classList.add('event-card');
-      if(arg.event.extendedProps.validated == 0){
+      if(arg.event.extendedProps.isValidated == 0){
         eventDiv.classList.add('notvalidated');
       }
 
@@ -259,8 +259,8 @@ function getCalendar(dataEvents) {
         arg.event.extendedProps.hour;
 
       eventDiv.setAttribute('card-id', arg.event.id );
-      eventDiv.setAttribute('is-validated', arg.event.extendedProps.validated);
-      eventDiv.setAttribute('type-id', arg.event.extendedProps.type.id );
+      eventDiv.setAttribute('is-validated', arg.event.extendedProps.isValidated);
+      eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId );
 
       eventDiv.style.borderLeft = '5px solid ' +
         arg.event.extendedProps.type.typColor;
