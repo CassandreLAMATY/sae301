@@ -60,6 +60,10 @@
     gap: 10px;
 }
 
+.fc-event-main .notvalidated {
+    border: dashed 2px var(--secondary-gray--03);
+}
+
 /* 📆 ---------- BTNS ---------- 📆 */
 
 #calendar .fc-header-toolbar:not(.filter) button {
