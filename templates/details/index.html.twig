@@ -1,7 +1,7 @@
 {% if detailsCard %}
     {% for item in detailsCard %}
         <div class='detail--back'>
-            <button id="back"><i class="fa-solid fa-arrow-right-long"></i></button>
+            <button class='btn--darker btn--close-menu' id="back"><i class="fa-solid fa-arrow-right-long"></i></button>
             <p class='tag'
                style='border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20'>{{ item.typeName }}</p>
         </div>
@@ -14,16 +14,6 @@
                         <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
                     {% endif %}
                     <p class="days">{{ item.card.getTimeLeft|raw }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="background-color: white">
-            <div>
-                <div>
-                    <div>
-                        <p><i class="fa-solid fa-book"></i> Matière</p>
-                        <p>{{ item.subjectName }}</p>
                 </div>
             </div>
         </div>
@@ -57,10 +47,6 @@
                     <p class='detail--content--format-c'>{{ item.card.getCrdDesc }}</p>
                 </div>
             {% endif %}
-            <div class='detail--content--links detail--content--format'>
-                <p class='detail--content--format-t'><i class="fa-solid fa-link"></i> Liens</p>
-                <p class='detail--content--format-c' style="color:red;">A FAIRE</p>
-            </div>
             <div class='detail--content--done status'>
                 <i class="fa-regular fa-square"></i>
                 <p>Rendu</p>

@@ -24,12 +24,6 @@
     align-items: end;
 }
 
-/* Go back btn */
-#back {
-    font-size: var(--grup1);
-    cursor: pointer;
-}
-
 #details .detail--back p {
     padding: var(--grup-3) var(--grup-1);
     font-size: var(--grup);
@@ -265,12 +259,6 @@
 }
 
 /*---------MODAL----------*/
-
-#back {
-    font-size: var(--grup1);
-    cursor: pointer;
-}
-
 #details #title_details {
     color: var(--main--black);
 }
@@ -296,6 +284,10 @@
     flex-direction: row;
     align-items: center;
     gap: var(--grup-1);
+}
+
+#details .detail--title .detail--title--under .time_left p {
+    width: initial;
 }
 
 #details .detail--title .detail--title--under .time_left p {

@@ -77,7 +77,37 @@
     padding-right: var(--grup) !important;
 }
 
-.fc-button-group.types button {
+#calendar .fc-header-toolbar.filter button:hover {
+    background-color: var(--secondary-gray--02) !important;
+}
+
+.fc-button-group.types {
+    display: flex;
+    gap: 2px;
+}
+
+.fc-button-group.types button.btn--active {
+    z-index: 2;
+}
+
+.fc-button-group.types button.btn--active:hover {
+    z-index: 3;
+}
+
+.fc-button-group.types button:nth-child(1).btn--active {
+    box-shadow: 0 0 0 2px var(--type--rendu);
+}
+
+.fc-button-group.types button:nth-child(2).btn--active {
+    box-shadow: 0 0 0 2px var(--type--examen);
+}
+
+.fc-button-group.types button:nth-child(3).btn--active {
+    box-shadow: 0 0 0 2px var(--type--iut);
+}
+
+.fc-button-group.types button:nth-child(4).btn--active {
+    box-shadow: 0 0 0 2px var(--type--bde);
 }
 
 @media screen and (max-width: 1165px) {
