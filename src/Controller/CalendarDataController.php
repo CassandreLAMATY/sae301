@@ -15,6 +15,7 @@ class CalendarDataController extends AbstractController
     ): Response {
         $user = $this->getUser();
         $cards = $userCardsRepository->findByUserId($user->getUsrId());
+        $data = [];
 
         foreach ($cards as $card) {
             if($card->getUcCrdId()->getCrdFrom()) {
