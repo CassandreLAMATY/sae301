@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     selectChoices.innerHTML = dataSubject;
 
-    getDetailsCard('fc-event-main');
+    getDetailsCard('event-card');
     getDetailsCard('item');
 
     const btnCalendar = document.querySelector('.btn-calendar');
@@ -240,13 +240,16 @@ function getCalendar(dataEvents) {
 
     eventContent: function(arg) {
       const eventDiv = document.createElement('div');
+      eventDiv.classList.add('event-card');
+
       eventDiv.innerHTML =
         arg.event.title + '<br>' +
         arg.event.extendedProps.subject.sbjName + '<br>' +
-        arg.event.extendedProps.hour + '<br> ' +
-        '<p class="card-id">' + arg.event.id + '</p>' +
-        '<p class="is-validated">' + arg.event.id + '</p>' +
-        '<p class="type-id">' + arg.event.extendedProps.type.id + '</p>';
+        arg.event.extendedProps.hour;
+
+      eventDiv.setAttribute('card-id', arg.event.id );
+      eventDiv.setAttribute('is-validated', arg.event.id );
+      eventDiv.setAttribute('type-id', arg.event.extendedProps.type.id );
 
       eventDiv.style.borderLeft = '5px solid ' +
         arg.event.extendedProps.type.typColor;
@@ -267,7 +270,8 @@ function getDetailsCard(className) {
   let eventDiv = document.getElementsByClassName(className);
   for (let i = 0; i < eventDiv.length; i++) {
     eventDiv[i].addEventListener('click', function() {
-      let eventId = this.querySelector('.card-id').innerHTML;
+      let eventId = this.getAttribute('card-id');
+      console.log(eventId);
       fetch('/details', {
         method: 'POST',
         headers: {
@@ -364,23 +368,23 @@ function hideType(typeId, isPressed) {
 
   if (isPressed) {
     events.forEach(event => {
-      if (event.querySelector('.type-id').innerHTML == typeId) {
+      if (event.getAttribute('type-id') == typeId) {
         event.parentNode.style.display = 'none';
       }
     });
     eventsList.forEach(eventList => {
-      if (eventList.querySelector('.type-id').innerHTML == typeId) {
+      if (eventList.getAttribute('type-id') == typeId) {
         eventList.style.display = 'none';
       }
     });
   } else {
     events.forEach(event => {
-      if (event.querySelector('.type-id').innerHTML == typeId) {
+      if (event.getAttribute('type-id') == typeId) {
         event.parentNode.style.display = 'block';
       }
     });
     eventsList.forEach(eventList => {
-      if (eventList.querySelector('.type-id').innerHTML == typeId) {
+      if (eventList.getAttribute('type-id') == typeId) {
         eventList.style.display = 'grid';
       }
     });
