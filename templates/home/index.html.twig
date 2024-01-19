@@ -157,6 +157,7 @@
 
 <script>
     const aVenir = document.getElementById('a-venir');
+    const aVenirInner = aVenir.innerHTML;
     const toggleCreate = document.getElementById('toggleCreateCardForm');
 
     var xhr = new XMLHttpRequest();
@@ -165,9 +166,15 @@
         if (xhr.status === 200) {
             toggleCreate.addEventListener('click', function() {
                 aVenir.innerHTML = xhr.responseText;
+
+                const closeCreate = document.getElementById('create-back');
+                closeCreate.addEventListener('click', function() {
+                    aVenir.innerHTML = aVenirInner;
+                });
             });
         }
     }
+    xhr.send();
 
 /*     document.addEventListener("DOMContentLoaded", function() {
         console.log('Document ready');
@@ -234,7 +241,6 @@
             }
         }
         xhr.send(); */
-    });
 </script>
 {# fin script #}
 {# script to close the pop-up with the close icon #}
