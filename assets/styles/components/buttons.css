@@ -2,7 +2,7 @@
 /* 🔴 ----- BUTTONS ----- 🔴 */
 /* 🔴 ------------------- 🔴 */
 
-button {
+button, .btn--simulated {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,12 +50,14 @@ button.btn--darker {
     box-shadow: 0 0 0 2px var(--secondary-gray--03);
 }
 
-button.btn--highlighted {
+button.btn--highlighted,
+.btn--simulated.btn--highlighted {
     background-color: var(--accent-yellow);
     box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
 }
 
-button.btn--highlighted:hover {
+button.btn--highlighted:hover,
+.btn--simulated.btn--highlighted:hover {
     background-color: var(--accent-yellow-shadow) !important;
 }
 
@@ -66,7 +68,7 @@ button.btn--signalement {
 button.btn--close-menu:hover {
     background-color: var(--accent-red);
     box-shadow: 0 0 0 2px var(--accent-red-shadow);
-    color: var(--main--white);
+    color: var(--main--white) !important;
 }
 
 /* 🟡 ----- CONCATENATED BTNS ----- 🟡 */

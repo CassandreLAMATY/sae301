@@ -451,7 +451,7 @@ main {
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 1;
+    z-index: 101;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -460,13 +460,21 @@ main {
 }
 
 #params_pop-up {
+    position: relative;
     border-radius: 16px;
-    background: #e5e9ed;
+    background: var(--secondary-gray--01);
     width: auto;
     height: auto;
     padding: 10px 15px;
 }
 
+#params_pop-up_close {
+    position: absolute;
+    top: var(--grup);
+    right: var(--grup);
+}
+
+/*
 #params_pop-up_close {
     cursor: pointer;
     color: #c0c5ca;
@@ -479,6 +487,7 @@ main {
     font-size: 24px;
     justify-self: flex-end;
 }
+*/
 
 #params_pop-up_top_section {
     display: flex;
@@ -546,11 +555,9 @@ main {
 
 #params_pop-up_saveButton {
     margin: 20px auto 0;
-    padding: 8px 16px;
-    background-color: var(--accent-yellow);
-    border-radius: 4px;
-    border: none;
-    color: var(--main--black);
-    font-size: var(--grup);
     cursor: pointer;
+}
+
+#params_pop-up_close:hover {
+    color: var(--accent-red);
 }
