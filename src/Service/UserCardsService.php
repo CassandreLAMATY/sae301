@@ -26,6 +26,7 @@ class UserCardsService {
                 "ref" => $card->getUcCrd()->getCrdSbj() ? $card->getUcCrd()->getCrdSbj()->getSbjRef() : null,
                 "subject" => $card->getUcCrd()->getCrdSbj() ? $card->getUcCrd()->getCrdSbj()->GetSbjName() : null,
                 "isValidated" => $card->getUcCrd()->getIsValidated(),
+                "isDone" => $card->isUcDone(),
             ];
 
             $timeEnd = $card->getUcCrd()->getCrdTo();

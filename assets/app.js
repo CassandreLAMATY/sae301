@@ -21,9 +21,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             typeFilter(i);
         }
     }
-
-    generalFilter('.statusEvent button', 'isvalidated');
-    generalFilter('.statusHomework button', 'isdone');
 });
 
 if (document.getElementById('calendar')) {
@@ -171,8 +168,9 @@ if (document.getElementById('calendar')) {
 
     //validatedFilter();
 
-    generalFilter('.statusEvent button', 'isvalidated');
-    generalFilter('.statusHomework button', 'isdone');
+    const select = document.createElement('button');
+    select.classList.add('fc-button');
+    select.classList.add('fc-button-primary', 'btn--force-single');
 
     select.innerHTML = 'Matières <i class="fa-solid fa-angle-down"></i>';
 
@@ -198,91 +196,23 @@ if (document.getElementById('calendar')) {
 
     const btnWeek = document.querySelector('[title="Semaine"]');
     btnWeek.addEventListener('click', function () {
-        if (btnWeek.getAttribute('aria-pressed') === 'true') {
-            const hourList = document.querySelectorAll(
-                '.fc-scrollgrid-section-body');
-            hourList[1].style.display = 'none';
-            const divider = document.querySelectorAll('.fc-scrollgrid-section');
-            divider[2].style.display = 'none';
-            const week = document.querySelectorAll('.fc-scroller-harness');
-            week[1].style.height = '100%';
-            const week2 = document.querySelectorAll('.fc-scroller');
-            week2[1].style.height = '100%';
-            const week3 = document.querySelector('.fc-daygrid-body');
-            week3.style.height = '100%';
-            const week4 = document.querySelector('.fc-scrollgrid-sync-table');
-            week4.style.height = '100%';
-        }
-    });
-}
-
-function getCalendar(dataEvents) {
-  let calendarEl = document.getElementById('calendar');
-  let calendar = new FullCalendar.Calendar(calendarEl, {
-    locale: 'fr',
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'timeGridWeek,dayGridMonth',
-    },
-    firstDay: 1,
-    businessHours: {
-      // Jours ouvrés (lundi à vendredi)
-      daysOfWeek: [1, 2, 3, 4, 5],
-    },
-    allDaySlot: true,
-
-    views: {
-      listWeek: {
-        buttonText: 'List',
-      },
-    },
-    eventColor: 'transparent',
-    eventBorderColor: '#E5E9ED',
-    eventTextColor: '#424242',
-    events: dataEvents,
-
-    eventContent: function(arg) {
-      const eventDiv = document.createElement('div');
-      eventDiv.innerHTML =
-        arg.event.title + '<br>' +
-        (arg.event.extendedProps.subject ? arg.event.extendedProps.subject.sbjRef + " - " + arg.event.extendedProps.subject.sbjName + '<br>' : '') +
-        "À " + arg.event.extendedProps.hour + '<br> ' +
-        /* '<p class="card-id">' + arg.event.id + '</p>' +
-        '<p class="is-validated">' + arg.event.id + '</p>' + */
-        '<p class="type-id">' + arg.event.extendedProps.type.id + '</p>';
-
-      eventDiv.style.borderLeft = '5px solid ' +
-        arg.event.extendedProps.type.typColor;
-      eventDiv.style.backgroundColor = arg.event.extendedProps.type.typColor +
-        '20';
-      eventDiv.style.borderRadius = '3px';
-      eventDiv.style.padding = '5px';
-      eventDiv.style.textOverflow = 'ellipsis';
-      eventDiv.style.overflow = 'hidden';
-      eventDiv.style.cursor = 'pointer';
-      return {domNodes: [eventDiv]};
-    },
-  });
-  calendar.render();
-}
-/*la function getDetails card qui recupere une class pour récuperer les données que tu veux envoyer à ton controller et donc a ton template
-c'est aussi cette function qui gère l'animation*/
-function getDetailsCard(className) {
-    let eventDiv = document.getElementsByClassName(className);
-    for (let i = 0; i < eventDiv.length; i++) {
-        eventDiv[i].addEventListener('click', function() {
-        let eventId = this.querySelector('.card-id').innerHTML;
-            //console.log(eventId);
-            fetch('/details', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-            });
-        })
-    }
+            if (btnWeek.getAttribute('aria-pressed') === 'true') {
+                const hourList = document.querySelectorAll(
+                    '.fc-scrollgrid-section-body');
+                hourList[1].style.display = 'none';
+                const divider = document.querySelectorAll('.fc-scrollgrid-section');
+                divider[2].style.display = 'none';
+                const week = document.querySelectorAll('.fc-scroller-harness');
+                week[1].style.height = '100%';
+                const week2 = document.querySelectorAll('.fc-scroller');
+                week2[1].style.height = '100%';
+                const week3 = document.querySelector('.fc-daygrid-body');
+                week3.style.height = '100%';
+                const week4 = document.querySelector('.fc-scrollgrid-sync-table');
+                week4.style.height = '100%';
+            }
+        },
+    );
 
 
     function getCalendar(dataEvents) {
@@ -321,8 +251,8 @@ function getDetailsCard(className) {
 
                 eventDiv.innerHTML =
                     arg.event.title + '<br>' +
-                    arg.event.extendedProps.subject.sbjName + '<br>' +
-                    arg.event.extendedProps.hour;
+                    (arg.event.extendedProps.subject ? arg.event.extendedProps.subject.sbjRef + " - " + arg.event.extendedProps.subject.sbjName + '<br>' : '') +
+                    "À " + arg.event.extendedProps.hour + '<br> ' +
 
                 eventDiv.setAttribute('card-id', arg.event.id);
                 eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId);
@@ -469,41 +399,6 @@ function getDetailsCard(className) {
         }
     }
 
-    function generalFilter(classBtn, item) {
-
-        const btnValidated = document.querySelector(classBtn);
-
-        const isPressed = localStorage.getItem(item) !== null;
-
-        btnValidated.setAttribute('aria-pressed', isPressed ? 'true' : 'false');
-
-        if (btnValidated.getAttribute('aria-pressed') === 'true') {
-            btnValidated.classList.add('btn--active');
-        } else {
-            btnValidated.classList.remove('btn--active');
-        }
-
-        hideCards(isPressed);
-
-        btnValidated.addEventListener('click', function () {
-
-            const isPressed = localStorage.getItem(item) !== null;
-
-            if (isPressed) {
-                localStorage.removeItem(item);
-                this.setAttribute('aria-pressed', 'false');
-                btnValidated.classList.remove('btn--active');
-            } else {
-                localStorage.setItem(item, 1);
-                this.setAttribute('aria-pressed', 'true');
-                btnValidated.classList.add('btn--active');
-            }
-
-            console.log(!isPressed);
-            hideCards(!isPressed, item);
-        });
-    }
-
     function hideCards(isPressed, item) {
         const events = document.querySelectorAll('.fc-event-main');
         const eventsList = document.querySelectorAll('.item');
@@ -536,4 +431,3 @@ function getDetailsCard(className) {
         }
     }
 }
-
