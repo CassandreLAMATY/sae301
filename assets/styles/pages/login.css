@@ -1,0 +1,259 @@
+:root {
+    --mdc-text-button-label-text-color: #f7f7f7;
+    --mdc-theme-error: #d9534f;
+    --cas-theme-primary: #448a95;
+    --cas-theme-primary-bg: rgba(21, 62, 80, 0.2);
+    --cas-theme-button-bg: #26418f;
+    --cas-theme-primary-light: #006d85;
+    --cas-theme-secondary: #f2c52c;
+    --cas-theme-success: var(--cas-theme-secondary);
+    --cas-theme-danger: var(--mdc-theme-error);
+    --cas-theme-warning: #e6a210;
+    --cas-theme-border-light: 1px solid rgba(0, 0, 0, .2);
+    --mdc-theme-primary: var(--cas-theme-primary, #153e50);
+    --urca-text-black: #333333;
+    --base-animation-duration: 30s;
+}
+
+body.portail-conection {
+    min-height: 100vh;
+    padding: max(16vh, 110px) 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #efefef;
+    overflow: hidden;
+}
+
+body.portail-conection h1 {
+    color: var(--main--black);
+}
+
+body.portail-conection header.header {
+    display: none;
+}
+
+body.portail-conection form.form-co {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: min-content;
+    max-width: 700px;
+    padding: var(--grup2);
+    gap: var(--grup1);
+    background-color: #ffffff;
+    border-radius: var(--grup-2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+}
+
+body.portail-conection form.form-co h1 {
+    font-weight: 400;
+}
+
+body.portail-conection form.form-co .form-co--input-cell {
+    position: relative;
+    width: 100%;
+}
+
+body.portail-conection form.form-co .form-co--input-cell input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: var(--grup) var(--grup4) var(--grup) var(--grup);
+    font-size: var(--grup);
+    border-radius: var(--grup-3);
+    border: none;
+    outline: 1px solid var(--main--black);
+    transition: var(--smooth2);
+}
+
+body.portail-conection form.form-co .form-co--input-cell input:not(:placeholder-shown) {
+    outline: 1px solid var(--cas-theme-primary);
+}
+
+body.portail-conection form.form-co .form-co--input-cell input:focus {
+    border: none;
+    outline: 2px solid var(--cas-theme-primary);
+}
+
+body.portail-conection form.form-co .form-co--input-cell label {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: calc(var(--grup) - var(--grup-3));
+    transform: translateY(-50%);
+    padding: 0 var(--grup-2);
+    font-weight: 300;
+    color: var(--main--black);
+    background-color: #ffffff;
+    border-radius: var(--grup-2);
+    transition: var(--smooth2);
+    pointer-events: none;
+}
+
+body.portail-conection form.form-co .form-co--input-cell input:not(:placeholder-shown) + label,
+body.portail-conection form.form-co .form-co--input-cell input:focus + label {
+    top: 0;
+    transform: translateY(-50%);
+    font-size: initial;
+    color: var(--cas-theme-primary);
+}
+
+body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    right: calc(var(--grup) - var(--grup-3));
+    transform: translateY(-50%);
+    padding: var(--grup-1);
+    font-size: var(--grup);
+    color: var(--grey);
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show i {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 26px;
+}
+
+body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show i.fa-eye,
+body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show.show-password i.fa-eye-slash {
+    display: block;
+}
+
+body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show.show-password i.fa-eye,
+body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show i.fa-eye-slash {
+    display: none;
+}
+
+body.portail-conection form.form-co .btn--submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--grup-1);
+    justify-content: center;
+}
+
+body.portail-conection form.form-co .btn--submit .alert {
+    color: var(--mdc-theme-error);
+}
+
+body.portail-conection form.form-co .btn--submit button {
+    font-family: "Outfit", sans-serif;
+    min-width: min-content;
+    width: 42%;
+    white-space: nowrap;
+    background-color: var(--cas-theme-secondary);
+    border: none;
+    text-transform: uppercase;
+    padding: var(--grup-1) var(--grup1);
+    font-size: var(--grup);
+    box-shadow: 0 0 4px rgba(0, 0, 0, .26);
+    border-radius: var(--grup-3);
+    transition: var(--smooth1) ease-in;
+    cursor: pointer;
+}
+
+body.portail-conection form.form-co .btn--submit button:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .26);
+}
+
+body.portail-conection form.form-co ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup-1);
+}
+
+body.portail-conection form.form-co ul li a {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    align-items: center;
+    align-content: center;
+    gap: var(--grup-2);
+    justify-content: center;
+    text-decoration: none;
+    color: var(--cas-theme-primary);
+    font-weight: 300;
+
+}
+
+body.portail-conection form.form-co ul li a p {
+    margin: 0;
+    text-decoration: underline;
+}
+
+body.portail-conection form.form-co ul li a i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.portail-conection form.form-co > p {
+    margin: 0;
+}
+
+body.portail-conection svg.logo-urca {
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translateY(26%);
+    width: 100%;
+}
+
+body.portail-conection svg.waves {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(180deg);
+    height: 16%;
+    width: 177%;
+}
+
+:root {
+    --bg--waves--width: 4000px;
+}
+
+body.portail-conection .bg--waves .waves {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../images/login/wave--long.svg);
+    background-size: var(--bg--waves--width);
+    background-repeat: repeat-x;
+    animation: bg--waves--ltr 26s linear infinite;
+    opacity: .68;
+}
+
+body.portail-conection .bg--waves .waves:nth-child(2) {
+    animation: bg--waves--ltr 16s linear infinite reverse;
+    opacity: .42;
+}
+
+body.portail-conection .bg--waves .waves:nth-child(3) {
+    animation: bg--waves--ltr 10s linear infinite reverse;
+    opacity: .26;
+}
+
+body.portail-conection .bg--waves .waves:nth-child(4) {
+    animation: bg--waves--ltr 6s linear infinite reverse;
+    opacity: .16;
+}
+
+@keyframes bg--waves--ltr {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: var(--bg--waves--width) 0;
+    }
+}

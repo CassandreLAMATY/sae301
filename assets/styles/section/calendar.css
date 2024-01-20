@@ -16,6 +16,11 @@
     text-transform: capitalize;
 }
 
+.fc-header-toolbar {
+    gap: var(--grup);
+    flex-wrap: wrap !important;
+}
+
 .filter-nav .fc-button {
     background-color: var(--secondary-gray--01) !important;
     border-color: var(--secondary-gray--02) !important;
