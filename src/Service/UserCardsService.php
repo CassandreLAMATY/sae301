@@ -13,25 +13,25 @@ class UserCardsService {
 
         foreach ($cards as $card) {
             $cardData = [
-                "id" => $card->getUcCrdId()->getCrdId(),
-                "title" => $card->getUcCrdId()->getCrdTitle(),
-                "description" => $card->getUcCrdId()->getCrdDesc(),
-                "from" => $card->getUcCrdId()->getCrdFrom(),
-                "stringFrom" => $card->getUcCrdId()->getCrdFrom() ? $dateTimeConverter->convertToString($card->getUcCrdId()->getCrdFrom()) : null,
-                "to" => $card->getUcCrdId()->getCrdTo(),
-                "stringTo" => $dateTimeConverter->convertToString($card->getUcCrdId()->getCrdTo()),
-                "timeLeft" => $card->getUcCrdId()->getTimeLeft(),
-                "type" => $card->getUcCrdId()->getCrdTyp()->getTypName(),
-                "typeId" => $card->getUcCrdId()->getCrdTyp()->getTypId(),
-                "ref" => $card->getUcCrdId()->getCrdSbj()->getSbjRef(),
-                "subject" => $card->getUcCrdId()->getCrdSbj()->GetSbjName(),
-                "isValidated" => $card->getUcCrdId()->getIsValidated(),
+                "id" => $card->getUcCrd()->getCrdId(),
+                "title" => $card->getUcCrd()->getCrdTitle(),
+                "description" => $card->getUcCrd()->getCrdDesc(),
+                "from" => $card->getUcCrd()->getCrdFrom(),
+                "stringFrom" => $card->getUcCrd()->getCrdFrom() ? $dateTimeConverter->convertToString($card->getUcCrd()->getCrdFrom()) : null,
+                "to" => $card->getUcCrd()->getCrdTo(),
+                "stringTo" => $dateTimeConverter->convertToString($card->getUcCrd()->getCrdTo()),
+                "timeLeft" => $card->getUcCrd()->getTimeLeft(),
+                "type" => $card->getUcCrd()->getCrdTyp()->getTypName(),
+                "typeId" => $card->getUcCrd()->getCrdTyp()->getTypId(),
+                "ref" => $card->getUcCrd()->getCrdSbj() ? $card->getUcCrd()->getCrdSbj()->getSbjRef() : null,
+                "subject" => $card->getUcCrd()->getCrdSbj() ? $card->getUcCrd()->getCrdSbj()->GetSbjName() : null,
+                "isValidated" => $card->getUcCrd()->getIsValidated(),
             ];
 
-            $timeEnd = $card->getUcCrdId()->getCrdTo();
+            $timeEnd = $card->getUcCrd()->getCrdTo();
 
-            if($card->getUcCrdId()->getCrdFrom()){
-                $timeEnd = $card->getUcCrdId()->getCrdFrom();
+            if($card->getUcCrd()->getCrdFrom()){
+                $timeEnd = $card->getUcCrd()->getCrdFrom();
             }
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
@@ -39,11 +39,13 @@ class UserCardsService {
 
             //if timeEnd is before now, skip this card
             if ($timeEnd > $now) {
-                $typeId = $card->getUcCrdId()->getCrdTyp();
+                $typeId = $card->getUcCrd()->getCrdTyp();
                 $type = $typesRepository->find($typeId);
 
-                $subjectId = $card->getUcCrdId()->getCrdSbj();
-                $subject = $subjectsRepository->find($subjectId);
+                if( $card->getUcCrd()->getCrdSbj() ) {
+                    $subjectId = $card->getUcCrd()->getCrdSbj();
+                    $subject = $subjectsRepository->find($subjectId);
+                }
 
                 $timeleft = $now->diff($timeEnd);
                 $dayLeft = $timeleft->format('%a');

@@ -61,12 +61,27 @@ deleteButton.forEach(button => {
                 }
                 button.parentElement.parentElement.remove();
 
-                const DnotifCards = dropdown.querySelectorAll('.notif-card');
-                if (DnotifCards.length <= 0) {
-                    tagNew.style.display = 'none';
-                    separator.style.display = 'none';
+                const NnotifCards = dropdown.querySelectorAll('.new-notif');
+                if (NnotifCards.length <= 0) {
+                    if( tagNew ) {
+                        tagNew.style.display = 'none';
+                    }
                     noNotif.style.display = 'block';
                     notifDot.style.display = 'none';
+
+                    if(separator) {
+                        separator.style.display = 'none';
+                    }
+
+                    readNotif.classList.add('empty-notif-desactivated');
+                    readNotif.classList.remove('empty-notif');
+                }
+
+                const OnotifCards = dropdown.querySelectorAll('.old-notif');
+                if (OnotifCards.length <= 0) {
+                    if(separator) {
+                        separator.style.display = 'none';
+                    }
                 }
             }).catch(error => {
                 console.error('Erreur lors de l\'opération, action annulée :', error);
@@ -86,7 +101,7 @@ deleteButton.forEach(button => {
 if(deleteAllButton) {
     deleteAllButton.addEventListener('click', () => {
         let deleteButtonContent = deleteAllButton.querySelector('i');
-        const confirm = deleteAllButton.parentElement.querySelector('.delete-confirm');
+        const confirm = document.querySelector('.delete-confirm');
     
         if( deleteButtonContent.classList.contains('fa-circle-check') ) {
             fetch('/notifications/deleteAll', {
@@ -138,21 +153,26 @@ if ( readNotif ) {
                 throw new Error('Quelque chose s\'est mal passé...');
             }
             tagNew.style.display = 'none';
-            separator.style.display = 'none';
             notifDot.style.display = 'none';
-            console.log(newNotif);
-            newNotif.forEach(card => {
-                separator.parentNode.insertBefore(card, separator.nextSibling);
-    
-                card.classList.remove('new-notif');
-                card.classList.add('old-notif');
-                card.style.border = "none";
-                card.style.boxShadow = "0 0 0 2px var(--secondary-gray--02)";
-                card.querySelector('.see-button').classList.remove('see-button__active');
-            });
+
+            if( separator ) {
+                separator.style.display = 'none';
+                
+                newNotif.forEach(card => {
+                    separator.parentNode.insertBefore(card, separator.nextSibling);
+                });
+            }
     
             readNotif.classList.add('empty-notif-desactivated');
             readNotif.classList.remove('empty-notif');
+
+            newNotif.forEach(card => {
+                card.style.border = "none";
+                card.style.boxShadow = "0 0 0 2px var(--secondary-gray--02)";
+                card.querySelector('.see-button').classList.remove('see-button__active');
+                card.classList.add('old-notif');
+                card.classList.remove('new-notif');
+            });
         })
         .catch(error => {
             console.error('Erreur lors de l\'opération, action annulée :', error);

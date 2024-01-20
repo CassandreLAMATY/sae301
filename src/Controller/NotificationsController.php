@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Repository\NotifUsersRepository;
+use App\Repository\UsersRepository;
 use App\Repository\TypesRepository;
 
 use App\Entity\Notifications;
-use Symfony\Component\HttpFoundation\Request;
+use App\Entity\NotifUsers;
+use App\Entity\Users;
 
 class NotificationsController extends AbstractController
 {
@@ -69,7 +72,7 @@ class NotificationsController extends AbstractController
     #[Route('/notifications/markAllAsRead', name: 'app_notifications_readAll', methods: ["POST"])]
     public function markAllAsRead(
         EntityManagerInterface $entityManager, 
-        NotifUsersRepository $notifUsersRepository
+        NotifUsersRepository $notifUsersRepository,
     ): Response
     {
         $user = $this->getUser();
@@ -90,25 +93,69 @@ class NotificationsController extends AbstractController
     }
 
     #[Route('/notifications/create', name: 'app_notifications_create', methods: ["POST"])]
-    public function create(
+    public function sendNotification(
         Request $request,
         EntityManagerInterface $entityManager,
-        TypesRepository $typesRepository
+        UsersRepository $usersRepository,
+        TypesRepository $typesRepository,
     ): Response {
         $notification = new Notifications();
 
         $formData = $request->request->all();
-        $notifData = $formData['cards'];
+        $cardData = $formData['cards'];
+        $type = $typesRepository->find($cardData['crd_typ']);
+        $user = $usersRepository->find($this->getUser());
 
-        $type = $typesRepository->find($notifData['crd_typ']);
-
+        // Create notification
         $notification->setNotType($type);
-        $notification->setNotTitle($notifData['crd_title']);
+        $notification->setNotTitle($type->getTypName() . " - " . $cardData['crd_title']);
         $notification->setNotCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')));
 
         $entityManager->persist($notification);
+
+        // Link notification to user
+        $userTp = $user->getUsrTp();
+        if ( $cardData['crd_grp'] == 0 ) {
+            $users = $usersRepository->findByTp($userTp);
+            foreach ($users as $user) {
+                $notifUser = new NotifUsers();
+
+                $notifUser->setNuNot($notification);
+                $notifUser->setNuUsr($user);
+                $notifUser->setIsNuSeen(false);
+
+                $entityManager->persist($notifUser);
+            }
+        } else {
+            $map = [
+                "A" => ["A", "B"],
+                "B" => ["A", "B"],
+                "C" => ["C", "D"],
+                "D" => ["C", "D"],
+                "E" => ["E", "F"],
+                "F" => ["E", "F"],
+                "G" => ["G", "H"],
+                "H" => ["G", "H"],
+            ];
+            
+            $td = $map[$userTp] ?? ["A", "B", "C", "D", "E", "F", "G", "H"];
+            foreach($td as $tp) {
+                $users = $usersRepository->findByTp($tp);
+                foreach ($users as $user) {
+                    $notifUser = new NotifUsers();
+
+                    $notifUser->setNuNot($notification);
+                    $notifUser->setNuUsr($user);
+                    $notifUser->setIsNuSeen(false);
+
+                    $entityManager->persist($notifUser);
+                }
+            }
+        }
+
         $entityManager->flush();
 
-        return new Response('marked');
+        header('Location: /');
+        exit;
     }
 }

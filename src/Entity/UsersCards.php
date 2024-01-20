@@ -42,24 +42,24 @@ class UsersCards
         return $this;
     }
 
-    public function getUcUsrId(): ?Users
+    public function getUcUsr(): ?Users
     {
         return $this->uc_usr;
     }
 
-    public function setUcUsrId(?Users $uc_usr): static
+    public function setUcUsr(?Users $uc_usr): static
     {
         $this->uc_usr = $uc_usr;
 
         return $this;
     }
 
-    public function getUcCrdId(): ?Cards
+    public function getUcCrd(): ?Cards
     {
         return $this->uc_crd;
     }
 
-    public function setUcCrdId(?Cards $uc_crd): static
+    public function setUcCrd(?Cards $uc_crd): static
     {
         $this->uc_crd = $uc_crd;
 

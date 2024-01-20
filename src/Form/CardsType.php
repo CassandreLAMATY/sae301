@@ -25,16 +25,17 @@ class CardsType extends AbstractType
                 'class' => Types::class,
                 'choice_label' => 'typ_name',
                 'attr' => ['id' => 'crd_typ'],
-                'placeholder' => 'Choisissez un type d\'évènement',
                 'required' => true,
             ])
 
             //->addEventSubscriber(new CardsFormListener())
             ->add('crd_title',TextType::class ,  [
                 'attr' => ['id' => 'crd_title'],
+                'required' => true,
             ])
             ->add('crd_desc',   TextType::class, [
                 'attr' => ['id' => 'crd_desc'],
+                'required' => false,
             ])
 
             ->add('crd_from', DateTimeType::class, [
@@ -43,6 +44,7 @@ class CardsType extends AbstractType
             ])
             ->add('crd_to', DateTimeType::class, [
                 'attr' => ['id' => 'crd_to'],
+                'required' => true,
             ])
             ->add('crd_sbj', EntityType::class, [
                 'class' => Subjects::class,
