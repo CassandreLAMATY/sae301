@@ -57,9 +57,7 @@ class CardsController extends AbstractController
             $cardData = $formData['cards'];
             $type = $typesRepository->find($cardData['crd_typ']);
             $user = $usersRepository->find($this->getUser());
-            if( $cardData['crd_from'] ) {
-                $from = new \DateTime($cardData['crd_from']);
-            }
+            $from = $cardData['crd_from'] ? new \DateTime($cardData['crd_from']) : null;
             $to = new \DateTime($cardData['crd_to']);
 
             // CARD
@@ -67,7 +65,7 @@ class CardsController extends AbstractController
             $card->setCrdCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')));
             $card->setCrdTyp($type);
             $card->setCrdTitle($cardData['crd_title']);
-            $card->setCrdFrom($from);
+            $from ? $card->setCrdFrom($from) : '';
             $card->setCrdTo($to);
             $card->setIsValidated(false);
 
