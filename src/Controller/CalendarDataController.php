@@ -28,6 +28,7 @@ class CalendarDataController extends AbstractController
                     'end' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
                     'hour' => $card->getUcCrdId()->getCrdTo()->format('H:i'),
                     "isValidated" => $card->getUcCrdId()->getIsValidated(),
+                    "isDone" => $card->isUcDone(),
                 ];
                 continue;
             }
@@ -39,6 +40,7 @@ class CalendarDataController extends AbstractController
                 'start' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
                 'hour' => $card->getUcCrdId()->getCrdTo()->format('H:i'),
                 "isValidated" => $card->getUcCrdId()->getIsValidated(),
+                "isDone" => $card->isUcDone(),
             ];
         }
         return $this->json($data);

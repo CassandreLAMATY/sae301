@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       typeFilter(i);
     }
 
-    validatedFilter()
+    generalFilter('.statusEvent button', 'isvalidated');
+    generalFilter('.statusHomework button', 'isdone');
   }
 
   if (document.getElementById('calendar')) {
@@ -170,7 +171,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     divFilter.appendChild(subjectDiv);
 
-    validatedFilter()
+    generalFilter('.statusEvent button', 'isvalidated');
+    generalFilter('.statusHomework button', 'isdone');
 
     //créer un input select
     const select = document.createElement('button');
@@ -260,9 +262,11 @@ function getCalendar(dataEvents) {
         arg.event.extendedProps.subject.sbjName + '<br>' +
         arg.event.extendedProps.hour;
 
+      console.log(arg.event);
       eventDiv.setAttribute('card-id', arg.event.id );
-      eventDiv.setAttribute('isvalidated', arg.event.extendedProps.isValidated);
       eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId );
+      eventDiv.setAttribute('isvalidated', arg.event.extendedProps.isValidated);
+      eventDiv.setAttribute('isdone', arg.event.extendedProps.isDone);
 
       eventDiv.style.borderLeft = '5px solid ' +
         arg.event.extendedProps.type.typColor;
@@ -403,11 +407,11 @@ function hideType(typeId, isPressed) {
   }
 }
 
-function validatedFilter() {
+function generalFilter(classBtn, item) {
 
-  const btnValidated = document.querySelector('.statusEvent button');
+  const btnValidated = document.querySelector(classBtn);
 
-  const isPressed = localStorage.getItem('isValidated') !== null;
+  const isPressed = localStorage.getItem(item) !== null;
 
   btnValidated.setAttribute('aria-pressed', isPressed ? 'true' : 'false');
 
@@ -417,52 +421,52 @@ function validatedFilter() {
     btnValidated.classList.remove('btn--active');
   }
 
-  hideValidated(isPressed);
+  hideCards(isPressed);
 
   btnValidated.addEventListener('click', function() {
 
-    const isPressed = localStorage.getItem('isValidated') !== null;
+    const isPressed = localStorage.getItem(item) !== null;
 
     if (isPressed) {
-      localStorage.removeItem('isValidated');
+      localStorage.removeItem(item);
       this.setAttribute('aria-pressed', 'false');
       btnValidated.classList.remove('btn--active');
     } else {
-      localStorage.setItem('isValidated', 1);
+      localStorage.setItem(item, 1);
       this.setAttribute('aria-pressed', 'true');
       btnValidated.classList.add('btn--active');
     }
 
     console.log(!isPressed);
-    hideValidated(!isPressed);
+    hideCards(!isPressed, item);
   });
 }
-function hideValidated(isPressed) {
+function hideCards(isPressed, item) {
   const events = document.querySelectorAll('.fc-event-main');
   const eventsList = document.querySelectorAll('.item');
 
   if (isPressed) {
     events.forEach(event => {
       const eventCard = event.querySelector('.event-card')
-
-      if (eventCard.getAttribute('isvalidated') == 0) {
+      console.log(eventCard.getAttribute(item));
+      if (eventCard.getAttribute(item) == 0 || eventCard.getAttribute(item) == false ) {
         event.parentNode.style.display = 'none';
       }
     });
     eventsList.forEach(eventList => {
-      if (eventList.getAttribute('isvalidated') == 0) {
+      if (eventList.getAttribute(item) == 0 || eventList.getAttribute(item) == false) {
         eventList.style.display = 'none';
       }
     });
   } else {
     events.forEach(event => {
       const eventCard = event.querySelector('.event-card')
-      if (eventCard.getAttribute('isvalidated') == 0) {
+      if (eventCard.getAttribute(item) == 0 || eventCard.getAttribute(item) == false) {
         event.parentNode.style.display = 'block';
       }
     });
     eventsList.forEach(eventList => {
-      if (eventList.getAttribute('isvalidated') == 0) {
+      if (eventList.getAttribute(item) == 0 || eventList.getAttribute(item) == false) {
         eventList.style.display = 'grid';
       }
     });
