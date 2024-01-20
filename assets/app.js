@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         for (let i = 1; i <= 4; i++) {
             typeFilter(i);
         }
-    }
 
-    generalFilter('.statusEvent button', 'isvalidated');
-    generalFilter('.statusHomework button', 'isdone');
+        generalFilter('.statusEvent button', 'isvalidated');
+        generalFilter('.statusHomework button', 'isdone');
+    }
 });
 
 if (document.getElementById('calendar')) {
@@ -173,6 +173,10 @@ if (document.getElementById('calendar')) {
 
     generalFilter('.statusEvent button', 'isvalidated');
     generalFilter('.statusHomework button', 'isdone');
+
+    const select = document.createElement('button');
+    select.classList.add('fc-button');
+    select.classList.add('fc-button-primary', 'btn--force-single');
 
     select.innerHTML = 'Matières <i class="fa-solid fa-angle-down"></i>';
 

@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Service\DateTimeConverter;
 
-class UserCardsService {
-    public function getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, DateTimeConverter $dateTimeConverter) {
+class UserCardsService
+{
+    public function getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, DateTimeConverter $dateTimeConverter)
+    {
         // Selecting every card id by user id
         $cards = $userCardsRepository->findByUserIdNotOutdated($user->getUsrId());
         $cardsData = [];
@@ -33,45 +35,47 @@ class UserCardsService {
 
             $timeEnd = $card->getUcCrdId()->getCrdTo();
 
-            if($card->getUcCrdId()->getCrdFrom()){
+            if ($card->getUcCrdId()->getCrdFrom()) {
                 $timeEnd = $card->getUcCrdId()->getCrdFrom();
             }
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            //if timeEnd is before now, skip this card
-            if ($timeEnd > $now) {
-                $typeId = $card->getUcCrdId()->getCrdTypId();
-                $type = $typesRepository->find($typeId);
-
-                $subjectId = $card->getUcCrdId()->getCrdSbjId();
-                $subject = $subjectsRepository->find($subjectId);
-
-                $timeleft = $now->diff($timeEnd);
-                $dayLeft = $timeleft->format('%a');
-                $dayLeft = (int)$dayLeft;
-
-                $timeColor = 'var(--grey)';
-
-                if ($dayLeft < 8) {
-                    $timeColor = 'var(--accent-orange)';
-                }
-
-                if ($dayLeft < 3) {
-                    $timeColor = 'var(--accent-red)';
-                }
-
-                if ($type) {
-                    $paramsData = [
-                        'typeName' => $type->getTypName(),
-                        'typeColor' => $type->getTypColor(),
-                        'subjectRef' => $subject->getSbjRef(),
-                        'subjectName' => $subject->getSbjName(),
-                        'timeColor' => $timeColor,
-                    ];
-                }
+            if ($timeEnd < $now) {
+                continue;
             }
+
+            $typeId = $card->getUcCrdId()->getCrdTypId();
+            $type = $typesRepository->find($typeId);
+
+            $subjectId = $card->getUcCrdId()->getCrdSbjId();
+            $subject = $subjectsRepository->find($subjectId);
+
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
+            }
+
+            if ($type) {
+                $paramsData = [
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'subjectRef' => $subject->getSbjRef(),
+                    'subjectName' => $subject->getSbjName(),
+                    'timeColor' => $timeColor,
+                ];
+            }
+
             $cardsData[] = ['card' => $cardData, 'params' => $paramsData];
         }
 
