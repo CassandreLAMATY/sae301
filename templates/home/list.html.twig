@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}List{% endblock %}
+{% block title %}📜 LISTE - CALENDRA{% endblock %}
 
 {% block body %}
 
@@ -10,126 +10,176 @@
         <div class="list--head">
             <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
                 <div class="fc-toolbar-chunk">
-                    <div class="fc-button-group">
-                        <button class="fc-button fc-button-primary calendar-view btn-calendar "><i
-                                    class="fa-regular fa-calendar" aria-hidden="true"></i></button>
-                        <button class="fc-button fc-button-primary btn-list list-view fc-button-active"><i
-                                    class="fa-solid fa-table-list"
-                                    aria-hidden="true"></i>
+                    <div class="fc-button-group concatinated-btns">
+                        <button class="fc-button fc-button-primary calendar-view btn-calendar btn--highlighted">
+                            <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                        </button>
+                        <button class="fc-button fc-button-primary btn-list list-view fc-button-active btn--highlighted">
+                            <i class="fa-solid fa-table-list" aria-hidden="true"></i>
                         </button>
                     </div>
-                    <button type="button" title="Aujourd'hui" disabled="" aria-pressed="false"
-                            class="fc-today-button fc-button fc-button-primary">Aujourd'hui
+                    <button type="button"
+                            title="Aujourd'hui"
+                            disabled=""
+                            aria-pressed="false"
+                            class="fc-today-button fc-button fc-button-primary btn--highlighted">
+                        Aujourd'hui
                     </button>
                 </div>
-                <div class="fc-toolbar-chunk"><h2 class="fc-toolbar-title" id="fc-dom-1">janvier 2024</h2></div>
-                <div class="fc-toolbar-chunk">
-                    <div class="fc-button-group">
-                        <button type="button" title="Précédent" aria-pressed="false"
-                                class="fc-prev-button fc-button fc-button-primary"><span
-                                    class="fc-icon fc-icon-chevron-left" role="img"></span></button>
-                        <button type="button" title="Suivant" aria-pressed="false"
-                                class="fc-next-button fc-button fc-button-primary"><span
-                                    class="fc-icon fc-icon-chevron-right" role="img"></span></button>
-                    </div>
-                    <div class="fc-button-group">
-                        <button type="button" title="Semaine" aria-pressed="false"
-                                class="fc-timeGridWeek-button fc-button fc-button-primary">Semaine
-                        </button>
-                        <button type="button" title="Mois" aria-pressed="true"
-                                class="fc-dayGridMonth-button fc-button fc-button-primary fc-button-active">Mois
-                        </button>
-                    </div>
+                <div class="fc-toolbar-chunk fc-toolbar-title-div ">
+                    <h2 class="fc-toolbar-title" id="fc-dom-1"> janvier 2024 </h2>
                 </div>
             </div>
             <div class="filter fc-header-toolbar fc-toolbar fc-toolbar-ltr">
                 <div class="fc-toolbar-chunk filter-nav">
-                    <div class="fc-button-group types">
-                        <button class="fc-button fc-button-primary btn--active" aria-pressed="true">Rendus</button>
-                        <button class="fc-button fc-button-primary btn--active" aria-pressed="true">Examens</button>
-                        <button class="fc-button fc-button-primary btn--active" aria-pressed="true">IUT</button>
-                        <button class="fc-button fc-button-primary btn--active" aria-pressed="true">BDE</button>
+                    <div class="fc-button-group types concatinated-btns">
+                        <button class="fc-button fc-button-primary btn--active btn--simulated" aria-pressed="true">
+                            Rendus
+                        </button>
+                        <button class="fc-button fc-button-primary btn--active btn--simulated" aria-pressed="true">
+                            Examens
+                        </button>
+                        <button class="fc-button fc-button-primary btn--active btn--simulated" aria-pressed="true">
+                            IUT
+                        </button>
+                        <button class="fc-button fc-button-primary btn--active btn--simulated" aria-pressed="true">
+                            BDE
+                        </button>
                     </div>
                     <div class="fc-button-group statusHomework">
-                        <button class="fc-button fc-button-primary" aria-pressed="false"><i
-                                    class="fa-regular fa-square-check" aria-hidden="true"></i> Rendu
+                        <button class="fc-button fc-button-primary btn--simulated" aria-pressed="false">
+                            <i class="fa-regular fa-square-check" aria-hidden="true"></i>
+                            Rendu
                         </button>
                     </div>
                     <div class="fc-button-group statusEvent">
-                        <button class="fc-button fc-button-primary" aria-pressed="false"><i
-                                    class="fa-regular fa-square-check" aria-hidden="true"></i> Validés
+                        <button class="fc-button fc-button-primary btn--simulated" aria-pressed="false">
+                            <i class="fa-regular fa-square-check" aria-hidden="true"></i>
+                            Validés
                         </button>
                     </div>
                     <div class="fc-button-group subject">
-                        <button class="fc-button fc-button-primary">Matières <i class="fa-solid fa-angle-down"
-                                                                                aria-hidden="true"></i></button>
-                        <div class="subject-choices"><label for="1"><input type="checkbox" id="1"
-                                                                           value="WSA301D - SAE Dév">WSA301D
-                                - SAE Dév</label><label for="2"><input type="checkbox" id="2"
-                                                                       value="WSA310 - Portfolio">WSA310
-                                - Portfolio</label><label for="3"><input type="checkbox" id="3"
-                                                                         value="WRA301 - Anglais">WRA301
-                                - Anglais</label><label for="4"><input type="checkbox" id="4"
-                                                                       value="WRA302 - Anglais Renforcé">WRA302 -
-                                Anglais
-                                Renforcé</label><label for="5"><input type="checkbox" id="5"
-                                                                      value="WRA303D - Design d'expérience">WRA303D -
-                                Design
-                                d'expérience</label><label for="6"><input type="checkbox" id="6"
-                                                                          value="WRA304 - Culture numérique">WRA304 -
-                                Culture numérique</label><label for="7"><input type="checkbox" id="7"
-                                                                               value="WRA305D - Stratégies de communication et marketing">WRA305D
-                                - Stratégies de communication et marketing</label><label for="8"><input type="checkbox"
-                                                                                                        id="8"
-                                                                                                        value="WRA306 - Référencement">WRA306
-                                - Référencement</label><label for="9"><input type="checkbox" id="9"
-                                                                             value="WRA307 - Expression, communication et rhétorique">WRA307
-                                - Expression, communication et rhétorique</label><label for="10"><input type="checkbox"
-                                                                                                        id="10"
-                                                                                                        value="WRA308D - Écriture multimédia et narration">WRA308D
-                                - Écriture multimédia et narration</label><label for="11"><input type="checkbox" id="11"
-                                                                                                 value="WRA309D - Création et design interactif (UI)">WRA309D
-                                - Création et design interactif (UI)</label><label for="12"><input type="checkbox"
-                                                                                                   id="12"
-                                                                                                   value="WRA310D - Culture artistique">WRA310D
-                                - Culture artistique</label><label for="13"><input type="checkbox" id="13"
-                                                                                   value="WRA311D - Audiovisuel et Motion design">WRA311D
-                                - Audiovisuel et Motion design</label><label for="14"><input type="checkbox" id="14"
-                                                                                             value="WRA312D - Développement Front et intégration">WRA312D
-                                - Développement Front et intégration</label><label for="15"><input type="checkbox"
-                                                                                                   id="15"
-                                                                                                   value="WRA313D - Développement Back">WRA313D
-                                - Développement Back</label><label for="16"><input type="checkbox" id="16"
-                                                                                   value="WRA314D - Déploiement de services">WRA314D
-                                - Déploiement de services</label><label for="17"><input type="checkbox" id="17"
-                                                                                        value="WRA315 - Représentation et traitement de l'information">WRA315
-                                - Représentation et traitement de l'information</label><label for="18"><input
-                                        type="checkbox" id="18" value="WRA316 - Gestion de projet">WRA316 - Gestion de
-                                projet</label><label for="19"><input type="checkbox" id="19"
-                                                                     value="WRA317 - Economie, gestion et droit du numérique">WRA317
-                                - Economie, gestion et droit du numérique</label><label for="20"><input type="checkbox"
-                                                                                                        id="20"
-                                                                                                        value="WRA318 - Projet Personnel et Professionnel">WRA318
-                                - Projet Personnel et Professionnel</label><label for="21"><input type="checkbox"
-                                                                                                  id="21"
-                                                                                                  value="WRA319D - Symfony">WRA319D
-                                - Symfony</label></div>
+                        <button class="fc-button fc-button-primary btn--simulated">
+                            Matières
+                            <i class="fa-solid fa-angle-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="subject-choices">
+                            <label for="1">
+                                <input type="checkbox" id="1" value="WSA301D - SAE Dév">
+                                WSA301D - SAE Dév
+                            </label>
+                            <label for="2">
+                                <input type="checkbox" id="2" value="WSA310 - Portfolio">
+                                WSA310 - Portfolio
+                            </label>
+                            <label for="3">
+                                <input type="checkbox" id="3" value="WRA301 - Anglais">
+                                WRA301 - Anglais
+                            </label>
+                            <label for="4">
+                                <input type="checkbox" id="4" value="WRA302 - Anglais Renforcé">
+                                WRA302 - Anglais Renforcé
+                            </label>
+                            <label for="5">
+                                <input type="checkbox" id="5" value="WRA303D - Design d'expérience">
+                                WRA303D - Design d'expérience
+                            </label>
+                            <label for="6">
+                                <input type="checkbox" id="6" value="WRA304 - Culture numérique">
+                                WRA304 - Culture numérique
+                            </label>
+                            <label for="7">
+                                <input type="checkbox"
+                                       id="7"
+                                       value="WRA305D - Stratégies de communication et marketing">
+                                WRA305D - Stratégies de communication et marketing
+                            </label>
+                            <label for="8">
+                                <input type="checkbox" id="8" value="WRA306 - Référencement">
+                                WRA306 - Référencement
+                            </label>
+                            <label for="9">
+                                <input type="checkbox" id="9" value="WRA307 - Expression, communication et rhétorique">
+                                WRA307 - Expression, communication et rhétorique
+                            </label>
+                            <label for="10">
+                                <input type="checkbox" id="10" value="WRA308D - Écriture multimédia et narration">
+                                WRA308D - Écriture multimédia et narration
+                            </label>
+                            <label for="11">
+                                <input type="checkbox" id="11" value="WRA309D - Création et design interactif (UI)">
+                                WRA309D - Création et design interactif (UI)
+                            </label>
+                            <label for="12">
+                                <input type="checkbox" id="12" value="WRA310D - Culture artistique">
+                                WRA310D - Culture artistique
+                            </label>
+                            <label for="13">
+                                <input type="checkbox" id="13" value="WRA311D - Audiovisuel et Motion design">
+                                WRA311D - Audiovisuel et Motion design
+                            </label>
+                            <label for="14">
+                                <input type="checkbox" id="14" value="WRA312D - Développement Front et intégration">
+                                WRA312D - Développement Front et intégration
+                            </label>
+                            <label for="15">
+                                <input type="checkbox" id="15" value="WRA313D - Développement Back">
+                                WRA313D - Développement Back
+                            </label>
+                            <label for="16">
+                                <input type="checkbox" id="16" value="WRA314D - Déploiement de services">
+                                WRA314D - Déploiement de services
+                            </label>
+                            <label for="17">
+                                <input type="checkbox"
+                                       id="17"
+                                       value="WRA315 - Représentation et traitement de l'information">
+                                WRA315 - Représentation et traitement de l'information
+                            </label>
+                            <label for="18">
+                                <input type="checkbox"
+                                       id="18"
+                                       value="WRA316 - Gestion de projet">WRA316 - Gestion de projet
+                            </label>
+                            <label for="19">
+                                <input type="checkbox" id="19" value="WRA317 - Economie, gestion et droit du numérique">
+                                WRA317 - Economie, gestion et droit du numérique
+                            </label>
+                            <label for="20">
+                                <input type="checkbox" id="20" value="WRA318 - Projet Personnel et Professionnel">
+                                WRA318 - Projet Personnel et Professionnel
+                            </label>
+                            <label for="21">
+                                <input type="checkbox" id="21" value="WRA319D - Symfony">
+                                WRA319D - Symfony
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="display: flex; flex-direction: column">
+
+        {# Items List #}
+        <div id='list--items'>
+
+            {# List Weeks #}
             {% for week in weekList %}
                 <div class="week items">
-                    <p>{{ week.weekString }}</p>
+                    <div class='week--head'>
+                        <p class='week--title'>{{ week.weekString }}</p>
+                        <hr>
+                    </div>
+                    {# Items #}
                     {% for item in cardsData %}
                         {% if item.card.start >= week.startOfWeek and item.card.start <= week.endOfWeek or item.card.end >= week.startOfWeek and item.card.end <= week.endOfWeek %}
-                            <div class="item {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
+                            <div class="item detail--content {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
                                  card-id="{{ item.card.id }}"
                                  type-id="{{ item.card.typeId }}"
                                  isValidated="{{ item.card.isValidated }}"
                                  isDone="{{ item.card.isDone }}"
                                  style="border-left-color: {{ item.params.typeColor }} !important;">
+
+                                {# Time Left #}
                                 <div class="time">
                                     <p class="date">
                                         {% if item.card.from is not null %}
@@ -138,26 +188,69 @@
                                         {{ item.card.stringTo }}
                                     </p>
                                     <div class="time_left">
-                                        <i class="fa-solid fa-hourglass-half" style="color:{{ item.params.timeColor }}"></i>
+                                        <i class="fa-solid fa-hourglass-half"
+                                           style="color:{{ item.params.timeColor }}"></i>
                                         <p class="days">{{ item.card.timeLeft|raw }}</p>
                                     </div>
                                 </div>
-                                <div class="subject">
-                                    <p class="tag"
-                                       style="border-color: {{ item.params.typeColor }}; background-color: {{ item.params.typeColor }}20">{{ item.params.typeName }}</p>
-                                    <h3>{{ item.card.title }}</h3>
-                                    <p class="course">{{ item.card.subject }}</p>
-                                </div>
-                                {% if item.card.type is same as('rendu') %}
-                                    <!--<div class="status">
-                                        <i class="fa-regular fa-square"></i>
-                                        <p>À Rendre</p>
-                                    </div>-->
-                                    <div class="status">
-                                        <i class="fa-regular fa-square-check"></i>
-                                        <p>Rendu</p>
+
+                                {# CONTENT Section #}
+                                <div class='liste--item--content'>
+                                    {# Titre #}
+                                    <div class="subject">
+                                        <p class="tag"
+                                           style="border-color: {{ item.params.typeColor }}; background-color: {{ item.params.typeColor }}20">{{ item.params.typeName }}</p>
+                                        <h3>{{ item.card.title }}</h3>
                                     </div>
-                                {% endif %}
+
+                                    {# Subject #}
+                                    <div class='detail--content--subject detail--content--format'>
+                                        <p class='detail--content--format-t'><i class="fa-solid fa-book"></i>Matière</p>
+                                        <p class='detail--content--format-c'>{{ item.card.subject }}</p>
+                                    </div>
+
+                                    {# Description #}
+                                    {% if item.card.description %}
+                                        <div class='detail--content--description detail--content--format'>
+                                            <p class='detail--content--format-t'>
+                                                <i class="fa-solid fa-paragraph"></i> Description</p>
+                                            <p class='detail--content--format-c'>{{ item.card.description }}</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                {# BTNS Section #}
+                                <div class='liste--item--buttons'>
+                                    {# BTN Modifier #}
+                                    <div class='detail--content--modif---btns double-button'>
+                                        <button class='double-button__item'><i class="fa-solid fa-pen"></i>Modifier
+                                        </button>
+                                        <button class='double-button__item signalement'><i class="fa-solid fa-flag"></i>
+                                        </button>
+                                    </div>
+
+                                    {# BTN Status #}
+                                    {% if item.card.type is same as('rendu') %}
+                                        <div class='concatinated-btns btns--a-valider'>
+                                            <div>2/5 <i class="fa-solid fa-user-check"></i></div>
+                                            <button class='btn--a-valider'>
+                                                Valider
+                                                <i class="fa-solid fa-arrow-right-long"></i>
+                                            </button>
+                                        </div>
+                                        {#
+                                        <button class="btn--a-faire">
+                                            A faire
+                                            <i class="fa-regular fa-square"></i>
+                                        </button>
+                                        <button class="btn--fait">
+                                            Fait
+                                            <i class="fa-regular fa-square-check"></i>
+                                        </button>
+                                        #}
+                                    {% endif %}
+                                </div>
+
                             </div>
                         {% endif %}
                     {% endfor %}

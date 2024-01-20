@@ -6,9 +6,11 @@
     {% block stylesheets %}
         <link href="{{ asset('styles/app.css') }}" rel="stylesheet">
         <link href="{{ asset('styles/components/buttons.css') }}" rel="stylesheet">
-        <link href="{{ asset('styles/section/detail.css') }}" rel="stylesheet">
-        <link href="{{ asset('styles/section/a-venir.css') }}" rel="stylesheet">
-        <link href="{{ asset('styles/section/calendar.css') }}" rel="stylesheet">
+        <link href="{{ asset('styles/home-sections/detail.css') }}" rel="stylesheet">
+        <link href="{{ asset('styles/home-sections/a-venir.css') }}" rel="stylesheet">
+        <link href="{{ asset('styles/home-sections/calendar.css') }}" rel="stylesheet">
+        <link href="{{ asset('styles/pages/login.css') }}" rel="stylesheet">
+        <link href="{{ asset('styles/pages/liste.css') }}" rel="stylesheet">
     {% endblock %}
 
     {% block javascripts %}
@@ -20,6 +22,6 @@
     {% endblock %}
 </head>
 <body class="{% block body_class %}sub_page{% endblock %}">
-    {% block body %}{% endblock %}
+{% block body %}{% endblock %}
 </body>
 </html>

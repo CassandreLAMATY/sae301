@@ -2,11 +2,6 @@
 
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('styles/login.css') }}" rel="stylesheet">
-{% endblock %}
-
     {% block javascripts %}
         {{ parent() }}
         <script src="{{ asset('login/show-password.js') }}"></script>

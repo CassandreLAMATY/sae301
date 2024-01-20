@@ -2,7 +2,7 @@
 /* 🔴 ----- BUTTONS ----- 🔴 */
 /* 🔴 ------------------- 🔴 */
 
-button {
+button, .btn--simulated {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,12 +50,14 @@ button.btn--darker {
     box-shadow: 0 0 0 2px var(--secondary-gray--03);
 }
 
-button.btn--highlighted {
+button.btn--highlighted,
+.btn--simulated.btn--highlighted {
     background-color: var(--accent-yellow);
     box-shadow: 0 0 0 2px var(--accent-yellow-shadow);
 }
 
-button.btn--highlighted:hover {
+button.btn--highlighted:hover,
+.btn--simulated.btn--highlighted:hover {
     background-color: var(--accent-yellow-shadow) !important;
 }
 
@@ -66,7 +68,7 @@ button.btn--signalement {
 button.btn--close-menu:hover {
     background-color: var(--accent-red);
     box-shadow: 0 0 0 2px var(--accent-red-shadow);
-    color: var(--main--white);
+    color: var(--main--white) !important;
 }
 
 /* 🟡 ----- CONCATENATED BTNS ----- 🟡 */
@@ -85,21 +87,44 @@ button.btn--close-menu:hover {
     border-radius: var(--grup-2) 0 0 var(--grup-2);
 }
 
+.concatinated-btns button:not(:first-of-type) {
+    border-radius: 0 0 0 0;
+}
+
 .concatinated-btns button:last-of-type:not(.btn--force-single) {
     border-radius: 0 var(--grup-2) var(--grup-2) 0;
 }
 
-.concatinated-btns button:only-of-type,
+.concatinated-btns button:only-of-type:not(.btn--a-valider),
 button.btn--force-single {
     border-radius: var(--grup-2) !important;
 }
 
 /* 🟢 ----- CLASSES VALIDATIONS ----- 🟢 */
 
-button.btn--a-faire {
-    background-color: var(--accent-blue);
-    box-shadow: 0 0 0 2px var(--accent-blue-shadow);
-    color: var(--main--white);
+.btns--a-valider > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--grup-2);
+    padding: var(--grup-2) var(--grup);
+
+    font-size: var(--grup);
+    font-weight: 600;
+    color: unset;
+
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px var(--secondary-gray--02);
+    border-radius: var(--grup-2) 0 0 var(--grup-2)
+}
+
+.btns--a-valider > div i {
+    color: var(--accent-blue);
+}
+
+.btns--a-valider > button.btn--a-valider {
+    border-radius: 0 var(--grup-2) var(--grup-2) 0;
 }
 
 button.btn--a-faire {
@@ -114,11 +139,12 @@ button.btn--a-faire:hover {
 
 button.btn--fait {
     background-color: var(--accent-green);
-    box-shadow: 0 0 0 2px var(--accent-green--shadow);
+    box-shadow: 0 0 0 2px var(--accent-green-shadow);
+    color: var(--main--white);
 }
 
 button.btn--fait:hover {
-    background-color: var(--accent-green--shadow);
+    background-color: var(--accent-green-shadow);
 }
 
 /* ⚫ ------------------ ⚫ */
