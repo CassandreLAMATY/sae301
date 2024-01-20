@@ -109,7 +109,6 @@
 
 .side-list,
 #details {
-    width: min(669px, 35vw);
     background-color: var(--list-bg-color);
     outline: 1px solid var(--secondary-gray--02);
     padding: 26px;

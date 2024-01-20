@@ -468,4 +468,3 @@ if (document.getElementById('calendar')) {
         }
     }
 }
-

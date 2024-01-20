@@ -6,6 +6,10 @@
     position: relative;
 }
 
+#a-venir, #details {
+    width: 700px;
+}
+
 #btn--open--avenir {
     display: none;
     position: absolute;
@@ -48,6 +52,11 @@
     background-color: var(--list-h-bg-color);
     border-radius: 6px;
     padding: 16px 42px;
+}
+
+#side-list_title {
+    display: flex;
+    gap: var(--grup);
 }
 
 .side-list h2,
@@ -136,28 +145,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 16vw;
-}
-
-@media screen and (max-width: 1500px) {
-    .side-list .subject > div h3.notif-card__title,
-    .side-list .subject > div p.notif-card__subject {
-        max-width: 14vw;
-    }
-}
-
-@media screen and (max-width: 1400px) {
-    .side-list .subject > div h3.notif-card__title,
-    .side-list .subject > div p.notif-card__subject {
-        max-width: 12vw;
-    }
-}
-
-@media screen and (max-width: 1300px) {
-    .side-list .subject > div h3.notif-card__title,
-    .side-list .subject > div p.notif-card__subject {
-        max-width: 10vw;
-    }
+    max-width: 310px;
 }
 
 .side-list .subject > p {
@@ -183,6 +171,30 @@
     overflow: hidden;
 }
 
+@media screen and (max-width: 1600px) {
+    #a-venir,
+    #details {
+        width: 550px;
+    }
+
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 150px;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    #a-venir,
+    #details {
+        width: 500px;
+    }
+
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 100px;
+    }
+}
+
 @media screen and (max-width: 1165px) {
     #section-right {
         z-index: 10;
@@ -193,7 +205,7 @@
     #details {
         position: absolute;
         transform: translateX(100%);
-        width: 60vw;
+        width: 700px;
     }
 
     #btn--open--avenir, #btn--close--avenir {
@@ -210,20 +222,30 @@
 
     .side-list .subject > div h3.notif-card__title,
     .side-list .subject > div p.notif-card__subject {
-        max-width: 24vw;
+        max-width: 310px;
     }
 }
 
-@media screen and (max-width: 1165px) {
-    .side-list .subject > div h3.notif-card__title,
-    .side-list .subject > div p.notif-card__subject {
-        max-width: 18vw;
-    }
-}
-
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 900px) {
     #a-venir,
     #details {
-        width: 80vw;
+        width: 550px;
+    }
+
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 150px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    #a-venir,
+    #details {
+        width: 90vw;
+    }
+
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 100px;
     }
 }
