@@ -87,6 +87,10 @@ button.btn--close-menu:hover {
     border-radius: var(--grup-2) 0 0 var(--grup-2);
 }
 
+.concatinated-btns button:not(:first-of-type) {
+    border-radius: 0 0 0 0;
+}
+
 .concatinated-btns button:last-of-type:not(.btn--force-single) {
     border-radius: 0 var(--grup-2) var(--grup-2) 0;
 }

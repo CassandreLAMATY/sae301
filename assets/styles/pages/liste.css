@@ -1,0 +1,80 @@
+/* 📜 --------------------------- 📜 */
+/* 📜 ---------- LISTE ---------- 📜 */
+/* 📜 --------------------------- 📜 */
+
+main#main-list {
+    flex-direction: column;
+    padding: 0 var(--grup) var(--grup) var(--grup);
+    gap: var(--grup1);
+}
+
+main#main-list .list--head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup);
+}
+
+main#main-list .list--head h2 {
+    position: absolute;
+    left: 50vw;
+    transform: translateX(-50%);
+}
+
+main#main-list .list--head .fc-header-toolbar {
+    width: 100%;
+    display: flex;
+}
+
+main#main-list .list--head .fc-header-toolbar button {
+    font-weight: 400;
+}
+
+main#main-list .list--head .fc-header-toolbar .fc-toolbar-chunk {
+    display: flex;
+    gap: var(--grup);
+}
+
+main#main-list .list--head .fc-header-toolbar .fc-button-group {
+    display: flex;
+}
+
+main#main-list .fc-header-toolbar:not(.filter) button {
+    height: 39px;
+}
+
+main#main-list #list--items {
+    display: flex;
+    flex-direction: column;
+    padding-right: var(--grup-2);
+    gap: var(--grup2);
+    overflow-y: scroll;
+}
+
+main#main-list #list--items .week {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup-1);
+}
+
+main#main-list #list--items .week hr {
+    border: var(--secondary-gray--02) solid 1px;
+    width: 100%;
+    margin: -6px 0 0 0
+}
+
+main#main-list #list--items .week .item {
+    display: flex;
+    cursor: unset
+}
+
+main#main-list #list--items .week .item:hover {
+    background-color: #ffffff;
+}
+
+main#main-list #list--items .week .week--title {
+    color: var(--secondary-gray--04);
+}
+
+main#main-list #list--items .item.notvalidated {
+    border: dashed 2px var(--secondary-gray--03);
+}
