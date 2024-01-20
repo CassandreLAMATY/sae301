@@ -1,27 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}📆 CALENDRIER - CALANDRA{% endblock %}
 
 {% block body %}
 
-    {{ include('components/header.html.twig') }}
+    {% include 'components/header.html.twig' %}
+    {% include 'components/cookies.html.twig' %}
 
-   <main class="main">
+    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
         <div id="section-right">
             <button id="btn--open--avenir" class='btn--a-faire' onclick='openAVenir()'>
                 <i class="fa-regular fa-clock"></i></button>
             <div id='a-venir' class="side-list">
                 <div id="side-list_title">
-                    <button id="btn--close--avenir" class='btn--a-faire' onclick='closeAVenir()'><i class="fa-regular fa-clock"></i></button>
+                    <button id="btn--close--avenir" class='btn--a-faire' onclick='closeAVenir()'>
+                        <i class="fa-regular fa-clock"></i></button>
                     <h2>À Venir</h2>
                 </div>
                 <div class="items">
                     {% for item in cardsData %}
                         <div class="item {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
+                             card-id="{{ item.card.id }}"
+                             type-id="{{ item.card.typeId }}"
+                             isValidated="{{ item.card.isValidated }}"
+                             isDone="{{ item.card.isDone }}"
                              style="border-left-color: {{ item.params.typeColor }} !important;">
-                            <p class="card-id">{{ item.card.id }}</p>
-                            <p class="type-id">{{ item.card.typeId }}</p>
                             <div class="time">
                                 <p class="date">
                                     {% if item.card.stringFrom is not null %}
@@ -43,15 +51,23 @@
                                 </div>
                             </div>
                             {% if item.params.typeName is same as('rendu') %}
-                                <!--<div class="status">
-                                    <i class="fa-regular fa-square"></i>
-                                    <p>À Rendre</p>
-                                </div>-->
-                                <div class="status status-button not-done">
-                                    <i class="fa-regular fa-square not-done"></i>
-                                    <i class="fa-regular fa-square done"></i>
-                                    <p>Rendu</p>
+                                <div class='concatinated-btns btns--a-valider'>
+                                    <div>2/5 <i class="fa-solid fa-user-check"></i></div>
+                                    <button class='btn--a-valider'>
+                                        Valider
+                                        <i class="fa-solid fa-arrow-right-long"></i>
+                                    </button>
                                 </div>
+                                {#
+                                <button class="btn--a-faire">
+                                    A faire
+                                    <i class="fa-regular fa-square"></i>
+                                </button>
+                                <button class="btn--fait">
+                                    Fait
+                                    <i class="fa-regular fa-square-check"></i>
+                                </button>
+                                #}
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -59,8 +75,7 @@
             </div>
             <div id="createCardFormContainer" class="details"></div>
 
-            <div id="details" class="details">
-            </div>
+            <div id="details" class="details"></div>
         </div>
         {# params pop-up #}
         <div id="params" style="display:none"></div>
@@ -173,5 +188,3 @@
 {# script to close the pop-up with the close icon #}
 
 {% endblock %}
-
-

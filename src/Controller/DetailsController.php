@@ -52,12 +52,11 @@ class DetailsController extends AbstractController {
             $cardData = [];
 
             if ($type !== null) {
-                $cardData[] = ['card' => $card, 'typeName' => $type->getTypName(), 'typeColor' => $type->getTypColor(), 'subjectName' => $subject->getSbjName(), 'timeColor' => $timeColor, $validated, $validatedBy];
+                $cardData[] = ['card' => $card, 'typeName' => $type->getTypName(), 'typeColor' => $type->getTypColor(),
+                               'subjectName' => $subject->getSbjName(), 'timeColor' => $timeColor];
             }
         }
 
-        return $this->render('details/index.html.twig', ['detailsCard' => $cardData,
-
-        ]);
+        return $this->render('details/index.html.twig', ['detailsCard' => $cardData,]);
     }
 }

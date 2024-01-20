@@ -22,23 +22,25 @@ class CalendarDataController extends AbstractController
                 $data[] = [
                     "id" => $card->getUcCrd()->getCrdId(),
                     "title" => $card->getUcCrd()->getCrdTitle(),
-                    'subject' => $card->getUcCrd()->getCrdSbj(),
-                    'type' => $card->getUcCrd()->getCrdTyp(),
+                    'subject' => $card->getUcCrd()->getCrdSbjId(),
+                    'type' => $card->getUcCrd()->getCrdTypId(),
                     'start' => $card->getUcCrd()->getCrdFrom()->format('Y-m-d'),
                     'end' => $card->getUcCrd()->getCrdTo()->format('Y-m-d'),
                     'hour' => $card->getUcCrd()->getCrdTo()->format('H:i'),
                     "isValidated" => $card->getUcCrd()->getIsValidated(),
+                    "isDone" => $card->isUcDone(),
                 ];
                 continue;
             }
             $data[] = [
                 "id" => $card->getUcCrd()->getCrdId(),
                 "title" => $card->getUcCrd()->getCrdTitle(),
-                'subject' => $card->getUcCrd()->getCrdSbj(),
-                'type' => $card->getUcCrd()->getCrdTyp(),
+                'subject' => $card->getUcCrd()->getCrdSbjId(),
+                'type' => $card->getUcCrd()->getCrdTypId(),
                 'start' => $card->getUcCrd()->getCrdTo()->format('Y-m-d'),
                 'hour' => $card->getUcCrd()->getCrdTo()->format('H:i'),
                 "isValidated" => $card->getUcCrd()->getIsValidated(),
+                "isDone" => $card->isUcDone(),
             ];
         }
         return $this->json($data);
