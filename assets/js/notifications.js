@@ -83,6 +83,11 @@ deleteButton.forEach(button => {
                         separator.style.display = 'none';
                     }
                 }
+
+                if(NnotifCards.length <= 0 && OnotifCards.length <= 0) {
+                    deleteAllButton.classList.add('delete-button-desactivated');
+                    deleteAllButton.classList.remove('delete-all-button');
+                }
             }).catch(error => {
                 console.error('Erreur lors de l\'opération, action annulée :', error);
             });

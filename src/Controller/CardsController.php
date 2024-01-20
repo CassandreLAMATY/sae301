@@ -74,11 +74,11 @@ class CardsController extends AbstractController
             if ( $cardData['crd_grp'] == 0 ) {
                 $users = $usersRepository->findByTp($userTp);
                 foreach ($users as $user) {
-                    $userCard = new NotifUsers();
+                    $userCard = new UsersCards();
 
-                    $userCard->setNuNot($notification);
-                    $userCard->setNuUsr($user);
-                    $userCard->setIsNuSeen(false);
+                    $userCard->setUcCrd($card);
+                    $userCard->setUcUsr($user);
+                    $userCard->setUcDone(false);
 
                     $entityManager->persist($userCard);
                 }

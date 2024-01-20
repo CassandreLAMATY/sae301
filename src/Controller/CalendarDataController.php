@@ -18,27 +18,27 @@ class CalendarDataController extends AbstractController
         $data = [];
 
         foreach ($cards as $card) {
-            if($card->getUcCrdId()->getCrdFrom()) {
+            if($card->getUcCrd()->getCrdFrom()) {
                 $data[] = [
-                    "id" => $card->getUcCrdId()->getCrdId(),
-                    "title" => $card->getUcCrdId()->getCrdTitle(),
-                    'subject' => $card->getUcCrdId()->getCrdSbj(),
-                    'type' => $card->getUcCrdId()->getCrdTyp(),
-                    'start' => $card->getUcCrdId()->getCrdFrom()->format('Y-m-d'),
-                    'end' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
-                    'hour' => $card->getUcCrdId()->getCrdTo()->format('H:i'),
-                    "isValidated" => $card->getUcCrdId()->getIsValidated(),
+                    "id" => $card->getUcCrd()->getCrdId(),
+                    "title" => $card->getUcCrd()->getCrdTitle(),
+                    'subject' => $card->getUcCrd()->getCrdSbj(),
+                    'type' => $card->getUcCrd()->getCrdTyp(),
+                    'start' => $card->getUcCrd()->getCrdFrom()->format('Y-m-d'),
+                    'end' => $card->getUcCrd()->getCrdTo()->format('Y-m-d'),
+                    'hour' => $card->getUcCrd()->getCrdTo()->format('H:i'),
+                    "isValidated" => $card->getUcCrd()->getIsValidated(),
                 ];
                 continue;
             }
             $data[] = [
-                "id" => $card->getUcCrdId()->getCrdId(),
-                "title" => $card->getUcCrdId()->getCrdTitle(),
-                'subject' => $card->getUcCrdId()->getCrdSbj(),
-                'type' => $card->getUcCrdId()->getCrdTyp(),
-                'start' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
-                'hour' => $card->getUcCrdId()->getCrdTo()->format('H:i'),
-                "isValidated" => $card->getUcCrdId()->getIsValidated(),
+                "id" => $card->getUcCrd()->getCrdId(),
+                "title" => $card->getUcCrd()->getCrdTitle(),
+                'subject' => $card->getUcCrd()->getCrdSbj(),
+                'type' => $card->getUcCrd()->getCrdTyp(),
+                'start' => $card->getUcCrd()->getCrdTo()->format('Y-m-d'),
+                'hour' => $card->getUcCrd()->getCrdTo()->format('H:i'),
+                "isValidated" => $card->getUcCrd()->getIsValidated(),
             ];
         }
         return $this->json($data);

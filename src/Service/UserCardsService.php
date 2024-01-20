@@ -65,8 +65,6 @@ class UserCardsService {
                     $paramsData = [
                         'typeName' => $type->getTypName(),
                         'typeColor' => $type->getTypColor(),
-                        'subjectRef' => $subject->getSbjRef(),
-                        'subjectName' => $subject->getSbjName(),
                         'timeColor' => $timeColor,
                     ];
                 }
