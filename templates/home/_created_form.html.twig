@@ -1,37 +1,38 @@
 <div class='detail--back'>
     <button id="create-back"><i class="fa-solid fa-arrow-right-long"></i></button>
 </div>
-<h2>Creation d'un évènement</h2>
 
-{{ form_start(form, {'method': 'POST', }) }}
-<br>
-{{ form_label(form.crd_typ,'Type d\'évènement : ') }}
-    {{ form_widget(form.crd_typ) }}
-<br>
-    {{ form_label(form.crd_title,'Titre de l\'évènement : ') }}
-    {{ form_widget(form.crd_title) }}
-<br>
-    {{ form_label(form.crd_desc,'Description de l\'évènement : ') }}
-    {{ form_widget(form.crd_desc) }}
+<h2>Ajouter un évènement</h2>
 
-<div id="label_crd_from">
+{{ form_start(form, {'method': 'POST', 'action': path('app_notifications_create')}) }}
+    <br>
+    {{ form_label(form.crd_typ,'Type d\'évènement : ') }}
+        {{ form_widget(form.crd_typ) }}
+    <br>
+        {{ form_label(form.crd_title,'Titre de l\'évènement : ') }}
+        {{ form_widget(form.crd_title) }}
+    <br>
+        {{ form_label(form.crd_desc,'Description de l\'évènement : ') }}
+        {{ form_widget(form.crd_desc, {'required': false}) }}
 
-    {{ form_label(form.crd_from,'Date de début : ') }}
-    {{ form_widget(form.crd_from) }}
-</div>
-<div id="label_crd_to">
-    {{ form_label(form.crd_to,'Date de fin : ') }}
-    {{ form_widget(form.crd_to) }}
-</div>
-<div id="label_crd_sbj">
+    <div id="label_crd_from">
 
-{{ form_label(form.crd_sbj,'Matière de l\'évènement : ') }}
-    {{ form_widget(form.crd_sbj) }}
-</div>
-<div id="label_crd_grp">
-    {{ form_label(form.crd_grp,'Groupe de l\'évènement : ') }}
-    {{ form_widget(form.crd_grp) }}
-</div>
+        {{ form_label(form.crd_from,'Date de début : ') }}
+        {{ form_widget(form.crd_from, {'required': false}) }}
+    </div>
+    <div id="label_crd_to">
+        {{ form_label(form.crd_to,'Date de fin : ') }}
+        {{ form_widget(form.crd_to) }}
+    </div>
+    <div id="label_crd_sbj">
+
+    {{ form_label(form.crd_sbj,'Matière de l\'évènement : ') }}
+        {{ form_widget(form.crd_sbj, {'required': false}) }}
+    </div>
+    <div id="label_crd_grp">
+        {{ form_label(form.crd_grp,'Groupe de l\'évènement : ') }}
+        {{ form_widget(form.crd_grp) }}
+    </div>
     <button type="submit">Valider</button>
 {{ form_end(form) }}
 

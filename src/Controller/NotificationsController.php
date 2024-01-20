@@ -6,7 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+
 use App\Repository\NotifUsersRepository;
+use App\Repository\TypesRepository;
+
+use App\Entity\Notifications;
+use Symfony\Component\HttpFoundation\Request;
 
 class NotificationsController extends AbstractController
 {
@@ -83,4 +88,27 @@ class NotificationsController extends AbstractController
 
         return new Response('marked');
     }
-} 
+
+    #[Route('/notifications/create', name: 'app_notifications_create', methods: ["POST"])]
+    public function create(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        TypesRepository $typesRepository
+    ): Response {
+        $notification = new Notifications();
+
+        $formData = $request->request->all();
+        $notifData = $formData['cards'];
+
+        $type = $typesRepository->find($notifData['crd_typ']);
+
+        $notification->setNotType($type);
+        $notification->setNotTitle($notifData['crd_title']);
+        $notification->setNotCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')));
+
+        $entityManager->persist($notification);
+        $entityManager->flush();
+
+        return new Response('marked');
+    }
+}
