@@ -173,8 +173,10 @@
                     {% for item in cardsData %}
                         {% if item.card.start >= week.startOfWeek and item.card.start <= week.endOfWeek or item.card.end >= week.startOfWeek and item.card.end <= week.endOfWeek %}
                             <div class="item detail--content {% if item.card.isValidated == 0 %} notvalidated {% endif %}"
-                                 data-card-id="{{ item.card.id }}"
-                                 data-type-id="{{ item.card.typeId }}"
+                                 card-id="{{ item.card.id }}"
+                                 type-id="{{ item.card.typeId }}"
+                                 isValidated="{{ item.card.isValidated }}"
+                                 isDone="{{ item.card.isDone }}"
                                  style="border-left-color: {{ item.params.typeColor }} !important;">
 
                                 {# Time Left #}
