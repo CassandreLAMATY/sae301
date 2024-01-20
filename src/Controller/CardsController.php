@@ -57,13 +57,17 @@ class CardsController extends AbstractController
             $cardData = $formData['cards'];
             $type = $typesRepository->find($cardData['crd_typ']);
             $user = $usersRepository->find($this->getUser());
-            $to = new \DateTime('2024-01-31T20:35');
+            if( $cardData['crd_from'] ) {
+                $from = new \DateTime($cardData['crd_from']);
+            }
+            $to = new \DateTime($cardData['crd_to']);
 
             // CARD
             $card = new Cards();
             $card->setCrdCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')));
             $card->setCrdTyp($type);
             $card->setCrdTitle($cardData['crd_title']);
+            $card->setCrdFrom($from);
             $card->setCrdTo($to);
             $card->setIsValidated(false);
 
@@ -114,5 +118,7 @@ class CardsController extends AbstractController
             // Sending notification
             $notificationsController->sendNotification( $request, $entityManager, $usersRepository, $typesRepository );
         }
+
+
     }
 }

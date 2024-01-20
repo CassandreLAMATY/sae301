@@ -217,7 +217,7 @@ function getCalendar(dataEvents) {
       const eventDiv = document.createElement('div');
       eventDiv.innerHTML =
         arg.event.title + '<br>' +
-        arg.event.extendedProps.subject.sbjName + '<br>' +
+        (arg.event.extendedProps.subject ? arg.event.extendedProps.subject.sbjName + '<br>' : '') +
         arg.event.extendedProps.hour + '<br> ' +
         '<p class="card-id">' + arg.event.id + '</p>' +
         '<p class="is-validated">' + arg.event.id + '</p>' +

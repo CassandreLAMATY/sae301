@@ -35,39 +35,30 @@ class UserCardsService {
             }
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
-            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            //if timeEnd is before now, skip this card
-            if ($timeEnd > $now) {
-                $typeId = $card->getUcCrd()->getCrdTyp();
-                $type = $typesRepository->find($typeId);
+            $typeId = $card->getUcCrd()->getCrdTyp();
+            $type = $typesRepository->find($typeId);
 
-                if( $card->getUcCrd()->getCrdSbj() ) {
-                    $subjectId = $card->getUcCrd()->getCrdSbj();
-                    $subject = $subjectsRepository->find($subjectId);
-                }
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
 
-                $timeleft = $now->diff($timeEnd);
-                $dayLeft = $timeleft->format('%a');
-                $dayLeft = (int)$dayLeft;
+            $timeColor = 'var(--grey)';
 
-                $timeColor = 'var(--grey)';
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
 
-                if ($dayLeft < 8) {
-                    $timeColor = 'var(--accent-orange)';
-                }
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
+            }
 
-                if ($dayLeft < 3) {
-                    $timeColor = 'var(--accent-red)';
-                }
-
-                if ($type) {
-                    $paramsData = [
-                        'typeName' => $type->getTypName(),
-                        'typeColor' => $type->getTypColor(),
-                        'timeColor' => $timeColor,
-                    ];
-                }
+            if ($type) {
+                $paramsData = [
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'timeColor' => $timeColor,
+                ];
             }
             $cardsData[] = ['card' => $cardData, 'params' => $paramsData];
         }
