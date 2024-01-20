@@ -110,6 +110,7 @@ body.portail-conection form.form-co .form-co--input-cell button.form-co--input-c
     border: none;
     background-color: transparent;
     cursor: pointer;
+    box-shadow: none;
 }
 
 body.portail-conection form.form-co .form-co--input-cell button.form-co--input-cell--pssw--show i {
