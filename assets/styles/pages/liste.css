@@ -11,7 +11,7 @@ main#main-list {
 main#main-list .list--head {
     display: flex;
     flex-direction: column;
-    gap: var(--grup);
+    gap: var(--grup1);
 }
 
 main#main-list .list--head h2 {
@@ -51,19 +51,32 @@ main#main-list #list--items {
 }
 
 main#main-list #list--items .week {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--grup-1);
 }
 
-main#main-list #list--items .week hr {
+main#main-list #list--items .week .week--head {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--body-bg-color);
+    top: 0;
+    position: sticky;
+}
+
+main#main-list #list--items .week .week--head .week--title {
+    color: var(--secondary-gray--04);
+    width: 100%;
+}
+
+main#main-list #list--items .week .week--head hr {
     border: var(--secondary-gray--02) solid 1px;
     width: 100%;
-    margin: -6px 0 0 0
 }
 
 main#main-list #list--items .week .item {
-    display: flex;
     cursor: unset
 }
 
@@ -71,10 +84,37 @@ main#main-list #list--items .week .item:hover {
     background-color: #ffffff;
 }
 
-main#main-list #list--items .week .week--title {
-    color: var(--secondary-gray--04);
-}
-
 main#main-list #list--items .item.notvalidated {
     border: dashed 2px var(--secondary-gray--03);
+}
+
+main#main-list #list--items .item .liste--item--content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup);
+}
+
+main#main-list #list--items .item .liste--item--content .subject .tag {
+    margin-bottom: var(--grup-3);
+}
+
+main#main-list #list--items .item .liste--item--content .subject h3 {
+    font-size: var(--grup1);
+}
+
+main#main-list #list--items .item .liste--item--buttons {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--grup);
+    align-items: end;
+    justify-content: space-between;
+}
+
+main#main-list #list--items .item .liste--item--buttons .detail--content--modif---btns {
+    opacity: 0;
+}
+
+main#main-list #list--items .item:hover .liste--item--buttons .detail--content--modif---btns {
+    opacity: 1;
 }
