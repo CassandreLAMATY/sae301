@@ -18,7 +18,8 @@
     --accent-orange: #f5af47;
     --accent-red: #ff4040;
     --accent-red-shadow: #de2727;
-    --accent-green: #6ee014;
+    --accent-green: #80d030;
+    --accent-green-shadow: #51990a;
     --accent-blue: #4098ff; /* couleur pour les tags A SUPPRIMER APRÈS */
     --accent-blue-shadow: #1571dd;
 
@@ -189,6 +190,12 @@ header {
 .userCard__name > span {
     font-size: var(--grup);
     font-weight: 600;
+}
+
+@media screen and (max-width: 700px) {
+    .userCard__name {
+        display: none;
+    }
 }
 
 /* dropdown */

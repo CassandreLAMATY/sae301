@@ -207,4 +207,23 @@
     #a-venir.a-venir--openned {
         transform: translateX(calc(-100% - 3px));
     }
+
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 24vw;
+    }
+}
+
+@media screen and (max-width: 1165px) {
+    .side-list .subject > div h3.notif-card__title,
+    .side-list .subject > div p.notif-card__subject {
+        max-width: 18vw;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #a-venir,
+    #details {
+        width: 80vw;
+    }
 }

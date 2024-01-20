@@ -32,6 +32,7 @@ main#main-list .list--head .fc-header-toolbar button {
 main#main-list .list--head .fc-header-toolbar .fc-toolbar-chunk {
     display: flex;
     gap: var(--grup);
+    flex-wrap: wrap;
 }
 
 main#main-list .list--head .fc-header-toolbar .fc-button-group {
@@ -92,6 +93,7 @@ main#main-list #list--items .item .liste--item--content {
     display: flex;
     flex-direction: column;
     gap: var(--grup);
+    overflow: hidden;
 }
 
 main#main-list #list--items .item .liste--item--content .subject .tag {
@@ -117,4 +119,23 @@ main#main-list #list--items .item .liste--item--buttons .detail--content--modif-
 
 main#main-list #list--items .item:hover .liste--item--buttons .detail--content--modif---btns {
     opacity: 1;
+}
+
+@media screen and (max-width: 850px) {
+    main#main-list .list--head h2 {
+        position: static;
+        left: unset;
+        transform: unset;
+    }
+
+    main#main-list #list--items .week .item {
+        grid-template-columns: 82px 1fr;
+    }
+
+    main#main-list #list--items .item .liste--item--buttons {
+        flex-direction: row;
+        grid-column: 1/-1;
+        justify-content: end;
+        flex-wrap: wrap;
+    }
 }

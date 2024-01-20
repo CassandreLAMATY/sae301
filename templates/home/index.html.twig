@@ -49,15 +49,23 @@
                                 </div>
                             </div>
                             {% if item.params.typeName is same as('rendu') %}
-                                <!--<div class="status">
-                                    <i class="fa-regular fa-square"></i>
-                                    <p>À Rendre</p>
-                                </div>-->
-                                <div class="status status-button not-done">
-                                    <i class="fa-regular fa-square not-done"></i>
-                                    <i class="fa-regular fa-square done"></i>
-                                    <p>Rendu</p>
+                                <div class='concatinated-btns btns--a-valider'>
+                                    <div>2/5 <i class="fa-solid fa-user-check"></i></div>
+                                    <button class='btn--a-valider'>
+                                        Valider
+                                        <i class="fa-solid fa-arrow-right-long"></i>
+                                    </button>
                                 </div>
+                                {#
+                                <button class="btn--a-faire">
+                                    A faire
+                                    <i class="fa-regular fa-square"></i>
+                                </button>
+                                <button class="btn--fait">
+                                    Fait
+                                    <i class="fa-regular fa-square-check"></i>
+                                </button>
+                                #}
                             {% endif %}
                         </div>
                     {% endfor %}
