@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NotifUsersRepository;
 use App\Repository\UsersRepository;
 use App\Repository\TypesRepository;
+use App\Repository\SubjectsRepository;
 
 use App\Entity\Notifications;
 use App\Entity\NotifUsers;
@@ -21,6 +22,7 @@ use App\Entity\Cards;
 use App\Form\CardsType;
 
 use App\Controller\NotificationsController;
+use App\Entity\Subjects;
 
 class CardsController extends AbstractController
 {
@@ -47,6 +49,7 @@ class CardsController extends AbstractController
         UsersRepository $usersRepository,
         TypesRepository $typesRepository,
         NotificationsController $notificationsController,
+        SubjectsRepository $subjectsRepository
     ): Response
     {
         $form = $this->createForm(CardsType::class);
@@ -57,6 +60,9 @@ class CardsController extends AbstractController
             $cardData = $formData['cards'];
             $type = $typesRepository->find($cardData['crd_typ']);
             $user = $usersRepository->find($this->getUser());
+            
+            $subject = $cardData['crd_sbj'] ? $subjectsRepository->find($cardData['crd_sbj']) : null;
+
             $from = $cardData['crd_from'] ? new \DateTime($cardData['crd_from']) : null;
             $to = new \DateTime($cardData['crd_to']);
 
@@ -65,6 +71,8 @@ class CardsController extends AbstractController
             $card->setCrdCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')));
             $card->setCrdTyp($type);
             $card->setCrdTitle($cardData['crd_title']);
+            $cardData['crd_desc'] ? $card->setCrdDesc($cardData['crd_desc']) : '';
+            $subject ? $card->setCrdSbj($subject) : '';
             $from ? $card->setCrdFrom($from) : '';
             $card->setCrdTo($to);
             $card->setIsValidated(false);
