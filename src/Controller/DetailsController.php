@@ -13,16 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DetailsController extends AbstractController
 {
-    #[Route('/details/{id}', name: 'app_details')]
+    #[Route('/details/{eventId}', name: 'app_details')]
     public function getDetails(
-        int $id, 
+        int $eventId, 
         Request $request,
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository,
         ValidationRepository $validationRepository
         ): Response {
-        $card = $cardsRepository->find($id);
+        $card = $cardsRepository->find($eventId);
 
         if ($card) {
             $timeEnd = $card->getCrdTo();
@@ -52,7 +52,7 @@ class DetailsController extends AbstractController
                 $timeColor = 'var(--accent-red)';
             }
 
-            $validations = $validationRepository->findByCardId($id);
+            $validations = $validationRepository->findByCardId($eventId);
             $validationNumber = count($validations);
             $cardData = [];
 

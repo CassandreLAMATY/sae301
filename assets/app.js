@@ -262,7 +262,7 @@ if (document.getElementById('calendar')) {
             : '') +
           'À ' + arg.event.extendedProps.hour;
 
-        eventDiv.setAttribute('cardId', arg.event.id);
+        eventDiv.setAttribute('card-id', arg.event.id);
         eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId);
         eventDiv.setAttribute('isvalidated',
           arg.event.extendedProps.isValidated);
@@ -301,13 +301,13 @@ if (document.getElementById('calendar')) {
     let eventDiv = document.getElementsByClassName(className);
     for (let i = 0; i < eventDiv.length; i++) {
       eventDiv[i].addEventListener('click', function() {
-        let cardId = this.getAttribute('card-id');
-        fetch(`/details/${cardId}`, {
+        let eventId = this.getAttribute('card-id');
+        fetch(`/details/${eventId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({cardId: cardId}),
+          body: JSON.stringify({eventId: eventId}),
         }).then(async (response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -324,18 +324,18 @@ if (document.getElementById('calendar')) {
               modal.classList.remove('details--openned');
             });
           }
-          addValidation(cardId);
+          addValidation(eventId);
         }).then(data => {
           console.log('Success:', data);
           console.log('wait modif');
           document.getElementById('modify-event').addEventListener('click', function () {
               console.log('modify start');
-              fetch(`/cards/modifyForm/${cardId}`,{
+              fetch(`/cards/modifyForm/${eventId}`,{
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json',
                   },
-                  body: JSON.stringify({cardId: cardId}),
+                  body: JSON.stringify({eventId: eventId}),
               }).then(async response => {
                   aVenir.innerHTML  = await response.text();
                   let modal = document.getElementById('details');
@@ -516,17 +516,14 @@ function addValidation(cardId) {
   const validationBtn = document.querySelector('.btns--a-valider-details');
 
   validationBtn.addEventListener('click', function() {
-    const requestBody = {
-      cardId: cardId
-    };
+    const cardId = this.getAttribute('card-id');
 
     // Retourne la promesse créée par fetch
-    return fetch('/validation', {
-      method: 'POST',
+    return fetch(`/cards/validation/${cardId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
+      }
     })
     .then(async (response) => {
       if (!response.ok) {
