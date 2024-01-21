@@ -285,6 +285,6 @@ class CardsController extends AbstractController
 
         $homeController->index($typesRepository, $subjectsRepository, $notifUserRepository, $userCardsRepository, $validationRepository, $notificationsService, $userCardsService, $dateTimeConverter);
     
-        return new Response('marked');
+        return $this->redirectToRoute('app_home');
     }
 }

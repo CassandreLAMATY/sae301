@@ -538,6 +538,7 @@ function addValidation(cardId) {
       const counter= document.querySelector('.btns--a-valider--counter');
       counter.style.borderRadius = 'var(--grup-2)';
 
+      window.location.reload();
     })
     .then(data => {
       console.log('Success:', data); // Affiche la réponse du serveur
