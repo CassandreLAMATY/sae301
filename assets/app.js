@@ -484,21 +484,6 @@ if (document.getElementById('calendar')) {
   generalFilter('.statusEvent button', 'isvalidated');
   generalFilter('.statusHomework button', 'isdone');
 
-  const select = document.createElement('button');
-  select.classList.add('fc-button');
-  select.classList.add('fc-button-primary', 'btn--force-single');
-
-  select.innerHTML = 'Matières <i class="fa-solid fa-angle-down"></i>';
-
-  subjectDiv.appendChild(select);
-
-  const selectChoices = document.createElement('div');
-  selectChoices.classList.add('subject-choices');
-
-  subjectDiv.appendChild(selectChoices);
-
-  selectChoices.innerHTML = dataSubject;
-
   getDetailsCard('event-card');
   getDetailsCard('item');
 
