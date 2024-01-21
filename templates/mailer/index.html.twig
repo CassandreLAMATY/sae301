@@ -68,7 +68,7 @@
 </head>
 <body>
     <header>
-        <h1>calendra</h1>
+        <h1>Calendra</h1>
     </header>
     <main>
         <h2>Tu as reçu une nouvelle notification !</h1>
@@ -83,11 +83,11 @@
         </section>
         {% if usr_name != " " %}
         <div>
-            <p>{{ action_by }} {{ usr_name }}</p>
-            <p>Promo : {{ usr_semester }}</p>
+            <p>Ajouté par {{ usr_name }}</p>
+           {# <p>Promo : {{ usr_semester }}</p>
             <p>Groupe : {{ usr_group }}</p>
             <p>Le : {{ crd_modif_date }}</p>
-            <p>À : {{ crd_modif_time }}</p>
+            <p>À : {{ crd_modif_time }}</p>#}
         </div>
         {% endif %}
     </main>
