@@ -28,18 +28,18 @@ class DetailsController extends AbstractController {
 
             $typeId = $card->getCrdTyp();
             $type = $typesRepository->find($typeId);
-
-            $subjectId = $card->getCrdSbj();
-            $subject = $subjectsRepository->find($subjectId);
+            
+            $subject = null;
+            if( $card->getCrdSbj() ) {
+                $subjectId = $card->getCrdSbj();
+                $subject = $subjectsRepository->find($subjectId);
+            }
 
             $timeleft = $now->diff($timeEnd);
             $dayLeft = $timeleft->format('%a');
             $dayLeft = (int)$dayLeft;
 
             $timeColor = 'var(--grey)';
-
-            $validated = [];
-            $validatedBy = [];
 
             if ($dayLeft < 8) {
                 $timeColor = 'var(--accent-orange)';
@@ -52,8 +52,18 @@ class DetailsController extends AbstractController {
             $cardData = [];
 
             if ($type !== null) {
-                $cardData[] = ['card' => $card, 'typeName' => $type->getTypName(), 'typeColor' => $type->getTypColor(),
-                               'subjectName' => $subject->getSbjName(), 'timeColor' => $timeColor];
+                $cardData[] = [ 
+                    'card' => $card, 
+                    'typeName' => $type->getTypName(), 
+                    'typeColor' => $type->getTypColor(), 
+                    'timeColor' => $timeColor,
+                    'subjectName' => "",
+                    'subjectRef' => "",
+                ];
+                if($subject !== null) {
+                    $cardData[0]['subjectName'] = $subject->getSbjName();
+                    $cardData[0]['subjectRef'] = $subject->getSbjRef();
+                }
             }
         }
 
