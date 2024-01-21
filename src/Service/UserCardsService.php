@@ -95,6 +95,8 @@ class UserCardsService
                 ];
             }
 
+
+
             $cardsData[] = ['card' => $cardData, 'params' => $paramsData];
         }
 

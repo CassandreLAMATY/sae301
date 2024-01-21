@@ -156,7 +156,7 @@ if (document.getElementById('calendar')) {
 
     const btnstatusHomework = document.querySelectorAll(
         '.statusHomework button');
-    btnstatusHomework[0].innerHTML = '<i class="fa-regular fa-square-check"></i> Rendu';
+    btnstatusHomework[0].innerHTML = '<i class="fa-regular fa-square-check"></i> À Rendre';
 
     createFilter('statusEvent', 1);
 
@@ -294,7 +294,6 @@ if (document.getElementById('calendar')) {
                         throw new Error('Network response was not ok');
                     }
                     document.getElementById('details').innerHTML = await response.text();
-                    console.log(document.getElementById('details'));
 
                     let modal = document.getElementById('details');
                     modal.classList.add('details--openned');
@@ -432,8 +431,6 @@ if (document.getElementById('calendar')) {
                 this.setAttribute('aria-pressed', 'true');
                 btnValidated.classList.add('btn--active');
             }
-
-            console.log(!isPressed);
             hideCards(!isPressed, item);
         });
     }
@@ -445,24 +442,24 @@ if (document.getElementById('calendar')) {
             events.forEach(event => {
                 const eventCard = event.querySelector('.event-card')
                 console.log(eventCard.getAttribute(item));
-                if (eventCard.getAttribute(item) == 0 || eventCard.getAttribute(item) == false) {
+                if (eventCard.getAttribute(item) == 0 || eventCard.getAttribute(item) === 'true') {
                     event.parentNode.style.display = 'none';
                 }
             });
             eventsList.forEach(eventList => {
-                if (eventList.getAttribute(item) == 0 || eventList.getAttribute(item) == false) {
+                if (eventList.getAttribute(item) == 0 || eventList.getAttribute(item) === 'true') {
                     eventList.style.display = 'none';
                 }
             });
         } else {
             events.forEach(event => {
                 const eventCard = event.querySelector('.event-card')
-                if (eventCard.getAttribute(item) == 0 || eventCard.getAttribute(item) == false) {
+                if (eventCard.getAttribute(item) == 0 || eventCard.getAttribute(item) === 'true') {
                     event.parentNode.style.display = 'block';
                 }
             });
             eventsList.forEach(eventList => {
-                if (eventList.getAttribute(item) == 0 || eventList.getAttribute(item) == false) {
+                if (eventList.getAttribute(item) == 0 || eventList.getAttribute(item) === 'true') {
                     eventList.style.display = 'grid';
                 }
             });
