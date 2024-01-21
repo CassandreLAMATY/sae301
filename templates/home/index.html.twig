@@ -99,9 +99,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var optionButton = document.getElementById('optionButton');
+            let optionButton = document.getElementById('optionButton');
 
-            var paramsForm = document.getElementById('paramsForm');
+            let paramsForm = document.getElementById('paramsForm');
 
             optionButton.addEventListener('click', function () {
                 openParamsPopUp();
@@ -114,8 +114,8 @@
                 console.log('params loaded 2')
                 params.style.display = 'flex';
 
-                var closeIcon = document.getElementById('params_pop-up_close');
-                var saveButton = document.getElementById('params_pop-up_saveButton')
+                let closeIcon = document.getElementById('params_pop-up_close');
+                let saveButton = document.getElementById('params_pop-up_saveButton')
 
                 closeIcon.addEventListener('click', function () {
                     // Close the params div by hiding it or removing it from the DOM
@@ -126,7 +126,7 @@
 
                 saveButton.addEventListener('click', function () {
                     // Serialize form data to send
-                    var formData = new FormData();
+                    let formData = new FormData();
                     formData.append('homeworkReminder', document.getElementById('homeworkToggle').classList.contains('fa-toggle-on') ? true : false)
                     formData.append('examReminder', document.getElementById('examToggle').classList.contains('fa-toggle-on') ? true : false);
                     formData.append('newReminder', document.getElementById('newToggle').classList.contains('fa-toggle-on') ? true : false);
@@ -151,10 +151,10 @@
                 });
 
                 // Toggle between fa-toggle-off and fa-toggle-on when params_pop-up_row is clicked
-                var paramsRows = document.querySelectorAll('.params_pop-up_row');
+                let paramsRows = document.querySelectorAll('.params_pop-up_row');
                 paramsRows.forEach(function (row) {
                     row.addEventListener('click', function () {
-                        var toggleIcon = row.querySelector('i.fa-solid');
+                        let toggleIcon = row.querySelector('i.fa-solid');
                         if (toggleIcon.classList.contains('fa-toggle-off')) {
                             toggleIcon.classList.remove('fa-toggle-off');
                             toggleIcon.classList.add('fa-toggle-on');

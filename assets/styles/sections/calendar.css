@@ -185,13 +185,14 @@ main#main-list .fc-header-toolbar.filter .fc-button-group:not(.types) button:not
     #calendar {
         padding: 0 var(--grup);
     }
+
+    #calendar .fc-header-toolbar:not(.filter) {
+        padding: 0 var(--grup2) 0 0;
+    }
 }
 
 @media screen and (max-width: 690px) {
-    #calendar .fc-header-toolbar:not(.filter) .fc-toolbar-title {
-        order: 1;
-        outline: red solid 1px;
-    }
+
 }
 
 @media screen and (max-width: 450px) {
@@ -199,4 +200,10 @@ main#main-list .fc-header-toolbar.filter .fc-button-group:not(.types) button:not
         width: 100%;
         justify-content: space-between;
     }
+
+    #calendar .fc-header-toolbar:not(.filter) .fc-toolbar-title {
+        width: 100%;
+        text-align: center;
+    }
+
 }
