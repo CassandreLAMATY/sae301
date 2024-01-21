@@ -544,4 +544,334 @@ if (document.getElementById('calendar')) {
       }
     },
   );
+
+  function getCalendar(dataEvents) {
+    let calendarEl = document.getElementById('calendar');
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: 'fr',
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'timeGridWeek,dayGridMonth',
+      },
+      firstDay: 1,
+      businessHours: {
+        // Jours ouvrés (lundi à vendredi)
+        daysOfWeek: [1, 2, 3, 4, 5],
+      },
+      allDaySlot: true,
+
+      views: {
+        listWeek: {
+          buttonText: 'List',
+        },
+      },
+      eventColor: 'transparent',
+      eventBorderColor: '#e5e9ed',
+      eventTextColor: '#424242',
+      events: dataEvents,
+
+      eventContent: function(arg) {
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('event-card');
+        if (arg.event.extendedProps.isValidated == 0) {
+          eventDiv.classList.add('notvalidated');
+        }
+
+        eventDiv.innerHTML =
+          arg.event.title + '<br>' +
+          (arg.event.extendedProps.subject
+            ? arg.event.extendedProps.subject.sbjRef + ' - ' +
+            arg.event.extendedProps.subject.sbjName + '<br>'
+            : '') +
+          'À ' + arg.event.extendedProps.hour;
+
+        eventDiv.setAttribute('card-id', arg.event.id);
+        eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId);
+        eventDiv.setAttribute('isvalidated',
+          arg.event.extendedProps.isValidated);
+        eventDiv.setAttribute('isdone', arg.event.extendedProps.isDone);
+
+        eventDiv.style.borderLeft = '5px solid ' +
+          arg.event.extendedProps.type.typColor;
+        eventDiv.style.backgroundColor = arg.event.extendedProps.type.typColor +
+          '20';
+        eventDiv.style.borderRadius = '3px';
+        eventDiv.style.padding = '5px';
+        eventDiv.style.textOverflow = 'ellipsis';
+        eventDiv.style.overflow = 'hidden';
+        eventDiv.style.cursor = 'pointer';
+
+        if (arg.event.end) {
+          if (arg.event.end < new Date()) {
+            eventDiv.style.opacity = '0.5';
+            eventDiv.classList.remove('notvalidated');
+          }
+        }
+
+        if (arg.event.start < new Date() && !arg.event.end) {
+          eventDiv.style.opacity = '0.5';
+          eventDiv.classList.remove('notvalidated');
+        }
+
+        return {domNodes: [eventDiv]};
+      }
+      ,
+    });
+    calendar.render();
+  }
+
+  function getDetailsCard(className) {
+    let eventDiv = document.getElementsByClassName(className);
+    for (let i = 0; i < eventDiv.length; i++) {
+      eventDiv[i].addEventListener('click', function() {
+        let eventId = this.getAttribute('card-id');
+        fetch(`/details/${eventId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({eventId: eventId}),
+        }).then(async (response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          document.getElementById(
+            'details').innerHTML = await response.text();
+
+          let modal = document.getElementById('details');
+          modal.classList.add('details--openned');
+
+          let backBtn = document.getElementById('back');
+          if (backBtn) {
+            backBtn.addEventListener('click', function() {
+              modal.classList.remove('details--openned');
+            });
+          }
+          addValidation(eventId);
+        }).then(data => {
+          console.log('Success:', data);
+          console.log('wait modif');
+          document.getElementById('modify-event').addEventListener('click', function () {
+              console.log('modify start');
+              fetch(`/cards/modifyForm/${eventId}`,{
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({eventId: eventId}),
+              }).then(async response => {
+                  aVenir.innerHTML  = await response.text();
+                  let modal = document.getElementById('details');
+                  modal.classList.remove('details--openned');
+
+
+                  const closeModify = document.getElementById('modify-back');
+                  closeModify.addEventListener('click', function () {
+                      aVenir.innerHTML = aVenirInner;
+                  });
+              })
+          });
+          }).catch(error => {
+          console.error('Error:', error);
+      });
+      });
+    }
+  }
+
+  function createFilter(className, nbFiltersOptions) {
+
+    const filterDiv = document.createElement('div');
+    filterDiv.classList.add('fc-button-group');
+    filterDiv.classList.add(className);
+
+    const divFilter = document.querySelector('.filter .fc-toolbar-chunk');
+    divFilter.appendChild(filterDiv);
+
+    for (let i = 0; i < nbFiltersOptions; i++) {
+      const filterBtn = document.createElement('button');
+      filterBtn.classList.add('fc-button');
+      filterBtn.classList.add('fc-button-primary');
+
+      filterBtn.setAttribute('aria-pressed', 'false');
+
+      filterDiv.appendChild(filterBtn);
+    }
+  }
+
+  function typeFilter(typeId) {
+
+    const btnsTypes = document.querySelectorAll('.types button');
+    const btnType = typeId - 1;
+
+    const isPressed = localStorage.getItem('typeId[' + typeId + ']') !== null;
+
+    btnsTypes[btnType].setAttribute('aria-pressed',
+      isPressed ? 'false' : 'true');
+
+    if (btnsTypes[btnType].getAttribute('aria-pressed') === 'true') {
+      btnsTypes[btnType].classList.add('btn--active');
+    } else {
+      btnsTypes[btnType].classList.remove('btn--active');
+    }
+
+    hideType(typeId, isPressed);
+
+    btnsTypes[btnType].addEventListener('click', function() {
+
+      const isPressed = localStorage.getItem('typeId[' + typeId + ']') !==
+        null;
+
+      if (isPressed) {
+        localStorage.removeItem('typeId[' + typeId + ']');
+        this.setAttribute('aria-pressed', 'true');
+        btnsTypes[btnType].classList.add('btn--active');
+      } else {
+        localStorage.setItem('typeId[' + typeId + ']', typeId);
+        this.setAttribute('aria-pressed', 'false');
+        btnsTypes[btnType].classList.remove('btn--active');
+      }
+
+      hideType(typeId, !isPressed);
+    });
+  }
+
+  function hideType(typeId, isPressed) {
+    const events = document.querySelectorAll('.fc-event-main');
+    const eventsList = document.querySelectorAll('.item');
+
+    if (isPressed) {
+      events.forEach(event => {
+        const eventCard = event.querySelector('.event-card');
+        if (eventCard.getAttribute('type-id') == typeId) {
+          event.parentNode.style.display = 'none';
+        }
+      });
+      eventsList.forEach(eventList => {
+        if (eventList.getAttribute('type-id') == typeId) {
+          eventList.style.display = 'none';
+        }
+      });
+    } else {
+      events.forEach(event => {
+        const eventCard = event.querySelector('.event-card');
+        if (eventCard.getAttribute('type-id') == typeId) {
+          event.parentNode.style.display = 'block';
+        }
+      });
+      eventsList.forEach(eventList => {
+        if (eventList.getAttribute('type-id') == typeId) {
+          eventList.style.display = 'grid';
+        }
+      });
+    }
+  }
+
+  function generalFilter(classBtn, item) {
+
+    const btnValidated = document.querySelector(classBtn);
+
+    const isPressed = localStorage.getItem(item) !== null;
+
+    btnValidated.setAttribute('aria-pressed', isPressed ? 'true' : 'false');
+
+    if (btnValidated.getAttribute('aria-pressed') === 'true') {
+      btnValidated.classList.add('btn--active');
+    } else {
+      btnValidated.classList.remove('btn--active');
+    }
+
+    hideCards(isPressed);
+
+    btnValidated.addEventListener('click', function() {
+
+      const isPressed = localStorage.getItem(item) !== null;
+
+      if (isPressed) {
+        localStorage.removeItem(item);
+        this.setAttribute('aria-pressed', 'false');
+        btnValidated.classList.remove('btn--active');
+      } else {
+        localStorage.setItem(item, 1);
+        this.setAttribute('aria-pressed', 'true');
+        btnValidated.classList.add('btn--active');
+      }
+      hideCards(!isPressed, item);
+    });
+  }
+
+  function hideCards(isPressed, item) {
+    const events = document.querySelectorAll('.fc-event-main');
+    const eventsList = document.querySelectorAll('.item');
+
+    if (isPressed) {
+      events.forEach(event => {
+        const eventCard = event.querySelector('.event-card');
+        if (eventCard.getAttribute(item) == 0 ||
+          eventCard.getAttribute(item) === 'true') {
+          event.parentNode.style.display = 'none';
+        }
+      });
+      eventsList.forEach(eventList => {
+        if (eventList.getAttribute(item) == 0 ||
+          eventList.getAttribute(item) === 'true') {
+          eventList.style.display = 'none';
+        }
+      });
+    } else {
+      events.forEach(event => {
+        const eventCard = event.querySelector('.event-card');
+        if (eventCard.getAttribute(item) == 0 ||
+          eventCard.getAttribute(item) === 'true') {
+          event.parentNode.style.display = 'block';
+        }
+      });
+      eventsList.forEach(eventList => {
+        if (eventList.getAttribute(item) == 0 ||
+          eventList.getAttribute(item) === 'true') {
+          eventList.style.display = 'grid';
+        }
+      });
+    }
+  }
 }
+
+function addValidation(cardId) {
+  const validationBtn = document.querySelector('.btns--a-valider-details');
+
+  validationBtn.addEventListener('click', function() {
+    const cardId = this.getAttribute('card-id');
+
+    // Retourne la promesse créée par fetch
+    return fetch(`/cards/validation/${cardId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(async (response) => {
+      if (!response.ok) {
+        // Gestion des erreurs
+        const errorMessage = await response.text(); // ou response.json() si le serveur renvoie du JSON
+        throw new Error(`Server response: ${response.status} - ${errorMessage}`);
+      }
+
+      const removedBtn = document.querySelector('.btns--a-valider button');
+      removedBtn.parentNode.removeChild(removedBtn);
+
+      const counter= document.querySelector('.btns--a-valider--counter');
+      counter.style.borderRadius = 'var(--grup-2)';
+
+      window.location.reload();
+    })
+    .then(data => {
+      console.log('Success:', data); // Affiche la réponse du serveur
+    })
+    .catch(error => {
+      console.error('Error:', error.message); // Affiche le message d'erreur
+      // Vous pourriez également afficher un message d'erreur à l'utilisateur ici
+    });
+  });
+}
+

@@ -21,10 +21,17 @@ use App\Entity\NotifUsers;
 use App\Entity\UsersCards;
 use App\Entity\Users;
 use App\Entity\Cards;
+use App\Entity\Validation;
 
 use App\Form\CardsType;
 
 use App\Entity\Subjects;
+
+use App\Controller\HomeController;
+use App\Service\NotifService;
+use App\Service\UserCardsService;
+use App\Service\DateTimeConverter;
+use App\Repository\ValidationRepository;
 
 class CardsController extends AbstractController
 {
@@ -244,5 +251,48 @@ class CardsController extends AbstractController
             'form' => $form->createView(),
             'id' => $id,
         ]);
+    }
+
+    #[Route('/cards/validation/{cardId}', name: 'app_cards_validation', methods: ['GET'])]
+    public function validation(
+        Request $request, 
+        EntityManagerInterface $entityManager, 
+        CardsRepository $cardsRepository, 
+        UsersRepository $usersRepository,
+        TypesRepository $typesRepository,
+        SubjectsRepository $subjectsRepository,
+        NotifUsersRepository $notifUserRepository,
+        UsersCardsRepository $userCardsRepository,
+        ValidationRepository $validationRepository,
+
+        NotifService $notificationsService,
+        UserCardsService $userCardsService,
+        DateTimeConverter $dateTimeConverter,
+        HomeController $homeController,
+        int $cardId
+    ): Response
+    {
+        $user =$this->getUser();
+
+        $validation = new Validation();
+
+        $validation->setValUsr($user);
+        $validation->setValCrd($cardsRepository->find($cardId));
+
+        $entityManager->persist($validation);
+        $entityManager->flush();
+
+        $count = $validationRepository->countByCardId($cardId);
+        if($count >= 5) {
+            $card = $cardsRepository->find($cardId);
+            $card->setIsValidated(true);
+            $entityManager->persist($card);
+            $entityManager->flush();
+        }
+
+        $homeController->index($typesRepository, $subjectsRepository, $notifUserRepository, $userCardsRepository, $validationRepository, $notificationsService, $userCardsService, $dateTimeConverter, $didUserValidate = true);
+    
+        
+        return $this->redirectToRoute('app_home');
     }
 }

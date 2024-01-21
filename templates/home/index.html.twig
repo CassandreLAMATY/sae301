@@ -176,22 +176,23 @@
 
         const xhr = new XMLHttpRequest();
         xhr.open('GET', '{{ path('app_cards_createForm') }}', true);
-        xhr.onload = function () {
+        xhr.onload = function() {
             if (xhr.status === 200) {
-                toggleCreate.addEventListener('click', function () {
+                toggleCreate.addEventListener('click', function() {
                     aVenir.innerHTML = xhr.responseText;
                     aVenir.classList.add('details--openned')
 
                     const closeCreate = document.getElementById('create-back');
                     closeCreate.addEventListener('click', function () {
-                        aVenir.classList.remove('details--openned')
+                        aVenir.classList.remove('details--openned');
+                        aVenir.innerHTML = aVenirInner;
                     });
                 });
             }
-        }
+        };
         xhr.send();
     </script>
-    {# fin script #}
-    {# script to close the pop-up with the close icon #}
+{# fin script #}
+{# script to close the pop-up with the close icon #}
 
 {% endblock %}

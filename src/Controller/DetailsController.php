@@ -13,17 +13,16 @@ use App\Repository\SubjectsRepository;
 
 class DetailsController extends AbstractController
 {
-    #[Route('/details', name: 'app_details')]
+    #[Route('/details/{eventId}', name: 'app_details', methods: ["GET"])]
     public function getDetails(
+        int $eventId, 
         Request $request,
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository,
         ValidationRepository $validationRepository
-    ): Response {
-        $cardId = json_decode($request->getContent())->cardId;
-
-        $card = $cardsRepository->find($cardId);
+        ): Response {
+        $card = $cardsRepository->find($eventId);
 
         if ($card) {
             $timeEnd = $card->getCrdTo();
@@ -53,19 +52,21 @@ class DetailsController extends AbstractController
                 $timeColor = 'var(--accent-red)';
             }
 
-            $validations = $validationRepository->findByCardId($cardId);
+            $validations = $validationRepository->findByCardId($eventId);
             $validationNumber = count($validations);
             $cardData = [];
+            $user = $this->getUser();
 
             if ($type !== null) {
-                $cardData[] = [
-                    'card' => $card,
-                    'typeName' => $type->getTypName(),
-                    'typeColor' => $type->getTypColor(),
+                $cardData[] = [ 
+                    'card' => $card, 
+                    'typeName' => $type->getTypName(), 
+                    'typeColor' => $type->getTypColor(), 
                     'timeColor' => $timeColor,
                     'subjectName' => "",
                     'subjectRef' => "",
-                    'validationNumber' => $validationNumber
+                    'validationNumber' => $validationNumber,
+                    "didUserValidate" => $validationRepository->didUserValidate($user->getUsrId(), $card->getCrdId()),
                 ];
                 if($subject !== null) {
                     $cardData[0]['subjectName'] = $subject->getSbjName();

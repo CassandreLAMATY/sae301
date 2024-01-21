@@ -718,3 +718,13 @@ main {
 #params_pop-up_close:hover {
     color: var(--accent-red);
 }
+
+
+.disabledSelect {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.disabledSelect:hover {
+    cursor: not-allowed;
+}

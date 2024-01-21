@@ -48,7 +48,7 @@ class HomeController extends AbstractController
 
         NotifService $notificationsService,
         UserCardsService $userCardsService,
-        DateTimeConverter $dateTimeConverter
+        DateTimeConverter $dateTimeConverter,
     ): Response {
 
         // ------------------------------ CARDS ------------------------------//
@@ -93,7 +93,7 @@ class HomeController extends AbstractController
         NotifService $notificationsService,
         UserCardsService $userCardsService,
         DateTimeConverter $dateTimeConverter,
-        ValidationRepository $validationRepository
+        ValidationRepository $validationRepository,
     ): Response {
         $showParams = true;
 
