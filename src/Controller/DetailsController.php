@@ -55,6 +55,7 @@ class DetailsController extends AbstractController
             $validations = $validationRepository->findByCardId($eventId);
             $validationNumber = count($validations);
             $cardData = [];
+            $user = $this->getUser();
 
             if ($type !== null) {
                 $cardData[] = [ 
@@ -65,6 +66,7 @@ class DetailsController extends AbstractController
                     'subjectName' => "",
                     'subjectRef' => "",
                     'validationNumber' => $validationNumber,
+                    "didUserValidate" => $validationRepository->didUserValidate($user->getUsrId(), $card->getCrdId()),
                 ];
                 if($subject !== null) {
                     $cardData[0]['subjectName'] = $subject->getSbjName();

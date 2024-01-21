@@ -44,6 +44,19 @@ class ValidationRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function didUserValidate($usr_id, $crd_id): bool
+    {
+        return $this->createQueryBuilder('val')
+            ->innerJoin('val.val_usr', 'u')
+            ->innerJoin('val.val_crd', 'v')
+            ->andWhere('u.usr_id = :usr_id')
+            ->andWhere('v.crd_id = :crd_id')
+            ->setParameter('usr_id', $usr_id)
+            ->setParameter('crd_id', $crd_id)
+            ->getQuery()
+            ->getResult() ? true : false;
+    }
+
 //    /**
 //     * @return Validation[] Returns an array of Validation objects
 //     */

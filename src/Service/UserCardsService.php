@@ -104,7 +104,7 @@ class UserCardsService
             $validations = $validationRepository->findByCardId($card->getUcCrd()->getCrdId());
             $validationNumber = count($validations);
 
-            $cardsData[] = ['card' => $cardData, 'params' => $paramsData, 'validationNumber' => $validationNumber];
+            $cardsData[] = ['card' => $cardData, 'params' => $paramsData, 'validationNumber' => $validationNumber, "didUserValidate" => $validationRepository->didUserValidate($user->getUsrId(), $card->getUcCrd()->getCrdId())];
         }
 
         return $cardsData;

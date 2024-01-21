@@ -290,7 +290,7 @@ class CardsController extends AbstractController
             $entityManager->flush();
         }
 
-        $homeController->index($typesRepository, $subjectsRepository, $notifUserRepository, $userCardsRepository, $validationRepository, $notificationsService, $userCardsService, $dateTimeConverter);
+        $homeController->index($typesRepository, $subjectsRepository, $notifUserRepository, $userCardsRepository, $validationRepository, $notificationsService, $userCardsService, $dateTimeConverter, $didUserValidate = true);
     
         
         return $this->redirectToRoute('app_home');
