@@ -13,19 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DetailsController extends AbstractController
 {
-    #[Route('/details', name: 'app_details')]
+    #[Route('/details/{id}', name: 'app_details')]
     public function getDetails(
+        int $id, 
         Request $request,
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository): Response {
-        $eventId = json_decode($request->getContent()) ? json_decode($request->getContent())->eventId : null;
-        $eventIdNotif = $request->query->get('eventId');
-
-        if ($eventIdNotif) {
-            $eventId = $eventIdNotif;
-        }
-        $card = $cardsRepository->find($eventId);
+        SubjectsRepository $subjectsRepository,
+        ValidationRepository $validationRepository
+        ): Response {
+        $card = $cardsRepository->find($id);
 
         if ($card) {
             $timeEnd = $card->getCrdTo();
@@ -55,7 +52,7 @@ class DetailsController extends AbstractController
                 $timeColor = 'var(--accent-red)';
             }
 
-            $validations = $validationRepository->findByCardId($cardId);
+            $validations = $validationRepository->findByCardId($id);
             $validationNumber = count($validations);
             $cardData = [];
 

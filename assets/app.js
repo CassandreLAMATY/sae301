@@ -262,7 +262,7 @@ if (document.getElementById('calendar')) {
             : '') +
           'À ' + arg.event.extendedProps.hour;
 
-        eventDiv.setAttribute('card-id', arg.event.id);
+        eventDiv.setAttribute('cardId', arg.event.id);
         eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId);
         eventDiv.setAttribute('isvalidated',
           arg.event.extendedProps.isValidated);
@@ -302,7 +302,7 @@ if (document.getElementById('calendar')) {
     for (let i = 0; i < eventDiv.length; i++) {
       eventDiv[i].addEventListener('click', function() {
         let cardId = this.getAttribute('card-id');
-        fetch('/details', {
+        fetch(`/details/${cardId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -327,9 +327,30 @@ if (document.getElementById('calendar')) {
           addValidation(cardId);
         }).then(data => {
           console.log('Success:', data);
-        }).catch(error => {
+          console.log('wait modif');
+          document.getElementById('modify-event').addEventListener('click', function () {
+              console.log('modify start');
+              fetch(`/cards/modifyForm/${cardId}`,{
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({cardId: cardId}),
+              }).then(async response => {
+                  aVenir.innerHTML  = await response.text();
+                  let modal = document.getElementById('details');
+                  modal.classList.remove('details--openned');
+
+
+                  const closeModify = document.getElementById('modify-back');
+                  closeModify.addEventListener('click', function () {
+                      aVenir.innerHTML = aVenirInner;
+                  });
+              })
+          });
+          }).catch(error => {
           console.error('Error:', error);
-        });
+      });
       });
     }
   }
