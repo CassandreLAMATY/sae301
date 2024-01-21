@@ -684,7 +684,7 @@ if (document.getElementById('calendar')) {
               }).then(async response => {
                   aVenir.innerHTML  = await response.text();
                   let modal = document.getElementById('details');
-                  modal.classList.remove('details--openned');
+/*                   modal.classList.remove('details--openned'); */
 
 
                   const closeModify = document.getElementById('modify-back');
