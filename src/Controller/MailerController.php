@@ -11,25 +11,46 @@ use Symfony\Component\Mime\Address;
 use App\Repository\CardsRepository;
 use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class MailerController extends AbstractController
 {
     #[Route('/email', name: 'app_email')]
     public function sendEmail(
+        $id,
         MailerInterface $mailer,
         CardsRepository $cardsRepository,
-        TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository,
+        TypesRepository $typesRepository
+
+
     ): Response {
         $cards = $cardsRepository->findAll();
         $cardData = [];
 
         //TODO : link every variable to the actual data from the create and modification forms
 
+        $card = $cardsRepository->find($id);
         $mail_type = 'creation';
+        $mail_title = 'Nouvel évènement ajouté !';
         // $action_by = $mail_type;
+        $crd_title = $card->getCrdTitle();
+        $typ_name = $typesRepository->find($card->getCrdTyp())->getTypName();
+        $crd_desc = $card->getCrdDesc();
+        $sbj_name = $card->getCrdSbj();
+        $crd_to = $card->getCrdTo();
+        $crd_date = date('d-m-Y', strtotime($crd_to));
+        $crd_time = date('H:i', strtotime($crd_to));
+        // nom de l'utilisateur connecté
+        $usr_name = $this->getUser()->getUsrName();
+        $usr_mail = $this->getUser()->getUsrMail();
+        $usr_semester = $this->getUser()->getUsrSemester();
+        //$usr_group = $this->getUser()->getUsrGroup();
+        /*$crd_modif_at = $card->getCrdModifAt();
+        $crd_modif_date = date('d-m-Y', strtotime($crd_modif_at));
+        $crd_modif_time = date('H:i', strtotime($crd_modif_at));*/
 
-        $crd_title = 'Partiel d\'UI'; // Replace with actual data from $cards or other source
+
+        /*$crd_title = 'Partiel d\'UI'; // Replace with actual data from $cards or other source
         $typ_name = 'Examen'; // Replace with actual data from $types or other source
         $crd_desc = 'Description descivant le partiel d\'UI'; // Replace with actual data from $cards or other source
         $sbj_name = 'WRA309D - Création et design interactif (UI)'; // Replace with actual data from $subjects or other source
@@ -41,10 +62,10 @@ class MailerController extends AbstractController
         $usr_group = 'E'; // Replace with actual data from $cards or other source
         $crd_modif_at = '2024-01-17 08:00:00'; // Replace with actual data from $cards or other source
         $crd_modif_date = date('d-m-Y', strtotime($crd_modif_at)); // Extract only the date from $crd_modif_at
-        $crd_modif_time = date('H:i', strtotime($crd_modif_at)); // Extract only the time from $crd_modif_at
+        $crd_modif_time = date('H:i', strtotime($crd_modif_at)); // Extract only the time from $crd_modif_at*/
 
         // Switch case for $mail_title
-        switch ($mail_type) {
+       /* switch ($mail_type) {
             case 'creation':
                 $mail_title = 'Nouvel évènement ajouté !';
                 $action_by = 'Ajouté par : ';
@@ -99,10 +120,10 @@ class MailerController extends AbstractController
                 $crd_modif_date = ' ';
                 $crd_modif_time = ' ';
                 break;
-        }
+        }*/
 
         $email = (new TemplatedEmail())
-            ->from('fabien@example.com') // Replace with actual data from form
+            ->from('Calendra') // Replace with actual data from form
             ->to(new Address('leane.berlo@univ-reims.fr'))
             ->subject('Nouvelle notification!')
             // path of the Twig template to render
@@ -119,10 +140,10 @@ class MailerController extends AbstractController
                 'crd_time' => $crd_time,
                 'usr_name' => $usr_name,
                 'usr_semester' => $usr_semester,
-                'usr_group' => $usr_group,
+                /*'usr_group' => $usr_group,
                 'crd_modif_date' => $crd_modif_date,
                 'crd_modif_time' => $crd_modif_time,
-                'action_by' => $action_by,
+                'action_by' => $action_by,*/
             ]);
 
         // ...
@@ -139,12 +160,11 @@ class MailerController extends AbstractController
             'crd_time' => $crd_time,
             'usr_name' => $usr_name,
             'usr_semester' => $usr_semester,
-            'usr_group' => $usr_group,
+            /*'usr_group' => $usr_group,
             'crd_modif_date' => $crd_modif_date,
             'crd_modif_time' => $crd_modif_time,
-            'action_by' => $action_by,
+            'action_by' => $action_by,*/
         ]);
 
-        return $this->redirectToRoute('app_home');
     }
 }

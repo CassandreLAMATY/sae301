@@ -8,6 +8,7 @@ use App\Repository\UsersCardsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -51,7 +52,10 @@ class CardsController extends AbstractController
         UsersRepository         $usersRepository,
         TypesRepository         $typesRepository,
         NotificationsController $notificationsController,
-        SubjectsRepository      $subjectsRepository
+        SubjectsRepository      $subjectsRepository,
+        MailerController        $mailerController,
+        CardsRepository         $cardsRepository,
+        MailerInterface         $mailer
     ): Response
     {
         $form = $this->createForm(CardsType::class);
@@ -120,12 +124,12 @@ class CardsController extends AbstractController
                     }
                 }
             }
-
+            $id = $card->getCrdId();
             $entityManager->flush();
 
             // Sending notification
             $notificationsController->sendNotification($request, $entityManager, $usersRepository, $typesRepository);
-
+            $mailerController->sendEmail($id,$mailer, $cardsRepository, $typesRepository);
         }
 
 
