@@ -168,6 +168,12 @@ header {
     border-radius: 50%;
 }
 
+.notif-separator {
+    width: 100%;
+    border: unset;
+    border-top: solid 1px var(--secondary-gray--02);
+}
+
 /* usercard menu */
 .userCard {
     position: relative;
