@@ -6,8 +6,14 @@ use App\Service\DateTimeConverter;
 
 class UserCardsService
 {
-    public function getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, DateTimeConverter $dateTimeConverter)
-    {
+    public function getUserCards(
+        $user,
+        $userCardsRepository,
+        $typesRepository,
+        $subjectsRepository,
+        DateTimeConverter $dateTimeConverter,
+        $usersValidationRepository
+    ) {
         // Selecting every card id by user id
         $cards = $userCardsRepository->findByUserIdNotOutdated($user->getUsrId());
         $cardsData = [];
@@ -35,35 +41,14 @@ class UserCardsService
 
             $timeEnd = $card->getUcCrd()->getCrdTo();
 
-            if($card->getUcCrd()->getCrdFrom()){
+            if ($card->getUcCrd()->getCrdFrom()) {
                 $timeEnd = $card->getUcCrd()->getCrdFrom();
             }
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
 
-            $typeId = $card->getUcCrd()->getCrdTyp();
-            $type = $typesRepository->find($typeId);
-
-            $timeleft = $now->diff($timeEnd);
-            $dayLeft = $timeleft->format('%a');
-            $dayLeft = (int)$dayLeft;
-
-            $timeColor = 'var(--grey)';
-
-            if ($dayLeft < 8) {
-                $timeColor = 'var(--accent-orange)';
-            }
-
-            if ($dayLeft < 3) {
-                $timeColor = 'var(--accent-red)';
-            }
-
-            if ($type) {
-                $paramsData = [
-                    'typeName' => $type->getTypName(),
-                    'typeColor' => $type->getTypColor(),
-                    'timeColor' => $timeColor,
-                ];
+            if ($timeEnd < $now) {
+                continue;
             }
 
             $typeId = $card->getUcCrd()->getCrdTyp();
@@ -91,7 +76,40 @@ class UserCardsService
                 ];
             }
 
-            $cardsData[] = ['card' => $cardData, 'params' => $paramsData];
+            $typeId = $card->getUcCrd()->getCrdTyp();
+            $type = $typesRepository->find($typeId);
+
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
+            }
+
+            if ($type) {
+                $paramsData = [
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'timeColor' => $timeColor,
+                ];
+            }
+
+            $validations = $usersValidationRepository->findByCardId($card->getUcCrd()->getCrdId());
+            $validationNumber = 0;
+            foreach ($validations as $validation) {
+                if ($validation->getUvValidated() > 0) {
+                    $validationNumber += $validation->getUvValidated();
+                }
+            }
+
+            $cardsData[] = ['card' => $cardData, 'params' => $paramsData, 'validationNumber' => $validationNumber];
         }
 
         return $cardsData;
