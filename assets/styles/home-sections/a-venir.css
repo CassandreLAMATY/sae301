@@ -229,19 +229,19 @@
 @media screen and (max-width: 900px) {
     #a-venir,
     #details {
-        width: 550px;
+        width: 500px;
     }
 
     .side-list .subject > div h3.notif-card__title,
     .side-list .subject > div p.notif-card__subject {
-        max-width: 150px;
+        max-width: 100px;
     }
 }
 
 @media screen and (max-width: 580px) {
     #a-venir,
     #details {
-        width: 90vw;
+        width: 80vw;
     }
 
     .side-list .subject > div h3.notif-card__title,
