@@ -51,7 +51,7 @@
             {% endif %}
             <div class='concatinated-btns btns--a-valider'>
                 <div class='btns--a-valider--counter'>{{ item.validationNumber }}/5 <i class="fa-solid fa-user-check"></i></div>
-                <button card-id={{ item.card.getCrdId() }} class='btn--a-valider btns--a-valider-details'>
+                <button card-id={{ item.card.getCrdId() }} class='btn--a-valider btns--a-valider-details {% if item.card.getIsValidated() %}disabledSelect{% endif %}'>
                     Valider
                     <i class="fa-regular fa-square"></i>
                     {#

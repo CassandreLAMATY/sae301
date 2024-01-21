@@ -273,18 +273,16 @@ class CardsController extends AbstractController
     ): Response
     {
         $user =$this->getUser();
-        $userId = $user->getUsrId();
 
         $validation = new Validation();
 
-        $validation->setValUsr($usersRepository->find($userId));
+        $validation->setValUsr($user);
         $validation->setValCrd($cardsRepository->find($cardId));
 
         $entityManager->persist($validation);
         $entityManager->flush();
 
         $count = $validationRepository->countByCardId($cardId);
-        dd($count);
         if($count >= 5) {
             $card = $cardsRepository->find($cardId);
             $card->setIsValidated(true);
