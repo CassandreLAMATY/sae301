@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\CardsRepository;
+use App\Repository\SubjectsRepository;
+use App\Repository\TypesRepository;
+use App\Repository\ValidationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,22 +21,26 @@ class DetailsController extends AbstractController
         Request $request,
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository
+        SubjectsRepository $subjectsRepository,
+        ValidationRepository $validationRepository
     ): Response {
-        $eventId = json_decode($request->getContent())->eventId;
+        $cardId = json_decode($request->getContent())->cardId;
 
-        $card = $cardsRepository->find($eventId);
+        $card = $cardsRepository->find($cardId);
 
         if ($card) {
             $timeEnd = $card->getCrdTo();
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            $typeId = $card->getCrdTypId();
+            $typeId = $card->getCrdTyp();
             $type = $typesRepository->find($typeId);
-
-            $subjectId = $card->getCrdSbjId();
-            $subject = $subjectsRepository->find($subjectId);
+            
+            $subject = null;
+            if( $card->getCrdSbj() ) {
+                $subjectId = $card->getCrdSbj();
+                $subject = $subjectsRepository->find($subjectId);
+            }
 
             $timeleft = $now->diff($timeEnd);
             $dayLeft = $timeleft->format('%a');
@@ -48,6 +56,8 @@ class DetailsController extends AbstractController
                 $timeColor = 'var(--accent-red)';
             }
 
+            $validations = $validationRepository->findByCardId($cardId);
+            $validationNumber = count($validations);
             $cardData = [];
 
             if ($type !== null) {
@@ -55,15 +65,18 @@ class DetailsController extends AbstractController
                     'card' => $card,
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
-                    'subjectName' => $subject->getSbjName(),
                     'timeColor' => $timeColor,
+                    'subjectName' => "",
+                    'subjectRef' => "",
+                    'validationNumber' => $validationNumber
                 ];
+                if($subject !== null) {
+                    $cardData[0]['subjectName'] = $subject->getSbjName();
+                    $cardData[0]['subjectRef'] = $subject->getSbjRef();
+                }
             }
         }
 
-        return $this->render('details/index.html.twig', [
-            'detailsCard' => $cardData,
-
-        ]);
+        return $this->render('details/index.html.twig', ['detailsCard' => $cardData]);
     }
 }

@@ -30,7 +30,11 @@ class Notifications
     #[ORM\JoinColumn(referencedColumnName: "sbj_id")]
     private ?Subjects $not_subject = null;
 
-    public function getId(): ?int
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "crd_id")]
+    private ?Cards $not_crd = null;
+
+    public function getNotId(): ?int
     {
         return $this->not_id;
     }
@@ -91,6 +95,18 @@ class Notifications
     public function setNotSubject(?Subjects $not_subject): static
     {
         $this->not_subject = $not_subject;
+
+        return $this;
+    }
+
+    public function getNotCrd(): ?Cards
+    {
+        return $this->not_crd;
+    }
+
+    public function setNotCrd(?Cards $not_crd): static
+    {
+        $this->not_crd = $not_crd;
 
         return $this;
     }

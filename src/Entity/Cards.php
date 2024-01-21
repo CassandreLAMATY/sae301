@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CardsRepository;
+use App\Entity\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\DateTimeConverter;
 
@@ -13,6 +14,8 @@ class Cards
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $crd_id = null;
+
+    private ?int $crd_grp = null;
 
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeImmutable $crd_created_at = null;
@@ -43,7 +46,7 @@ class Cards
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::SMALLINT, nullable: true)]
     private ?int $validated_by = null;
 
-    public function getId(): ?int
+    public function getCrdId(): ?int
     {
         return $this->crd_id;
     }
@@ -199,13 +202,13 @@ class Cards
     }
 
     public
-    function getCrdTypId(): ?Types
+    function getCrdTyp(): ?Types
     {
         return $this->crd_typ;
     }
 
     public
-    function setCrdTypId(
+    function setCrdTyp(
         ?Types $crd_typ
     ): static {
         $this->crd_typ = $crd_typ;
@@ -213,14 +216,27 @@ class Cards
         return $this;
     }
 
-    public function getCrdSbjId(): ?Subjects
+    public function getCrdSbj(): ?Subjects
     {
         return $this->crd_sbj;
     }
 
-    public function setCrdSbjId(?Subjects $crd_sbj): static
+    public function setCrdSbj(?Subjects $crd_sbj): static
     {
         $this->crd_sbj = $crd_sbj;
+
+        return $this;
+    }
+
+
+    public function getValidatedBy(): ?int
+    {
+        return $this->validated_by;
+    }
+
+    public function setValidatedBy(?int $validated_by): static
+    {
+        $this->validated_by = $validated_by;
 
         return $this;
     }
@@ -237,15 +253,15 @@ class Cards
         return $this;
     }
 
-    public function getValidatedBy(): ?int
+    public function getCrdGrp(): ?int
     {
-        return $this->validated_by;
+        return $this->crd_grp;
     }
 
-    public function setValidatedBy(?int $validated_by): static
+    public function setCrdGrp(?int $crd_grp = null): void
     {
-        $this->validated_by = $validated_by;
-
-        return $this;
+        $this->crd_grp = $crd_grp;
     }
+
+
 }

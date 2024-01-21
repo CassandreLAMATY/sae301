@@ -2,42 +2,47 @@
 
 namespace App\Controller;
 
-use App\Repository\CardsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UsersCardsRepository;
 
 class CalendarDataController extends AbstractController
 {
     #[Route('/calendar/data', name: 'app_calendar_data')]
     public function getCalendarData(
-        CardsRepository $cardsRepository
+        UsersCardsRepository $userCardsRepository
     ): Response {
-        $cards = $cardsRepository->findAll();
+        $user = $this->getUser();
+        $cards = $userCardsRepository->findByUserId($user->getUsrId());
+        $data = [];
 
         foreach ($cards as $card) {
-            if($card->getCrdFrom()) {
+            if($card->getUcCrd()->getCrdFrom()) {
                 $data[] = [
-                    'title' => $card->getCrdTitle(),
-                    'start' => $card->getCrdFrom()->format('Y-m-d'),
-                    'end' => $card->getCrdTo()->format('Y-m-d'),
-                    'hour' => $card->getCrdTo()->format('H:i'),
-                    'subject' => $card->getCrdSbjId(),
-                    'type' => $card->getCrdTypId(),
-                    'id' => $card->getId(),
+                    "id" => $card->getUcCrd()->getCrdId(),
+                    "title" => $card->getUcCrd()->getCrdTitle(),
+                    'subject' => $card->getUcCrd()->getCrdSbj(),
+                    'type' => $card->getUcCrd()->getCrdTyp(),
+                    'start' => $card->getUcCrd()->getCrdFrom()->format('Y-m-d'),
+                    'end' => $card->getUcCrd()->getCrdTo()->format('Y-m-d'),
+                    'hour' => $card->getUcCrd()->getCrdTo()->format('H:i'),
+                    "isValidated" => $card->getUcCrd()->getIsValidated(),
+                    "isDone" => $card->isUcDone(),
                 ];
                 continue;
             }
             $data[] = [
-                'title' => $card->getCrdTitle(),
-                'start' => $card->getCrdTo()->format('Y-m-d'),
-                'hour' => $card->getCrdTo()->format('H:i'),
-                'subject' => $card->getCrdSbjId(),
-                'type' => $card->getCrdTypId(),
-                'id' => $card->getId(),
+                "id" => $card->getUcCrd()->getCrdId(),
+                "title" => $card->getUcCrd()->getCrdTitle(),
+                'subject' => $card->getUcCrd()->getCrdSbj(),
+                'type' => $card->getUcCrd()->getCrdTyp(),
+                'start' => $card->getUcCrd()->getCrdTo()->format('Y-m-d'),
+                'hour' => $card->getUcCrd()->getCrdTo()->format('H:i'),
+                "isValidated" => $card->getUcCrd()->getIsValidated(),
+                "isDone" => $card->isUcDone(),
             ];
         }
-
         return $this->json($data);
     }
 }

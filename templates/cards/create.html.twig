@@ -1,0 +1,60 @@
+<div class='detail--back'>
+    <button id="create-back" class='btn--darker btn--close-menu'><i class="fa-solid fa-arrow-right-long"></i></button>
+    <h2>Ajouter un évènement</h2>
+</div>
+
+{{ form_start(form, {'method': 'POST', 'action': path('app_cards_create')}) }}
+
+<div class='detail--content'>
+    <div class='detail--content--subject detail--content--format'>
+        <p class='detail--content--format-t'>
+            <i class="fa-solid fa-book modify-button"></i>{{ form_label(form.crd_typ,'Type d\'évènement : ') }}</p>
+        {{ form_widget(form.crd_typ) }}
+    </div>
+    <div class='detail--content--subject detail--content--format'>
+        <p class='detail--content--format-t'>
+            <i class="fa-solid fa-book modify-button"></i>
+            {{ form_label(form.crd_title,'Titre de l\'évènement : ') }}
+        </p>
+        {{ form_widget(form.crd_title) }}
+    </div>
+    <div class='detail--content--subject detail--content--format'>
+        <p class='detail--content--format-t'>
+            <i class="fa-solid fa-book modify-button"></i>
+            {{ form_label(form.crd_desc,'Description de l\'évènement : ') }}
+        </p>
+        {{ form_widget(form.crd_desc) }}
+    </div>
+    <div class='detail--content--subject detail--content--format'>
+        <p class='detail--content--format-t'>
+            <i class="fa-solid fa-book modify-button"></i>
+            {{ form_label(form.crd_from,'Date de début : ') }}
+        </p>
+        {{ form_widget(form.crd_from) }}
+    </div>
+    <div class='detail--content--subject detail--content--format'>
+        <p class='detail--content--format-t'>
+            <i class="fa-solid fa-book modify-button"></i>
+            {{ form_label(form.crd_to,'Date de fin : ') }}
+        </p>
+        {{ form_widget(form.crd_to) }}
+    </div>
+    <div class='detail--content--subject detail--content--format'>
+        <p class='detail--content--format-t'>
+            <i class="fa-solid fa-book modify-button"></i>
+            {{ form_label(form.crd_sbj,'Matière de l\'évènement : ') }}
+        </p>
+        {{ form_widget(form.crd_sbj) }}
+    </div>
+    <div class='detail--content--subject detail--content--format'>
+        <p class='detail--content--format-t'>
+            <i class="fa-solid fa-book modify-button"></i>
+            {{ form_label(form.crd_grp,'Groupe de l\'évènement : ') }}
+        </p>
+        {{ form_widget(form.crd_grp) }}
+    </div>
+    <button type="submit">Valider</button>
+
+</div>
+
+{{ form_end(form) }}
