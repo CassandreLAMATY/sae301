@@ -12,7 +12,7 @@ class UserCardsService
         $typesRepository,
         $subjectsRepository,
         DateTimeConverter $dateTimeConverter,
-        $usersValidationRepository
+        $validationRepository
     ) {
         // Selecting every card id by user id
         $cards = $userCardsRepository->findByUserIdNotOutdated($user->getUsrId());
@@ -101,13 +101,8 @@ class UserCardsService
                 ];
             }
 
-            $validations = $usersValidationRepository->findByCardId($card->getUcCrd()->getCrdId());
-            $validationNumber = 0;
-            foreach ($validations as $validation) {
-                if ($validation->getUvValidated() > 0) {
-                    $validationNumber += $validation->getUvValidated();
-                }
-            }
+            $validations = $validationRepository->findByCardId($card->getUcCrd()->getCrdId());
+            $validationNumber = count($validations);
 
             $cardsData[] = ['card' => $cardData, 'params' => $paramsData, 'validationNumber' => $validationNumber];
         }

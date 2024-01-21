@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Repository\CardsRepository;
 use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
-use App\Repository\UsersValidationRepository;
+use App\Repository\ValidationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class DetailsController extends AbstractController
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository,
-        UsersValidationRepository $usersValidationRepository
+        ValidationRepository $validationRepository
     ): Response {
         $cardId = json_decode($request->getContent())->cardId;
 
@@ -53,14 +53,8 @@ class DetailsController extends AbstractController
                 $timeColor = 'var(--accent-red)';
             }
 
-            $validations = $usersValidationRepository->findByCardId($cardId);
-            $validationNumber = 0;
-            foreach ($validations as $validation) {
-                if ($validation->getUvValidated() > 0) {
-                    $validationNumber += $validation->getUvValidated();
-                }
-            }
-
+            $validations = $validationRepository->findByCardId($cardId);
+            $validationNumber = count($validations);
             $cardData = [];
 
             if ($type !== null) {

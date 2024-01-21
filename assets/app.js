@@ -495,9 +495,7 @@ function addValidation(cardId) {
   const validationBtn = document.querySelector('.btns--a-valider-details');
 
   validationBtn.addEventListener('click', function() {
-    const validation = 1;
     const requestBody = {
-      validation: validation,
       cardId: cardId
     };
 
@@ -516,8 +514,12 @@ function addValidation(cardId) {
         throw new Error(`Server response: ${response.status} - ${errorMessage}`);
       }
 
-      // Retourne la réponse pour les traitements ultérieurs
-      return response.json(); // ou response.text() si le serveur renvoie du texte
+      const removedBtn = document.querySelector('.btns--a-valider button');
+      removedBtn.parentNode.removeChild(removedBtn);
+
+      const counter= document.querySelector('.btns--a-valider--counter');
+      counter.style.borderRadius = 'var(--grup-2)';
+
     })
     .then(data => {
       console.log('Success:', data); // Affiche la réponse du serveur
