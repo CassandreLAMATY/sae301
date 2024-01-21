@@ -191,21 +191,14 @@ class Cards
         $hourLeft = (int)$hourLeft;
 
         if ($dayLeft === '0' && $hourLeft > 1 ) {
-            $timeLeft = sprintf('%dh%02d', $diff->h, $diff->i);
-            return 'Dans <br> <span>'. $timeLeft .'</span>';
+            return sprintf('%dh%02d', $diff->h, $diff->i);
         }
 
         if ($dayLeft === '0' && $hourLeft === 0) {
-            $timeLeft = $diff->format('Dans <br> <span>%i min</span>');
-            return 'Dans <br> <span>'. $timeLeft .'</span>';
+            return $diff->format('%i min');
         }
 
-        if($final < $now) {
-            return 'Terminé';
-        }
-
-        $timeLeft = $diff->format('%a jours');
-        return 'Dans <br> <span>'. $timeLeft .'</span>';
+        return $diff->format('%a jours');
     }
 
     public
