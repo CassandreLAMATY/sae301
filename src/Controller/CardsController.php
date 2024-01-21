@@ -124,9 +124,10 @@ class CardsController extends AbstractController
             $entityManager->flush();
 
             $createdCard = $cardsRepository->findLastCard();
+            $cardId = $createdCard->getCrdId();
 
             // Sending notification
-            $notificationsController->sendNotification( $request, $entityManager, $usersRepository, $typesRepository, $cardsRepository, $createdCard );
+            $notificationsController->sendNotification( $request, $entityManager, $usersRepository, $typesRepository, $cardsRepository, $createdCard, $cardId );
         }
 
 

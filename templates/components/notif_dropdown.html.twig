@@ -36,7 +36,7 @@
                 {% endif %}
             </div>
             <div class="double-button">
-                <button {% if item.getNuCrd() %}card-id="{{ item.getNuCrd().getCrdId }}"{% endif %} class="double-button__item see-button see-button__active"><i class="fa-solid fa-eye"></i> Voir</button>
+                <button {% if item.getNuCrd() %}card-id="{{ item.getNuCrd().getCrdId }}"{% endif %} data-id="{{ item.getNuNot().getNotId() }}" class="double-button__item see-button see-button__active"><i class="fa-solid fa-eye"></i> Voir</button>
                 <button class="double-button__item delete-button" data-id="{{ item.getNuNot().getNotId() }}"><i class="fa-solid fa-trash-can" title="Supprimer la notification"></i></button>
                 <span class="delete-confirm">Confirmer la suppression ?</span>
             </div>
@@ -64,7 +64,7 @@
                 {% endif %}
             </div>
             <div class="double-button">
-                <button {% if item.getNuCrd() %}card-id="{{ item.getNuCrd().getCrdId }}"{% endif %} class="double-button__item see-button"><i class="fa-solid fa-eye"></i> Voir</button>
+                <button {% if item.getNuCrd() %}card-id="{{ item.getNuCrd().getCrdId }}"{% endif %} data-id="{{ item.getNuNot().getNotId() }}" class="double-button__item see-button"><i class="fa-solid fa-eye"></i> Voir</button>
                 <button class="double-button__item delete-button" data-id="{{ item.getNuNot().getNotId() }}"><i class="fa-solid fa-trash-can"></i></button>
                 <span class="delete-confirm">Confirmer la suppression ?</span>
             </div>
