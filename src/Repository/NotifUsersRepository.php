@@ -26,6 +26,7 @@ class NotifUsersRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('nu')
             ->andWhere('nu.nu_usr = :id')
             ->setParameter('id', $usr_id)
+            ->orderBy('nu.nu_id', 'DESC')
             ->getQuery()
             ->getResult()
         ;

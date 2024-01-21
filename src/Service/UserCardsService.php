@@ -15,42 +15,34 @@ class UserCardsService
 
         foreach ($cards as $card) {
             $cardData = [
-                "id" => $card->getUcCrdId()->getCrdId(),
-                "title" => $card->getUcCrdId()->getCrdTitle(),
-                "description" => $card->getUcCrdId()->getCrdDesc(),
-                "from" => $card->getUcCrdId()->getCrdFrom(),
-                "stringFrom" => $card->getUcCrdId()->getCrdFrom() ? $dateTimeConverter->convertToString($card->getUcCrdId()->getCrdFrom()) : null,
-                'start' => $card->getUcCrdId()->getCrdFrom() ? $card->getUcCrdId()->getCrdFrom()->format('Y-m-d') : null,
-                "to" => $card->getUcCrdId()->getCrdTo(),
-                "stringTo" => $dateTimeConverter->convertToString($card->getUcCrdId()->getCrdTo()),
-                'end' => $card->getUcCrdId()->getCrdTo()->format('Y-m-d'),
-                "timeLeft" => $card->getUcCrdId()->getTimeLeft(),
-                "type" => $card->getUcCrdId()->getCrdTypId()->getTypName(),
-                "typeId" => $card->getUcCrdId()->getCrdTypId()->getTypId(),
-                "ref" => $card->getUcCrdId()->getCrdSbjId()->getSbjRef(),
-                "subject" => $card->getUcCrdId()->getCrdSbjId()->GetSbjName(),
-                "isValidated" => $card->getUcCrdId()->getIsValidated(),
+                "id" => $card->getUcCrd()->getCrdId(),
+                "title" => $card->getUcCrd()->getCrdTitle(),
+                "description" => $card->getUcCrd()->getCrdDesc(),
+                "from" => $card->getUcCrd()->getCrdFrom(),
+                "stringFrom" => $card->getUcCrd()->getCrdFrom() ? $dateTimeConverter->convertToString($card->getUcCrd()->getCrdFrom()) : null,
+                'start' => $card->getUcCrd()->getCrdFrom() ? $card->getUcCrd()->getCrdFrom()->format('Y-m-d') : null,
+                "to" => $card->getUcCrd()->getCrdTo(),
+                "stringTo" => $dateTimeConverter->convertToString($card->getUcCrd()->getCrdTo()),
+                'end' => $card->getUcCrd()->getCrdTo()->format('Y-m-d'),
+                "timeLeft" => $card->getUcCrd()->getTimeLeft(),
+                "type" => $card->getUcCrd()->getCrdTyp()->getTypName(),
+                "typeId" => $card->getUcCrd()->getCrdTyp()->getTypId(),
+                "ref" => $card->getUcCrd()->getCrdSbj() ? $card->getUcCrd()->getCrdSbj()->getSbjRef() : null,
+                "subject" => $card->getUcCrd()->getCrdSbj() ? $card->getUcCrd()->getCrdSbj()->GetSbjName() : null,
+                "isValidated" => $card->getUcCrd()->getIsValidated(),
                 "isDone" => $card->isUcDone(),
             ];
 
-            $timeEnd = $card->getUcCrdId()->getCrdTo();
+            $timeEnd = $card->getUcCrd()->getCrdTo();
 
-            if ($card->getUcCrdId()->getCrdFrom()) {
-                $timeEnd = $card->getUcCrdId()->getCrdFrom();
+            if($card->getUcCrd()->getCrdFrom()){
+                $timeEnd = $card->getUcCrd()->getCrdFrom();
             }
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
-            $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            if ($timeEnd < $now) {
-                continue;
-            }
-
-            $typeId = $card->getUcCrdId()->getCrdTypId();
+            $typeId = $card->getUcCrd()->getCrdTyp();
             $type = $typesRepository->find($typeId);
-
-            $subjectId = $card->getUcCrdId()->getCrdSbjId();
-            $subject = $subjectsRepository->find($subjectId);
 
             $timeleft = $now->diff($timeEnd);
             $dayLeft = $timeleft->format('%a');
@@ -70,8 +62,31 @@ class UserCardsService
                 $paramsData = [
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
-                    'subjectRef' => $subject->getSbjRef(),
-                    'subjectName' => $subject->getSbjName(),
+                    'timeColor' => $timeColor,
+                ];
+            }
+
+            $typeId = $card->getUcCrd()->getCrdTyp();
+            $type = $typesRepository->find($typeId);
+
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
+            }
+
+            if ($type) {
+                $paramsData = [
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
                     'timeColor' => $timeColor,
                 ];
             }

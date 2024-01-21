@@ -26,10 +26,10 @@ class DetailsController extends AbstractController {
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
             $timeEnd->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-            $typeId = $card->getCrdTypId();
+            $typeId = $card->getCrdTyp();
             $type = $typesRepository->find($typeId);
 
-            $subjectId = $card->getCrdSbjId();
+            $subjectId = $card->getCrdSbj();
             $subject = $subjectsRepository->find($subjectId);
 
             $timeleft = $now->diff($timeEnd);

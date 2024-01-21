@@ -169,8 +169,6 @@ if (document.getElementById('calendar')) {
 
     divFilter.appendChild(subjectDiv);
 
-    //validatedFilter();
-
     generalFilter('.statusEvent button', 'isvalidated');
     generalFilter('.statusHomework button', 'isdone');
 
@@ -257,8 +255,8 @@ if (document.getElementById('calendar')) {
 
                 eventDiv.innerHTML =
                     arg.event.title + '<br>' +
-                    arg.event.extendedProps.subject.sbjName + '<br>' +
-                    arg.event.extendedProps.hour;
+                    (arg.event.extendedProps.subject ? arg.event.extendedProps.subject.sbjRef + " - " + arg.event.extendedProps.subject.sbjName + '<br>' : '') +
+                    "À " + arg.event.extendedProps.hour;
 
                 eventDiv.setAttribute('card-id', arg.event.id);
                 eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId);
@@ -439,7 +437,6 @@ if (document.getElementById('calendar')) {
             hideCards(!isPressed, item);
         });
     }
-
     function hideCards(isPressed, item) {
         const events = document.querySelectorAll('.fc-event-main');
         const eventsList = document.querySelectorAll('.item');
