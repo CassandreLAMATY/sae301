@@ -49,10 +49,27 @@
                     <p class='detail--content--format-c'>{{ item.card.getCrdDesc }}</p>
                 </div>
             {% endif %}
-            <div class='detail--content--done status'>
-                <i class="fa-regular fa-square"></i>
-                <p>Rendu</p>
+            <div class='concatinated-btns btns--a-valider'>
+                <div class='btns--a-valider--counter'>{{ item.validationNumber }}/5 <i class="fa-solid fa-user-check"></i></div>
+                <button class='btn--a-valider btns--a-valider-details'>
+                    Valider
+                    <i class="fa-regular fa-square"></i>
+                    {#
+                    <i class="fa-solid fa-arrow-right-long"></i>
+                    <i class="fa-regular fa-square-check"></i>
+                    #}
+                </button>
             </div>
+            {#
+            <button class="btn--a-faire">
+                A faire
+                <i class="fa-regular fa-square"></i>
+            </button>
+            <button class="btn--fait">
+                Fait
+                <i class="fa-regular fa-square-check"></i>
+            </button>
+            #}
         </div>
     {% endfor %}
 {% endif %}

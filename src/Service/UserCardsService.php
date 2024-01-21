@@ -6,8 +6,14 @@ use App\Service\DateTimeConverter;
 
 class UserCardsService
 {
-    public function getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, DateTimeConverter $dateTimeConverter)
-    {
+    public function getUserCards(
+        $user,
+        $userCardsRepository,
+        $typesRepository,
+        $subjectsRepository,
+        DateTimeConverter $dateTimeConverter,
+        $validationRepository
+    ) {
         // Selecting every card id by user id
         $cards = $userCardsRepository->findByUserIdNotOutdated($user->getUsrId());
         $cardsData = [];
@@ -35,13 +41,13 @@ class UserCardsService
 
             $timeEnd = $card->getUcCrd()->getCrdTo();
 
-            if($card->getUcCrd()->getCrdFrom()){
+            if ($card->getUcCrd()->getCrdFrom()) {
                 $timeEnd = $card->getUcCrd()->getCrdFrom();
             }
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
 
-            if($timeEnd < $now){
+            if ($timeEnd < $now) {
                 continue;
             }
 
@@ -95,7 +101,10 @@ class UserCardsService
                 ];
             }
 
-            $cardsData[] = ['card' => $cardData, 'params' => $paramsData];
+            $validations = $validationRepository->findByCardId($card->getUcCrd()->getCrdId());
+            $validationNumber = count($validations);
+
+            $cardsData[] = ['card' => $cardData, 'params' => $paramsData, 'validationNumber' => $validationNumber];
         }
 
         return $cardsData;

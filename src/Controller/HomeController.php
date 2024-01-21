@@ -15,6 +15,7 @@ use App\Repository\NotifUsersRepository;
 use App\Repository\UsersCardsRepository;
 use App\Repository\UsersRepository;
 use App\Repository\CardsRepository;
+use App\Repository\ValidationRepository;
 
 use App\Service\NotifService;
 use App\Service\UserCardsService;
@@ -43,6 +44,7 @@ class HomeController extends AbstractController
         SubjectsRepository $subjectsRepository,
         NotifUsersRepository $notifUserRepository,
         UsersCardsRepository $userCardsRepository,
+        ValidationRepository $validationRepository,
 
         NotifService $notificationsService,
         UserCardsService $userCardsService,
@@ -59,7 +61,7 @@ class HomeController extends AbstractController
             $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
 
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $validationRepository);
 
             return $this->render('home/index.html.twig', [
                 'username' => $username,
@@ -90,7 +92,8 @@ class HomeController extends AbstractController
 
         NotifService $notificationsService,
         UserCardsService $userCardsService,
-        DateTimeConverter $dateTimeConverter
+        DateTimeConverter $dateTimeConverter,
+        ValidationRepository $validationRepository
     ): Response {
         $showParams = true;
 
@@ -103,7 +106,7 @@ class HomeController extends AbstractController
             $firstname = $user->getUsrFirstname();
 
             $weekList = $this->generateWeekList();
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $validationRepository);
 
             $homeworkReminder = $user->isUsrHomeworkReminder();
             $examReminder = $user->isUsrExamReminder();
@@ -144,7 +147,7 @@ class HomeController extends AbstractController
         if($this->getUser()){
             $user = $this->getUser();
 
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $usersValidationRepository);
             $content = $this->renderView('home/list.html.twig', ['cardsData' => $cardsData]);
 
             return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);

@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Repository\CardsRepository;
 use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
+use App\Repository\ValidationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DetailsController extends AbstractController {
+class DetailsController extends AbstractController
+{
     #[Route('/details', name: 'app_details')]
     public function getDetails(
         Request $request,
@@ -53,6 +55,8 @@ class DetailsController extends AbstractController {
                 $timeColor = 'var(--accent-red)';
             }
 
+            $validations = $validationRepository->findByCardId($cardId);
+            $validationNumber = count($validations);
             $cardData = [];
 
             if ($type !== null) {
@@ -63,6 +67,7 @@ class DetailsController extends AbstractController {
                     'timeColor' => $timeColor,
                     'subjectName' => "",
                     'subjectRef' => "",
+                    'validationNumber' => $validationNumber,
                 ];
                 if($subject !== null) {
                     $cardData[0]['subjectName'] = $subject->getSbjName();

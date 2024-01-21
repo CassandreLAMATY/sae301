@@ -20,7 +20,9 @@
     --accent-red-shadow: #de2727;
     --accent-green: #80d030;
     --accent-green-shadow: #51990a;
-    --accent-blue: #4098ff; /* couleur pour les tags A SUPPRIMER APRÈS */
+    --accent-green--light: #80d03020;
+    --accent-green--light--shadow: #80d03068;
+    --accent-blue: #4098ff;
     --accent-blue-shadow: #1571dd;
 
     --main-black: #424242;
@@ -201,6 +203,15 @@ header {
 @media screen and (max-width: 700px) {
     .userCard__name {
         display: none;
+    }
+
+    .add-event {
+        gap: 0;
+        font-size: 0;
+    }
+
+    .add-event > i {
+        font-size: var(--grup);
     }
 }
 
