@@ -15,7 +15,7 @@ use App\Repository\NotifUsersRepository;
 use App\Repository\UsersCardsRepository;
 use App\Repository\UsersRepository;
 use App\Repository\CardsRepository;
-use App\Repository\UsersValidationRepository;
+use App\Repository\ValidationRepository;
 
 use App\Service\NotifService;
 use App\Service\UserCardsService;
@@ -44,7 +44,7 @@ class HomeController extends AbstractController
         SubjectsRepository $subjectsRepository,
         NotifUsersRepository $notifUserRepository,
         UsersCardsRepository $userCardsRepository,
-        UsersValidationRepository $usersValidationRepository,
+        ValidationRepository $validationRepository,
 
         NotifService $notificationsService,
         UserCardsService $userCardsService,
@@ -61,7 +61,7 @@ class HomeController extends AbstractController
             $lastname = $user->getUsrName();
             $firstname = $user->getUsrFirstname();
 
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $usersValidationRepository);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $validationRepository);
 
             return $this->render('home/index.html.twig', [
                 'username' => $username,
@@ -93,7 +93,7 @@ class HomeController extends AbstractController
         NotifService $notificationsService,
         UserCardsService $userCardsService,
         DateTimeConverter $dateTimeConverter,
-        UsersValidationRepository $usersValidationRepository
+        ValidationRepository $validationRepository
     ): Response {
         $showParams = true;
 
@@ -106,7 +106,7 @@ class HomeController extends AbstractController
             $firstname = $user->getUsrFirstname();
 
             $weekList = $this->generateWeekList();
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $usersValidationRepository);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $validationRepository);
 
             $homeworkReminder = $user->isUsrHomeworkReminder();
             $examReminder = $user->isUsrExamReminder();

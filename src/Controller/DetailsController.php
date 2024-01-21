@@ -5,25 +5,25 @@ namespace App\Controller;
 use App\Repository\CardsRepository;
 use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
+use App\Repository\ValidationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DetailsController extends AbstractController {
+class DetailsController extends AbstractController
+{
     #[Route('/details', name: 'app_details')]
     public function getDetails(
         Request $request,
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository): Response {
-        $eventId = json_decode($request->getContent()) ? json_decode($request->getContent())->eventId : null;
-        $eventIdNotif = $request->query->get('eventId');
+        SubjectsRepository $subjectsRepository,
+        ValidationRepository $validationRepository
+    ): Response {
+        $cardId = json_decode($request->getContent())->cardId;
 
-        if ($eventIdNotif) {
-            $eventId = $eventIdNotif;
-        }
-        $card = $cardsRepository->find($eventId);
+        $card = $cardsRepository->find($cardId);
 
         if ($card) {
             $timeEnd = $card->getCrdTo();
@@ -53,21 +53,19 @@ class DetailsController extends AbstractController {
                 $timeColor = 'var(--accent-red)';
             }
 
+            $validations = $validationRepository->findByCardId($cardId);
+            $validationNumber = count($validations);
             $cardData = [];
 
             if ($type !== null) {
-                $cardData[] = [ 
-                    'card' => $card, 
-                    'typeName' => $type->getTypName(), 
-                    'typeColor' => $type->getTypColor(), 
+                $cardData[] = [
+                    'card' => $card,
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'subjectName' => $subject->getSbjName(),
                     'timeColor' => $timeColor,
-                    'subjectName' => "",
-                    'subjectRef' => "",
+                    'validationNumber' => $validationNumber,
                 ];
-                if($subject !== null) {
-                    $cardData[0]['subjectName'] = $subject->getSbjName();
-                    $cardData[0]['subjectRef'] = $subject->getSbjRef();
-                }
             }
         }
 
