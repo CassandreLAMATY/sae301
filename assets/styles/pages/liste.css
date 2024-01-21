@@ -46,7 +46,7 @@ main#main-list .fc-header-toolbar:not(.filter) button {
 main#main-list #list--items {
     display: flex;
     flex-direction: column;
-    padding-right: var(--grup-2);
+    padding: 0 var(--grup-2) var(--grup3) 0;
     gap: var(--grup2);
     overflow-y: scroll;
 }

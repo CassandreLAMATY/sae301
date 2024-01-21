@@ -71,6 +71,10 @@
 
 /* 📆 ---------- BTNS ---------- 📆 */
 
+#calendar .fc-header-toolbar:not(.filter) {
+    justify-content: space-between;
+}
+
 #calendar .fc-header-toolbar:not(.filter) button {
     height: 39px;
     background-color: var(--accent-yellow);
@@ -85,6 +89,15 @@
 .list-view, .calendar-view {
     padding-left: var(--grup) !important;
     padding-right: var(--grup) !important;
+}
+
+#calendar .filter-nav {
+    flex-wrap: wrap;
+    gap: var(--grup);
+}
+
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    margin: 0;
 }
 
 #calendar .fc-header-toolbar.filter button {
@@ -145,12 +158,36 @@ main#main-list .fc-header-toolbar.filter .fc-button-group:not(.types) button:hov
     background-color: var(--type--bde--light--shadow) !important;
 }
 
+.fc-button-group.types button:nth-child(4).btn--active {
+    box-shadow: 0 0 0 2px var(--type--bde) !important;
+    background-color: var(--type--bde--light) !important;
+}
+
+.fc-button-group.statusHomework button.btn--active {
+    box-shadow: 0 0 0 2px var(--accent-green) !important;
+    background-color: var(--accent-green--light) !important;
+}
+
+.fc-button-group.statusHomework button.btn--active:hover {
+    background-color: var(--accent-green--light--shadow) !important;
+}
+
 @media screen and (max-width: 1165px) {
     #calendar {
         padding: 0 var(--grup);
     }
+}
 
-    #calendar .fc-header-toolbar:not(.filter) {
-        margin-right: calc(var(--grup2) + var(--grup));
+@media screen and (max-width: 690px) {
+    #calendar .fc-header-toolbar:not(.filter) .fc-toolbar-title {
+        order: 1;
+        outline: red solid 1px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #calendar .fc-header-toolbar:not(.filter) .fc-toolbar-chunk {
+        width: 100%;
+        justify-content: space-between;
     }
 }

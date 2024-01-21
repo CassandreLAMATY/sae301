@@ -302,6 +302,11 @@
     border-radius: 6px;
 }
 
+.detail--content > button,
+.detail--content > .btns--a-valider {
+    margin: 0 auto;
+}
+
 .detail--content .detail--content--time {
     display: flex;
     justify-content: space-between;
