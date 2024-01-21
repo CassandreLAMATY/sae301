@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Service\DateTimeConverter;
 
-class UserCardsService {
-    public function getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, DateTimeConverter $dateTimeConverter) {
+class UserCardsService
+{
+    public function getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, DateTimeConverter $dateTimeConverter)
+    {
         // Selecting every card id by user id
         $cards = $userCardsRepository->findByUserIdNotOutdated($user->getUsrId());
         $cardsData = [];
@@ -63,6 +65,35 @@ class UserCardsService {
                     'timeColor' => $timeColor,
                 ];
             }
+
+            $typeId = $card->getUcCrdId()->getCrdTypId();
+            $type = $typesRepository->find($typeId);
+
+            $subjectId = $card->getUcCrdId()->getCrdSbjId();
+            $subject = $subjectsRepository->find($subjectId);
+
+            $timeleft = $now->diff($timeEnd);
+            $dayLeft = $timeleft->format('%a');
+            $dayLeft = (int)$dayLeft;
+
+            $timeColor = 'var(--grey)';
+
+            if ($dayLeft < 8) {
+                $timeColor = 'var(--accent-orange)';
+            }
+
+            if ($dayLeft < 3) {
+                $timeColor = 'var(--accent-red)';
+            }
+
+            if ($type) {
+                $paramsData = [
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'timeColor' => $timeColor,
+                ];
+            }
+
             $cardsData[] = ['card' => $cardData, 'params' => $paramsData];
         }
 
