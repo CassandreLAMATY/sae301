@@ -92,7 +92,8 @@ class HomeController extends AbstractController
 
         NotifService $notificationsService,
         UserCardsService $userCardsService,
-        DateTimeConverter $dateTimeConverter
+        DateTimeConverter $dateTimeConverter,
+        UsersValidationRepository $usersValidationRepository
     ): Response {
         $showParams = true;
 
@@ -105,7 +106,7 @@ class HomeController extends AbstractController
             $firstname = $user->getUsrFirstname();
 
             $weekList = $this->generateWeekList();
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $usersValidationRepository);
 
             $homeworkReminder = $user->isUsrHomeworkReminder();
             $examReminder = $user->isUsrExamReminder();
@@ -143,7 +144,7 @@ class HomeController extends AbstractController
         if($this->getUser()){
             $user = $this->getUser();
 
-            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter);
+            $cardsData = $userCardsService->getUserCards($user, $userCardsRepository, $typesRepository, $subjectsRepository, $dateTimeConverter, $usersValidationRepository);
             $content = $this->renderView('home/list.html.twig', ['cardsData' => $cardsData]);
 
             return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/html']);
