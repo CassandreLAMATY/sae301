@@ -62,10 +62,15 @@ class DetailsController extends AbstractController
                     'card' => $card,
                     'typeName' => $type->getTypName(),
                     'typeColor' => $type->getTypColor(),
-                    'subjectName' => $subject->getSbjName(),
                     'timeColor' => $timeColor,
-                    'validationNumber' => $validationNumber,
+                    'subjectName' => "",
+                    'subjectRef' => "",
+                    'validationNumber' => $validationNumber
                 ];
+                if($subject !== null) {
+                    $cardData[0]['subjectName'] = $subject->getSbjName();
+                    $cardData[0]['subjectRef'] = $subject->getSbjRef();
+                }
             }
         }
 
