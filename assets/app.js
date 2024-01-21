@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         for (let i = 1; i <= 4; i++) {
             typeFilter(i);
         }
+
+        generalFilter('.statusEvent button', 'isvalidated');
+        generalFilter('.statusHomework button', 'isdone');
     }
 });
 
@@ -166,7 +169,8 @@ if (document.getElementById('calendar')) {
 
     divFilter.appendChild(subjectDiv);
 
-    //validatedFilter();
+    generalFilter('.statusEvent button', 'isvalidated');
+    generalFilter('.statusHomework button', 'isdone');
 
     const select = document.createElement('button');
     select.classList.add('fc-button');
@@ -399,6 +403,40 @@ if (document.getElementById('calendar')) {
         }
     }
 
+    function generalFilter(classBtn, item) {
+
+        const btnValidated = document.querySelector(classBtn);
+
+        const isPressed = localStorage.getItem(item) !== null;
+
+        btnValidated.setAttribute('aria-pressed', isPressed ? 'true' : 'false');
+
+        if (btnValidated.getAttribute('aria-pressed') === 'true') {
+            btnValidated.classList.add('btn--active');
+        } else {
+            btnValidated.classList.remove('btn--active');
+        }
+
+        hideCards(isPressed);
+
+        btnValidated.addEventListener('click', function () {
+
+            const isPressed = localStorage.getItem(item) !== null;
+
+            if (isPressed) {
+                localStorage.removeItem(item);
+                this.setAttribute('aria-pressed', 'false');
+                btnValidated.classList.remove('btn--active');
+            } else {
+                localStorage.setItem(item, 1);
+                this.setAttribute('aria-pressed', 'true');
+                btnValidated.classList.add('btn--active');
+            }
+
+            console.log(!isPressed);
+            hideCards(!isPressed, item);
+        });
+    }
     function hideCards(isPressed, item) {
         const events = document.querySelectorAll('.fc-event-main');
         const eventsList = document.querySelectorAll('.item');
