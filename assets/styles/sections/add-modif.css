@@ -1,0 +1,20 @@
+#details .detail--back.add-modif {
+    gap: var(--grup);
+    align-items: center;
+    justify-content: unset;
+}
+
+#create-cards-form {
+    max-width: 100%;
+    overflow-y: scroll;
+}
+
+#details .detail--content.add-modif {
+    border-left: var(--grup-2) solid var(--secondary-gray--03);
+}
+
+#details .detail--content.add-modif select,
+#details .detail--content.add-modif input {
+    padding: var(--grup-2);
+    font-size: var(--grup);
+}

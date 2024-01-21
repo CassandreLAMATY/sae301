@@ -248,4 +248,16 @@
     .side-list .subject > div p.notif-card__subject {
         max-width: 100px;
     }
+
+    .item {
+        grid-template-columns: 86px 1fr;
+    }
+
+    .item .concatinated-btns {
+        flex-direction: row;
+        grid-column: 1/-1;
+        justify-content: end;
+        flex-wrap: wrap;
+    }
+
 }

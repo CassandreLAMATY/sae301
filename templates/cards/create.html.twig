@@ -1,11 +1,11 @@
-<div class='detail--back'>
+<div class='detail--back add-modif'>
     <button id="create-back" class='btn--darker btn--close-menu'><i class="fa-solid fa-arrow-right-long"></i></button>
     <h2>Ajouter un évènement</h2>
 </div>
 
 {{ form_start(form, {'method': 'POST', 'action': path('app_cards_create')}) }}
 
-<div class='detail--content'>
+<div class='detail--content add-modif'>
     <div class='detail--content--subject detail--content--format'>
         <p class='detail--content--format-t'>
             <i class="fa-solid fa-book modify-button"></i>{{ form_label(form.crd_typ,'Type d\'évènement : ') }}</p>
