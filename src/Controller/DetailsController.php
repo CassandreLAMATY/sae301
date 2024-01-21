@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DetailsController extends AbstractController
 {
-    #[Route('/details/{eventId}', name: 'app_details')]
+    #[Route('/details/{eventId}', name: 'app_details', methods: ["GET"])]
     public function getDetails(
         int $eventId, 
         Request $request,

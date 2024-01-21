@@ -303,7 +303,7 @@ if (document.getElementById('calendar')) {
       eventDiv[i].addEventListener('click', function() {
         let eventId = this.getAttribute('card-id');
         fetch(`/details/${eventId}`, {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
