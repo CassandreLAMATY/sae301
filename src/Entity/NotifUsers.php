@@ -24,6 +24,10 @@ class NotifUsers
     #[ORM\Column]
     private ?bool $nu_is_seen = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: "crd_id")]
+    private ?Cards $nu_crd = null;
+
     public function getId(): ?int
     {
         return $this->nu_id;
@@ -61,6 +65,18 @@ class NotifUsers
     public function setIsNuSeen(bool $nu_is_seen): static
     {
         $this->nu_is_seen = $nu_is_seen;
+
+        return $this;
+    }
+
+    public function getNuCrd(): ?Cards
+    {
+        return $this->nu_crd;
+    }
+
+    public function setNuCrd(?Cards $nu_crd): static
+    {
+        $this->nu_crd = $nu_crd;
 
         return $this;
     }

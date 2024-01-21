@@ -17,7 +17,7 @@ class DetailsController extends AbstractController {
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
         SubjectsRepository $subjectsRepository): Response {
-        $eventId = json_decode($request->getContent())->eventId;
+        $eventId = $request->query->get('eventId');
 
         $card = $cardsRepository->find($eventId);
 
@@ -67,6 +67,6 @@ class DetailsController extends AbstractController {
             }
         }
 
-        return $this->render('details/index.html.twig', ['detailsCard' => $cardData,]);
+        return $this->render('details/index.html.twig', ['detailsCard' => $cardData]);
     }
 }

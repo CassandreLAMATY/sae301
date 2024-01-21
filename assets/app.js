@@ -305,13 +305,7 @@ if (document.getElementById('calendar')) {
                             modal.classList.remove('details--openned');
                         });
                     }
-
-                }).then(data => {
-                    console.log('Success:', data);
-                }).catch(error => {
-                    console.error('Error:', error);
                 });
-
             });
         }
     }

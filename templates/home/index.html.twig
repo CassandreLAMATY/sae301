@@ -171,7 +171,7 @@
     const aVenirInner = aVenir.innerHTML;
     const toggleCreate = document.querySelector('.add-event');
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open('GET', '{{ path('app_cards_createForm') }}', true);
     xhr.onload = function() {
         if (xhr.status === 200) {

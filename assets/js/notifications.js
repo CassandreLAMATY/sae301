@@ -15,6 +15,8 @@ const tagNew = document.querySelector('.tag.new');
 const noNotif = document.querySelector('.notif-message');
 const readNotif = document.querySelector('.empty-notif');
 
+const seeButton = document.querySelectorAll('.see-button');
+
 userCard.addEventListener('mouseenter', () => {
     dropdown.style.opacity = '0';
     dropdown.style.pointerEvents = 'none';
@@ -181,6 +183,32 @@ if ( readNotif ) {
         })
         .catch(error => {
             console.error('Erreur lors de l\'opération, action annulée :', error);
+        });
+    });
+}
+
+if(seeButton) {
+    seeButton.forEach(button => {
+        button.addEventListener('click', () => {
+            let eventId = button.getAttribute('card-id');
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `/details?eventId=${eventId}`, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    document.getElementById('details').innerHTML = xhr.responseText;
+
+                    let modal = document.getElementById('details');
+                    modal.classList.add('details--openned');
+
+                    let backBtn = document.getElementById('back');
+                    if (backBtn) {
+                        backBtn.addEventListener('click', function () {
+                            modal.classList.remove('details--openned');
+                        });
+                    }
+                }
+            }
+            xhr.send();
         });
     });
 }

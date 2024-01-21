@@ -15,6 +15,7 @@ use App\Repository\TypesRepository;
 use App\Entity\Notifications;
 use App\Entity\NotifUsers;
 use App\Entity\Users;
+use App\Repository\CardsRepository;
 
 class NotificationsController extends AbstractController
 {
@@ -98,6 +99,8 @@ class NotificationsController extends AbstractController
         EntityManagerInterface $entityManager,
         UsersRepository $usersRepository,
         TypesRepository $typesRepository,
+        CardsRepository $cardsRepository,
+        $createdCard
     ): Response {
         $notification = new Notifications();
 
@@ -124,6 +127,9 @@ class NotificationsController extends AbstractController
                 $notifUser->setNuUsr($user);
                 $notifUser->setIsNuSeen(false);
 
+                $card = $cardsRepository->find($cardId);
+                $notifUser->setNuCrd($card);
+
                 $entityManager->persist($notifUser);
             }
         } else {
@@ -147,6 +153,8 @@ class NotificationsController extends AbstractController
                     $notifUser->setNuNot($notification);
                     $notifUser->setNuUsr($user);
                     $notifUser->setIsNuSeen(false);
+
+                    $notifUser->setNuCrd($createdCard);
 
                     $entityManager->persist($notifUser);
                 }

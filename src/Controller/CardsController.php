@@ -12,6 +12,7 @@ use App\Repository\NotifUsersRepository;
 use App\Repository\UsersRepository;
 use App\Repository\TypesRepository;
 use App\Repository\SubjectsRepository;
+use App\Repository\CardsRepository;
 
 use App\Entity\Notifications;
 use App\Entity\NotifUsers;
@@ -49,7 +50,8 @@ class CardsController extends AbstractController
         UsersRepository $usersRepository,
         TypesRepository $typesRepository,
         NotificationsController $notificationsController,
-        SubjectsRepository $subjectsRepository
+        SubjectsRepository $subjectsRepository,
+        CardsRepository $cardsRepository
     ): Response
     {
         $form = $this->createForm(CardsType::class);
@@ -121,8 +123,10 @@ class CardsController extends AbstractController
 
             $entityManager->flush();
 
+            $createdCard = $cardsRepository->findLastCard();
+
             // Sending notification
-            $notificationsController->sendNotification( $request, $entityManager, $usersRepository, $typesRepository );
+            $notificationsController->sendNotification( $request, $entityManager, $usersRepository, $typesRepository, $cardsRepository, $createdCard );
         }
 
 
