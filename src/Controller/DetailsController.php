@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\CardsRepository;
-use App\Repository\SubjectsRepository;
-use App\Repository\TypesRepository;
 use App\Repository\ValidationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
