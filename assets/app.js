@@ -317,32 +317,13 @@ if (document.getElementById('calendar')) {
                             },
                             body: JSON.stringify({eventId: eventId}),
                         }).then(async response => {
+                            const aVenir = document.getElementById('a-venir');
+                            const aVenirInner = aVenir.innerHTML;
                             aVenir.innerHTML  = await response.text();
                             let modal = document.getElementById('details');
                             modal.classList.remove('details--openned');
 
-                            document.getElementById('cards_crd_typ').addEventListener('change', function() {
-                                const selectedValue = this.value;
-                                console.log(selectedValue);
 
-                                // Masquer ou afficher les champs crd_sbj et crd_from en fonction du choix
-                                const labelCrdSbj = document.getElementById('label_crd_sbj');
-                                const labelCrdFrom = document.getElementById('label_crd_from');
-
-                                if (selectedValue === '1' || selectedValue === '2') {
-                                    labelCrdSbj.style.display = 'block';
-                                    labelCrdFrom.style.display = 'none';
-                                } else if (selectedValue === '3' || selectedValue === '4') {
-                                    labelCrdFrom.style.display = 'block';
-                                    labelCrdSbj.style.display = 'none';
-                                } else {
-                                    // Afficher les deux champs ou effectuer d'autres actions si nécessaire
-                                    labelCrdSbj.style.display = 'none';
-                                    labelCrdFrom.style.display = 'none';
-                                }
-                            });
-                            const aVenir = document.getElementById('a-venir');
-                            const aVenirInner = aVenir.innerHTML;
                             const closeModify = document.getElementById('modify-back');
                             closeModify.addEventListener('click', function () {
                                 aVenir.innerHTML = aVenirInner;
