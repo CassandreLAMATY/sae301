@@ -54,3 +54,7 @@
 .env.local
 
 .idea/
+
+*Zone.Identifier
+
+/migrations

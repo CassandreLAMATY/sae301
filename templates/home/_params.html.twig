@@ -1,0 +1,41 @@
+ <div id="params_pop-up">
+        <div id="params_pop-up_top_section">
+            <h2>Paramètres</h2>
+            <i id="params_pop-up_close" class="fa-solid fa-xmark"></i>
+        </div>
+        <div id="params_pop-up_main_section">
+            <form id="paramsForm" method="post" action="{{ path('app_home_params') }}">
+                <h3>Notification par mail</h3> 
+                <div class="params_pop-up_row">
+                    <input type="hidden" name="homeworkReminder" value="{{ homeworkReminder ? 'on' : 'off' }}" />
+                    <i class="fa-solid {% if homeworkReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="homeworkToggle"></i>
+                    <p>Rappels des devoirs à rendre</p>
+                </div>
+                <div class="params_pop-up_row">
+                    <input type="hidden" name="examReminder" value="{{ examReminder ? 'on' : 'off' }}" />
+                    <i class="fa-solid {% if examReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="examToggle"></i>
+                    <p>Rappels des examens</p>
+                </div>
+                <div class="params_pop-up_row">
+                    <input type="hidden" name="newReminder" value="{{ newReminder ? 'on' : 'off' }}" />
+                    <i class="fa-solid {% if newReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="newToggle"></i>
+                    <p>Nouvel évènement</p>
+                </div>
+                <div class="params_pop-up_row">
+                    <input type="hidden" name="modifReminder" value="{{ modifReminder ? 'on' : 'off' }}" />
+                    <i class="fa-solid {% if modifReminder %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="modifToggle"></i>
+                    <p>Modification d'un évènement</p>
+                </div>
+                <hr>
+                <h3>Confidentialité</h3> 
+                <div class="params_pop-up_row">
+                    <input type="hidden" name="cookies" value="{{ cookies ? 'on' : 'off' }}" />
+                    <i class="fa-solid {% if cookies %}fa-toggle-on{% else %}fa-toggle-off{% endif %}" id="cookiesToggle"></i>
+                    <p>Cookies</p>
+                </div>
+                <div id="params_pop-up_bottom_section">
+                    <input type="button" id="params_pop-up_saveButton" value="Enregistrer" />
+                </div>
+            </form>
+        </div>      
+    </div>

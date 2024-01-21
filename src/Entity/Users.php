@@ -30,9 +30,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $usr_firstname = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $usr_pp = null;
-
     #[ORM\Column(length: 1, nullable: true)]
     private ?string $usr_tp = null;
 
@@ -45,7 +42,22 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 2)]
     private ?string $usr_semester = null;
 
-    public function getId(): ?int
+    #[ORM\Column]
+    private ?bool $usr_homework_reminder = false;
+
+    #[ORM\Column]
+    private ?bool $usr_exam_reminder = false;
+
+    #[ORM\Column]
+    private ?bool $usr_new_reminder = false;
+
+    #[ORM\Column]
+    private ?bool $usr_modif_reminder = false;
+
+    #[ORM\Column]
+    private ?bool $usr_cookies = false;
+
+    public function getUsrId(): ?int
     {
         return $this->usr_id;
     }
@@ -110,18 +122,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUsrPP(): ?string
-    {
-        return $this->usr_pp;
-    }
-
-    public function setUsrPP(string $usr_pp): static
-    {
-        $this->usr_pp = $usr_pp;
-
-        return $this;
-    }
-
     public function getUsrTp(): ?string
     {
         return $this->usr_tp;
@@ -166,20 +166,20 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
 
-    return [$this->getUsrRole()];
+        return [$this->getUsrRole()];
     }
 
     public function eraseCredentials(): void
     {
-            // TODO: Implement eraseCredentials() method.
+        // TODO: Implement eraseCredentials() method.
     }
 
     public function getUserIdentifier(): string
     {
-        return $this->getUsrPseudo();//changer ici si on veut se connecter avec le pseudo
+        return $this->getUsrPseudo(); //changer ici si on veut se connecter avec le pseudo
 
     }
-    
+
     public function getUsrSemester(): ?string
     {
         return $this->usr_semester;
@@ -188,6 +188,73 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsrSemester(string $usr_semester): static
     {
         $this->usr_semester = $usr_semester;
+
+        return $this;
+    }
+
+    public function isUsrHomeworkReminder(): ?bool
+    {
+        return $this->usr_homework_reminder;
+    }
+
+    public function setUsrHomeworkReminder(bool $usr_homework_reminder): static
+    {
+        $this->usr_homework_reminder = $usr_homework_reminder;
+
+        return $this;
+    }
+
+    public function isUsrExamReminder(): ?bool
+    {
+        return $this->usr_exam_reminder;
+    }
+
+    public function setUsrExamReminder(bool $usr_exam_reminder): static
+    {
+        $this->usr_exam_reminder = $usr_exam_reminder;
+
+        return $this;
+    }
+
+    public function isUsrNewReminder(): ?bool
+    {
+        return $this->usr_new_reminder;
+    }
+
+    public function setUsrNewReminder(bool $usr_new_reminder): static
+    {
+        $this->usr_new_reminder = $usr_new_reminder;
+
+        return $this;
+    }
+
+    public function isUsrModifReminder(): ?bool
+    {
+        return $this->usr_modif_reminder;
+    }
+
+    public function setUsrModifReminder(bool $usr_modif_reminder): static
+    {
+        $this->usr_modif_reminder = $usr_modif_reminder;
+
+        return $this;
+    }
+
+    public function isUsrCookies(): ?bool
+    {
+        return $this->usr_cookies;
+    }
+
+    public function setUsrCookies(bool $usr_cookies): static
+    {
+        $this->usr_cookies = $usr_cookies;
+
+        return $this;
+    }
+
+    public function setId(?Notifications $id): static
+    {
+        $this->id = $id;
 
         return $this;
     }

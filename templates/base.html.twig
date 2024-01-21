@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
+        <link href="{{ asset('styles/app.css') }}" rel="stylesheet">
     {% endblock %}
 
-        {% block javascripts %}
-            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js' defer></script>
-            <script src="https://kit.fontawesome.com/9d34ec166c.js" crossorigin="anonymous" defer></script>
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block header %}{% endblock %}
-        {% block body %}{% endblock %}
-    </body>
+    {% block javascripts %}
+        <script src='{{ asset('fullcalendar-6.1.10/dist/index.global.min.js') }}'></script>
+        <script src='{{ asset('fullcalendar-6.1.10/packages/core/locales/fr.global.min.js') }}'></script>
+        <script src="https://kit.fontawesome.com/9d34ec166c.js" crossorigin="anonymous"></script>
+
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+<body class="{% block body_class %}sub_page{% endblock %}">
+    {% block body %}{% endblock %}
+</body>
 </html>

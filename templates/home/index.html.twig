@@ -2,41 +2,147 @@
 
 {% block title %}Home{% endblock %}
 
-{% block header %}
-    {% include 'components/header.html.twig' %}
-{% endblock %}
 {% block body %}
-    {# <h1>Votre nom : {{ username }} / {{ name }} / {{ firstname }} / {{ email }}</h1> #}
 
-    <main>
+    {{ include('components/header.html.twig') }}
 
+    <main class="main">
         <div id="calendar" data-url="{{ path('app_calendar_data') }}"></div>
-        <div id="list">
-            <div id="title_list">
-                <h2>À Venir</h2>
-            </div>
-            <div id="items">
-                {% for item in cardData %}
-                    <div class="item" style="border-left-color: {{ item.typeColor }};">
-                        <div class="time">
-                            <p class="date">{{ item.card.getFormattedCrdTo }}</p>
-                            <div class="time_left">
-                                <i class="fa-solid fa-hourglass-half"></i>
-                                <p class="days">Dans <br> <span>{{ item.card.getTimeLeft }}</span></p>
+        <div id="section-right">
+            <div class="side-list">
+                <div id="side-list_title">
+                    <h2>À Venir</h2>
+                </div>
+                <div class="items">
+                    {% for item in cardData %}
+                        <div class="item {% if item.card.getIsValidated == 0 %} notvalidated {% endif %}"
+                             style="border-left-color: {{ item.typeColor }} !important;">
+                            <p class="card-id">{{item.card.getId}}</p>
+                            <p class="type-id">{{item.card.getCrdTypId.getId}}</p>
+                            <div class="time">
+                                <p class="date">
+                                    {% if item.card.getCrdFrom is not null %}
+                                        Du {{ item.card.getSmallCrdFrom }} <br>Au
+                                    {% endif %}
+                                    {{ item.card.getSmallCrdTo }}
+                                </p>
+                                <div class="time_left">
+                                    <i class="fa-solid fa-hourglass-half" style="color:{{ item.timeColor }}"></i>
+                                    <p class="days">Dans <br> <span>{{ item.card.getTimeLeft }}</span></p>
+                                </div>
                             </div>
+                            <div class="subject">
+                                <p class="tag" style="border-color: {{ item.typeColor }}; background-color: {{ item.typeColor }}20">{{ item.typeName }}</p>
+                                <div>
+                                    <h3 class="notif-card__title">{{ item.card.getCrdTitle }}</h3>
+                                    <p class="notif-card__subject">{{ item.subjectRef }} - {{ item.subjectName }}</p>
+                                </div>
+                            </div>
+                            {% if item.typeName is same as('rendu') %}
+                                <!--<div class="status">
+                                    <i class="fa-regular fa-square"></i>
+                                    <p>À Rendre</p>
+                                </div>-->
+                                <div class="status">
+                                    <i class="fa-regular fa-square-check"></i>
+                                    <p>Rendu</p>
+                                </div>
+                            {% endif %}
                         </div>
-                        <div class="subject">
-                            <p class="tag" style="background-color: {{ item.typeColor }}">{{ item.typeName }}</p>
-                            <h3>{{ item.card.getCrdTitle }}</h3>
-                            <p class="course">{{ item.subjectName }}</p>
-                        </div>
-                        <div class="status">
-                            <i class="fa-solid fa-check"></i>
-                            <p>Rendu</p>
-                        </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
+            <div id="details"></div>
         </div>
+        {# params pop-up #}
+        <div id="params" style="display:none"></div>
     </main>
+
+{# TODO : refactor code #}
+{# script to close the pop-up with the close icon #}
+ <style>
+    .fa-toggle-on {
+        color: #4098FF !important; /* Change this to your desired color */
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var optionButton = document.getElementById('optionButton');
+        var optionButtonIcon = document.getElementById('optionButtonIcon');
+
+        var paramsForm = document.getElementById('paramsForm');
+
+        optionButton.addEventListener('click', function() {
+            openParamsPopUp();
+        });
+
+        optionButtonIcon.addEventListener('click', function() {
+            openParamsPopUp();
+        });
+        
+        async function openParamsPopUp() {
+            const params = document.getElementById('params')
+            const reponse = await fetch('{{ path('app_home_params') }}');
+            params.innerHTML = await reponse.text()
+            console.log('params loaded 2')
+            params.style.display = 'flex';
+
+
+            var closeIcon = document.querySelector('#params_pop-up_top_section i.fa-xmark');
+             var saveButton = document.getElementById('params_pop-up_saveButton');
+
+            closeIcon.addEventListener('click', function () {
+                // Close the params div by hiding it or removing it from the DOM
+                //paramsDiv.style.display = 'none'; // You can use 'block', 'inline', etc. if you want to show it again
+                // Alternatively, you can remove the entire div from the DOM
+                params.style.display = 'none';
+            });
+            
+             saveButton.addEventListener('click', function() {
+                // Serialize form data to send
+                var formData = new FormData();
+                formData.append('homeworkReminder', document.getElementById('homeworkToggle').classList.contains('fa-toggle-on') ? true : false)
+                formData.append('examReminder',  document.getElementById('examToggle').classList.contains('fa-toggle-on') ? true : false);
+                formData.append('newReminder',  document.getElementById('newToggle').classList.contains('fa-toggle-on') ? true : false);
+                formData.append('modifReminder',  document.getElementById('modifToggle').classList.contains('fa-toggle-on') ? true : false);
+                formData.append('cookies',  document.getElementById('cookiesToggle').classList.contains('fa-toggle-on') ? true : false);
+            
+                // Send an AJAX request
+                fetch('{{ path('app_home_params') }}', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response as needed
+                    console.log(data);
+                    params.style.display = 'none';
+                    // You can close the pop-up or update the UI based on the response
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Toggle between fa-toggle-off and fa-toggle-on when params_pop-up_row is clicked
+            var paramsRows = document.querySelectorAll('.params_pop-up_row');
+            paramsRows.forEach(function (row) {
+                row.addEventListener('click', function () {
+                    var toggleIcon = row.querySelector('i.fa-solid');
+                    if (toggleIcon.classList.contains('fa-toggle-off')) {
+                        toggleIcon.classList.remove('fa-toggle-off');
+                        toggleIcon.classList.add('fa-toggle-on');
+                    } else {
+                        toggleIcon.classList.remove('fa-toggle-on');
+                        toggleIcon.classList.add('fa-toggle-off');
+                    }
+                });
+            });
+        }
+       
+    });
+</script>
+{# fin script #}
+{# script to close the pop-up with the close icon #}
+
 {% endblock %}
