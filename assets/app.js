@@ -172,10 +172,6 @@ if (document.getElementById('calendar')) {
     select.classList.add('fc-button');
     select.classList.add('fc-button-primary', 'btn--force-single');
 
-    const select = document.createElement('button');
-    select.classList.add('fc-button');
-    select.classList.add('fc-button-primary', 'btn--force-single');
-
     select.innerHTML = 'Matières <i class="fa-solid fa-angle-down"></i>';
 
     subjectDiv.appendChild(select);

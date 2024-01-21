@@ -66,11 +66,8 @@ class UserCardsService
                 ];
             }
 
-            $typeId = $card->getUcCrdId()->getCrdTypId();
+            $typeId = $card->getUcCrd()->getCrdTyp();
             $type = $typesRepository->find($typeId);
-
-            $subjectId = $card->getUcCrdId()->getCrdSbjId();
-            $subject = $subjectsRepository->find($subjectId);
 
             $timeleft = $now->diff($timeEnd);
             $dayLeft = $timeleft->format('%a');
