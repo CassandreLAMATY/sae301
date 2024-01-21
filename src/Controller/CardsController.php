@@ -125,6 +125,7 @@ class CardsController extends AbstractController
 
             // Sending notification
             $notificationsController->sendNotification($request, $entityManager, $usersRepository, $typesRepository);
+
         }
 
 
