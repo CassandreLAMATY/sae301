@@ -15,6 +15,7 @@ use App\Repository\TypesRepository;
 use App\Entity\Notifications;
 use App\Entity\NotifUsers;
 use App\Entity\Users;
+use App\Repository\CardsRepository;
 
 class NotificationsController extends AbstractController
 {
@@ -69,6 +70,38 @@ class NotificationsController extends AbstractController
         return new Response('deleted');
     }
 
+    #[Route('/notifications/markAsRead/{id}', name: 'app_notifications_read', methods: ["POST"])]
+    public function markAsRead(
+        int $id, 
+        EntityManagerInterface $entityManager, 
+        NotifUsersRepository $notifUsersRepository
+    ): Response
+    {
+        $user = $this->getUser();
+
+        // select user's notification
+        $nu = $notifUsersRepository->findByUserID($user->getUsrId());
+        
+        // select row that have both notification user id
+        $notification = null;
+
+        foreach ($nu as $row) {
+            if ($row->getNuNot()->getNotId() == $id) {
+                $notification = $row;
+            }
+        }
+
+        if($notification) {
+            $notification->setIsNuSeen(true);
+            $entityManager->persist($notification);
+            $entityManager->flush();
+
+            return new Response('marked');
+        }
+
+        return new Response('not found');
+    }
+
     #[Route('/notifications/markAllAsRead', name: 'app_notifications_readAll', methods: ["POST"])]
     public function markAllAsRead(
         EntityManagerInterface $entityManager, 
@@ -98,6 +131,9 @@ class NotificationsController extends AbstractController
         EntityManagerInterface $entityManager,
         UsersRepository $usersRepository,
         TypesRepository $typesRepository,
+        CardsRepository $cardsRepository,
+        $createdCard,
+        $cardId
     ): Response {
         $notification = new Notifications();
 
@@ -124,6 +160,9 @@ class NotificationsController extends AbstractController
                 $notifUser->setNuUsr($user);
                 $notifUser->setIsNuSeen(false);
 
+                $card = $cardsRepository->find($cardId);
+                $notifUser->setNuCrd($card);
+
                 $entityManager->persist($notifUser);
             }
         } else {
@@ -147,6 +186,8 @@ class NotificationsController extends AbstractController
                     $notifUser->setNuNot($notification);
                     $notifUser->setNuUsr($user);
                     $notifUser->setIsNuSeen(false);
+
+                    $notifUser->setNuCrd($createdCard);
 
                     $entityManager->persist($notifUser);
                 }

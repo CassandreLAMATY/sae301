@@ -168,22 +168,23 @@
 
         });
     </script>
-
     <script>
-        const aVenir = document.getElementById('a-venir');
+        const aVenir = document.getElementById('details');
         const aVenirInner = aVenir.innerHTML;
         const toggleCreate = document.querySelector('.add-event');
+        const toggleModify = document.querySelector('.modify-event');
 
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', '{{ path('app_cards_createForm') }}', true);
         xhr.onload = function () {
             if (xhr.status === 200) {
                 toggleCreate.addEventListener('click', function () {
                     aVenir.innerHTML = xhr.responseText;
+                    aVenir.classList.add('details--openned')
 
                     const closeCreate = document.getElementById('create-back');
                     closeCreate.addEventListener('click', function () {
-                        aVenir.innerHTML = aVenirInner;
+                        aVenir.classList.remove('details--openned')
                     });
                 });
             }
