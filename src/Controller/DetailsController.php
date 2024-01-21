@@ -5,21 +5,25 @@ namespace App\Controller;
 use App\Repository\CardsRepository;
 use App\Repository\SubjectsRepository;
 use App\Repository\TypesRepository;
+use App\Repository\UsersValidationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DetailsController extends AbstractController {
+class DetailsController extends AbstractController
+{
     #[Route('/details', name: 'app_details')]
     public function getDetails(
         Request $request,
         CardsRepository $cardsRepository,
         TypesRepository $typesRepository,
-        SubjectsRepository $subjectsRepository): Response {
-        $eventId = json_decode($request->getContent())->eventId;
+        SubjectsRepository $subjectsRepository,
+        UsersValidationRepository $usersValidationRepository
+    ): Response {
+        $cardId = json_decode($request->getContent())->cardId;
 
-        $card = $cardsRepository->find($eventId);
+        $card = $cardsRepository->find($cardId);
 
         if ($card) {
             $timeEnd = $card->getCrdTo();
@@ -49,11 +53,25 @@ class DetailsController extends AbstractController {
                 $timeColor = 'var(--accent-red)';
             }
 
+            $validations = $usersValidationRepository->findByCardId($cardId);
+            $validationNumber = 0;
+            foreach ($validations as $validation) {
+                if ($validation->getUvValidated() > 0) {
+                    $validationNumber += $validation->getUvValidated();
+                }
+            }
+
             $cardData = [];
 
             if ($type !== null) {
-                $cardData[] = ['card' => $card, 'typeName' => $type->getTypName(), 'typeColor' => $type->getTypColor(),
-                               'subjectName' => $subject->getSbjName(), 'timeColor' => $timeColor];
+                $cardData[] = [
+                    'card' => $card,
+                    'typeName' => $type->getTypName(),
+                    'typeColor' => $type->getTypColor(),
+                    'subjectName' => $subject->getSbjName(),
+                    'timeColor' => $timeColor,
+                    'validationNumber' => $validationNumber,
+                ];
             }
         }
 

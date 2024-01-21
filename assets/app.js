@@ -250,7 +250,6 @@ if (document.getElementById('calendar')) {
       eventContent: function(arg) {
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event-card');
-        console.log();
         if (arg.event.extendedProps.isValidated == 0) {
           eventDiv.classList.add('notvalidated');
         }
@@ -285,12 +284,12 @@ if (document.getElementById('calendar')) {
             eventDiv.classList.remove('notvalidated');
           }
         }
-        
-        if(arg.event.start < new Date() && !arg.event.end){
+
+        if (arg.event.start < new Date() && !arg.event.end) {
           eventDiv.style.opacity = '0.5';
           eventDiv.classList.remove('notvalidated');
         }
-        
+
         return {domNodes: [eventDiv]};
       }
       ,
@@ -302,13 +301,13 @@ if (document.getElementById('calendar')) {
     let eventDiv = document.getElementsByClassName(className);
     for (let i = 0; i < eventDiv.length; i++) {
       eventDiv[i].addEventListener('click', function() {
-        let eventId = this.getAttribute('card-id');
+        let cardId = this.getAttribute('card-id');
         fetch('/details', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({eventId: eventId}),
+          body: JSON.stringify({cardId: cardId}),
         }).then(async (response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -325,13 +324,12 @@ if (document.getElementById('calendar')) {
               modal.classList.remove('details--openned');
             });
           }
-
+          addValidation(cardId);
         }).then(data => {
           console.log('Success:', data);
         }).catch(error => {
           console.error('Error:', error);
         });
-
       });
     }
   }
@@ -464,7 +462,6 @@ if (document.getElementById('calendar')) {
     if (isPressed) {
       events.forEach(event => {
         const eventCard = event.querySelector('.event-card');
-        console.log(eventCard.getAttribute(item));
         if (eventCard.getAttribute(item) == 0 ||
           eventCard.getAttribute(item) === 'true') {
           event.parentNode.style.display = 'none';
@@ -493,3 +490,42 @@ if (document.getElementById('calendar')) {
     }
   }
 }
+
+function addValidation(cardId) {
+  const validationBtn = document.querySelector('.btns--a-valider-details');
+
+  validationBtn.addEventListener('click', function() {
+    const validation = 1;
+    const requestBody = {
+      validation: validation,
+      cardId: cardId
+    };
+
+    // Retourne la promesse créée par fetch
+    return fetch('/validation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    })
+    .then(async (response) => {
+      if (!response.ok) {
+        // Gestion des erreurs
+        const errorMessage = await response.text(); // ou response.json() si le serveur renvoie du JSON
+        throw new Error(`Server response: ${response.status} - ${errorMessage}`);
+      }
+
+      // Retourne la réponse pour les traitements ultérieurs
+      return response.json(); // ou response.text() si le serveur renvoie du texte
+    })
+    .then(data => {
+      console.log('Success:', data); // Affiche la réponse du serveur
+    })
+    .catch(error => {
+      console.error('Error:', error.message); // Affiche le message d'erreur
+      // Vous pourriez également afficher un message d'erreur à l'utilisateur ici
+    });
+  });
+}
+
