@@ -18,8 +18,8 @@
                 <i class="fa-regular fa-clock"></i></button>
             <div id='a-venir' class="side-list">
                 <div id="side-list_title">
-                    <button id="btn--close--avenir" class='btn--a-faire' onclick='closeAVenir()'>
-                        <i class="fa-regular fa-clock"></i></button>
+                    <button id="btn--close--avenir" class='btn--darker btn--close-menu' onclick='closeAVenir()'>
+                        <i class="fa-solid fa-arrow-right-long"></i></button>
                     <h2>À Venir</h2>
                 </div>
                 <div class="items">
@@ -107,6 +107,8 @@
             console.log('params loaded 2')
             params.style.display = 'flex';
 
+                var closeIcon = document.getElementById('params_pop-up_close');
+                var saveButton = document.getElementById('params_pop-up_saveButton');
 
             var closeIcon = document.querySelector('#params_pop-up_top_section i.fa-xmark');
              var saveButton = document.getElementById('params_pop-up_saveButton');
