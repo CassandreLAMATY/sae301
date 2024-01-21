@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CardsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,12 +45,12 @@ class CardsController extends AbstractController
 
     #[Route('/cards/create', name: 'app_cards_create', methods: ["POST"])]
     public function create(
-        Request $request,
-        EntityManagerInterface $entityManager,
-        UsersRepository $usersRepository,
-        TypesRepository $typesRepository,
+        Request                 $request,
+        EntityManagerInterface  $entityManager,
+        UsersRepository         $usersRepository,
+        TypesRepository         $typesRepository,
         NotificationsController $notificationsController,
-        SubjectsRepository $subjectsRepository
+        SubjectsRepository      $subjectsRepository
     ): Response
     {
         $form = $this->createForm(CardsType::class);
@@ -60,7 +61,7 @@ class CardsController extends AbstractController
             $cardData = $formData['cards'];
             $type = $typesRepository->find($cardData['crd_typ']);
             $user = $usersRepository->find($this->getUser());
-            
+
             $subject = $cardData['crd_sbj'] ? $subjectsRepository->find($cardData['crd_sbj']) : null;
 
             $from = $cardData['crd_from'] ? new \DateTime($cardData['crd_from']) : null;
@@ -81,7 +82,7 @@ class CardsController extends AbstractController
 
             // Link card to user
             $userTp = $user->getUsrTp();
-            if ( $cardData['crd_grp'] == 0 ) {
+            if ($cardData['crd_grp'] == 0) {
                 $users = $usersRepository->findByTp($userTp);
                 foreach ($users as $user) {
                     $userCard = new UsersCards();
@@ -103,9 +104,9 @@ class CardsController extends AbstractController
                     "G" => ["G", "H"],
                     "H" => ["G", "H"],
                 ];
-                
+
                 $td = $map[$userTp] ?? ["A", "B", "C", "D", "E", "F", "G", "H"];
-                foreach($td as $tp) {
+                foreach ($td as $tp) {
                     $users = $usersRepository->findByTp($tp);
                     foreach ($users as $user) {
                         $userCard = new UsersCards();
@@ -122,9 +123,42 @@ class CardsController extends AbstractController
             $entityManager->flush();
 
             // Sending notification
-            $notificationsController->sendNotification( $request, $entityManager, $usersRepository, $typesRepository );
+            $notificationsController->sendNotification($request, $entityManager, $usersRepository, $typesRepository);
         }
 
 
+        //return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/cards/modifyForm/{id}', name: 'app_cards_modifyForm', methods: ['POST'])]
+    public function modifyCardForm(Request $request, EntityManagerInterface $entityManager, CardsRepository $cardsRepository, SubjectsRepository $subjectsRepository, $id): Response
+    {
+        // Récupérez la carte existante depuis la base de données
+        $card = $cardsRepository->find($id);
+
+        if (!$card) {
+            throw $this->createNotFoundException('La carte avec l\'ID ' . $id . ' n\'existe pas.');
+        }
+
+        // Récupérez les données JSON envoyées depuis le client
+        $jsonData = json_decode($request->getContent(), true);
+
+        // Modifiez les propriétés de la carte en fonction des données reçues
+        // Assurez-vous d'ajuster ces lignes en fonction de vos besoins spécifiques
+        $card->setCrdCreatedAt(new \DateTimeImmutable());
+        $card->setIsValidated(0);
+
+        // Par exemple, si vous avez un champ nommé "event_name"
+        if (isset($jsonData['event_name'])) {
+            $card->setCrdTitle($jsonData['crd_title']);
+        }
+
+        // Vous pouvez continuer d'ajuster les propriétés en fonction de vos besoins
+
+        // Enregistrez les modifications dans la base de données
+        $entityManager->flush();
+
+        // Vous pouvez renvoyer une réponse appropriée si nécessaire
+        return new Response('La carte a été modifiée avec succès.', 200);
     }
 }

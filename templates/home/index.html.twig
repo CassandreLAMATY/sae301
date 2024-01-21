@@ -167,8 +167,9 @@
     const aVenir = document.getElementById('a-venir');
     const aVenirInner = aVenir.innerHTML;
     const toggleCreate = document.querySelector('.add-event');
+    const toggleModify = document.querySelector('.modify-event');
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open('GET', '{{ path('app_cards_createForm') }}', true);
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -177,6 +178,20 @@
 
                 const closeCreate = document.getElementById('create-back');
                 closeCreate.addEventListener('click', function() {
+                    aVenir.innerHTML = aVenirInner;
+                });
+            });
+        }
+    }
+    const xhr2 = new XMLHttpRequest();
+    xhr2.open('GET', '{{ path('app_cards_modifyForm') }}', true);
+    xhr2.onload = function() {
+        if (xhr2.status === 200) {
+            toggleModify.addEventListener('click', function() {
+                aVenir.innerHTML = xhr2.responseText;
+
+                const closeModify = document.getElementById('modify-back');
+                closeModify.addEventListener('click', function() {
                     aVenir.innerHTML = aVenirInner;
                 });
             });
