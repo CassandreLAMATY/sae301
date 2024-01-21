@@ -102,7 +102,7 @@ button.btn--force-single {
 
 /* 🟢 ----- CLASSES VALIDATIONS ----- 🟢 */
 
-.btns--a-valider > div {
+.btns--a-valider > .btns--a-valider--counter {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,12 +119,22 @@ button.btn--force-single {
     border-radius: var(--grup-2) 0 0 var(--grup-2)
 }
 
-.btns--a-valider > div i {
+.btns--a-valider > .btns--a-valider--counter i {
     color: var(--accent-blue);
 }
 
 .btns--a-valider > button.btn--a-valider {
     border-radius: 0 var(--grup-2) var(--grup-2) 0;
+}
+
+.btns--a-valider.btns--deja-valide .btn--a-valider {
+    background-color: var(--accent-green);
+    box-shadow: 0 0 0 2px var(--accent-green-shadow);
+    color: var(--main--white);
+}
+
+.btns--a-valider.btns--deja-valide .btn--a-valider:hover {
+    background-color: var(--accent-green-shadow);
 }
 
 button.btn--a-faire {

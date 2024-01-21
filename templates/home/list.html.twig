@@ -231,12 +231,22 @@
 
                                     {# BTN Status #}
                                     {% if item.card.type is same as('rendu') %}
-                                        <div class='concatinated-btns btns--a-valider'>
-                                            <div>2/5 <i class="fa-solid fa-user-check"></i></div>
+                                        <div class='concatinated-btns btns--a-valider '>
+                                            <div class='btns--a-valider--counter'>
+                                                2/5
+                                                <i class="fa-solid fa-user-check"></i>
+                                            </div>
                                             <button class='btn--a-valider'>
                                                 Valider
-                                                <i class="fa-solid fa-arrow-right-long"></i>
+                                                {# <i class="fa-solid fa-arrow-right-long"></i> #}
+                                                <i class="fa-solid fa-check"></i>
                                             </button>
+
+                                            {# <div class='btn--simulated btn--a-valider'>
+                                                Valider
+                                                <i class="fa-solid fa-check"></i>
+                                            </div>
+                                            #}
                                         </div>
                                         {#
                                         <button class="btn--a-faire">
