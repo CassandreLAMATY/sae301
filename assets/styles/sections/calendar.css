@@ -104,8 +104,8 @@
     box-shadow: 0 0 0 2px var(--secondary-gray--02);
 }
 
-#calendar .fc-header-toolbar.filter .fc-button-group:not(.types) button:hover,
-main#main-list .fc-header-toolbar.filter .fc-button-group:not(.types) button:hover {
+#calendar .fc-header-toolbar.filter .fc-button-group:not(.types) button:not(.btn--active):hover,
+main#main-list .fc-header-toolbar.filter .fc-button-group:not(.types) button:not(.btn--active):hover {
     background-color: var(--secondary-gray--02) !important;
 }
 
@@ -170,6 +170,15 @@ main#main-list .fc-header-toolbar.filter .fc-button-group:not(.types) button:hov
 
 .fc-button-group.statusHomework button.btn--active:hover {
     background-color: var(--accent-green--light--shadow) !important;
+}
+
+.fc-button-group.statusEvent button.btn--active {
+    box-shadow: 0 0 0 2px var(--accent-blue) !important;
+    background-color: var(--accent-blue--light) !important;
+}
+
+.fc-button-group.statusEvent button.btn--active:hover {
+    background-color: var(--accent-blue--light--shadow) !important;
 }
 
 @media screen and (max-width: 1165px) {

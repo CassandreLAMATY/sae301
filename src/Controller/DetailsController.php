@@ -32,18 +32,18 @@ class DetailsController extends AbstractController
 
             $typeId = $card->getCrdTyp();
             $type = $typesRepository->find($typeId);
-
-            $subjectId = $card->getCrdSbj();
-            $subject = $subjectsRepository->find($subjectId);
+            
+            $subject = null;
+            if( $card->getCrdSbj() ) {
+                $subjectId = $card->getCrdSbj();
+                $subject = $subjectsRepository->find($subjectId);
+            }
 
             $timeleft = $now->diff($timeEnd);
             $dayLeft = $timeleft->format('%a');
             $dayLeft = (int)$dayLeft;
 
             $timeColor = 'var(--grey)';
-
-            $validated = [];
-            $validatedBy = [];
 
             if ($dayLeft < 8) {
                 $timeColor = 'var(--accent-orange)';
@@ -69,6 +69,6 @@ class DetailsController extends AbstractController
             }
         }
 
-        return $this->render('details/index.html.twig', ['detailsCard' => $cardData,]);
+        return $this->render('details/index.html.twig', ['detailsCard' => $cardData]);
     }
 }
