@@ -304,17 +304,14 @@ function addValidation(cardId) {
   const validationBtn = document.querySelector('.btns--a-valider-details');
 
   validationBtn.addEventListener('click', function() {
-    const requestBody = {
-      cardId: cardId
-    };
+    const cardId = this.getAttribute('card-id');
 
     // Retourne la promesse créée par fetch
-    return fetch('/validation', {
-      method: 'POST',
+    return fetch(`/cards/validation/${cardId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
+      }
     })
     .then(async (response) => {
       if (!response.ok) {
@@ -329,6 +326,7 @@ function addValidation(cardId) {
       const counter= document.querySelector('.btns--a-valider--counter');
       counter.style.borderRadius = 'var(--grup-2)';
 
+      window.location.reload();
     })
     .then(data => {
       console.log('Success:', data); // Affiche la réponse du serveur
