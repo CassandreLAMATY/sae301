@@ -41,6 +41,10 @@ class UserCardsService
 
             $now = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
 
+            if($timeEnd < $now){
+                continue;
+            }
+
             $typeId = $card->getUcCrd()->getCrdTyp();
             $type = $typesRepository->find($typeId);
 
