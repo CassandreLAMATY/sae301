@@ -170,6 +170,7 @@
     const aVenir = document.getElementById('a-venir');
     const aVenirInner = aVenir.innerHTML;
     const toggleCreate = document.querySelector('.add-event');
+    const toggleModify = document.querySelector('.modify-event');
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '{{ path('app_cards_createForm') }}', true);
@@ -186,6 +187,31 @@
         }
     }
     xhr.send();
+/*
+    let element = document.querySelector('.event-card'); // Replace this with the actual selector for your element
+    let eventId = element.getAttribute('card-id');
+    toggleModify.addEventListener('click', function() {
+    fetch(`/app_cards_modifyForm/${eventId}`)
+        .then(response => response.text())
+        .then(data => {
+            const xhr2 = new XMLHttpRequest();
+            xhr2.open('GET', data, true);
+            xhr2.onload = function() {
+                if (xhr2.status === 200) {
+                    toggleModify.addEventListener('click', function() {
+                        aVenir.innerHTML = xhr2.responseText;
+
+                        const closeModify = document.getElementById('modify-back');
+                        closeModify.addEventListener('click', function() {
+                            aVenir.innerHTML = aVenirInner;
+                        });
+                    });
+                }
+            }
+            xhr2.send();
+        });
+         });*/
+
 </script>
 {# fin script #}
 {# script to close the pop-up with the close icon #}
