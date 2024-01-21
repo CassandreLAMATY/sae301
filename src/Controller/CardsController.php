@@ -277,14 +277,24 @@ class CardsController extends AbstractController
 
         $validation = new Validation();
 
-        $validation->setValCrd($cardsRepository->find($cardId));
         $validation->setValUsr($usersRepository->find($userId));
+        $validation->setValCrd($cardsRepository->find($cardId));
 
         $entityManager->persist($validation);
         $entityManager->flush();
 
+        $count = $validationRepository->countByCardId($cardId);
+        dd($count);
+        if($count >= 5) {
+            $card = $cardsRepository->find($cardId);
+            $card->setIsValidated(true);
+            $entityManager->persist($card);
+            $entityManager->flush();
+        }
+
         $homeController->index($typesRepository, $subjectsRepository, $notifUserRepository, $userCardsRepository, $validationRepository, $notificationsService, $userCardsService, $dateTimeConverter);
     
+        
         return $this->redirectToRoute('app_home');
     }
 }

@@ -18,7 +18,7 @@ class Validation
     private ?Users $val_usr = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(referencedColumnName: "crd_id", nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: "usr_id", nullable: false)]
     private ?Cards $val_crd = null;
 
     public function getId(): ?int

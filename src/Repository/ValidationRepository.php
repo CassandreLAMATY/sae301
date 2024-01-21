@@ -33,6 +33,19 @@ class ValidationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function countByCardId($crd_id): int
+    {
+        return $this->createQueryBuilder('val')
+            ->select('count(val.id)')
+            ->innerJoin('val.val_crd', 'v')
+            ->addSelect('v')
+            ->andWhere('v.crd_id = :id')  // Adjusted from val.val_usr to v.crd_id
+            ->setParameter('id', $crd_id)
+            ->orderBy('v.crd_to', 'ASC')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Validation[] Returns an array of Validation objects
 //     */
