@@ -308,11 +308,32 @@ if (document.getElementById('calendar')) {
 
                 }).then(data => {
                     console.log('Success:', data);
-                }).catch(error => {
+                    console.log('wait modif');
+                    document.getElementById('modify-event').addEventListener('click', function () {
+                        console.log('modify start');
+                        fetch(`/cards/modifyForm/${eventId}`,{
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({eventId: eventId}),
+                        }).then(async response => {
+                            aVenir.innerHTML  = await response.text();
+                            let modal = document.getElementById('details');
+                            modal.classList.remove('details--openned');
+
+
+                            const closeModify = document.getElementById('modify-back');
+                            closeModify.addEventListener('click', function () {
+                                aVenir.innerHTML = aVenirInner;
+                            });
+                        })
+                    });
+                    }).catch(error => {
                     console.error('Error:', error);
                 });
 
-            });
+                });
         }
     }
 
