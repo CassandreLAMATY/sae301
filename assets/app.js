@@ -127,18 +127,18 @@ function getDetailsCard(className) {
   let eventDiv = document.getElementsByClassName(className);
   for (let i = 0; i < eventDiv.length; i++) {
     eventDiv[i].addEventListener('click', function() {
-      let cardId = this.getAttribute('card-id');
-      fetch('/details', {
-        method: 'POST',
+      let eventId = this.getAttribute('card-id');
+      fetch(`/details/${eventId}`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({cardId: cardId}),
       }).then(async (response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        document.getElementById('details').innerHTML = await response.text();
+        document.getElementById(
+          'details').innerHTML = await response.text();
 
         let modal = document.getElementById('details');
         modal.classList.add('details--openned');
@@ -149,12 +149,33 @@ function getDetailsCard(className) {
             modal.classList.remove('details--openned');
           });
         }
-        addValidation(cardId);
+        addValidation(eventId);
       }).then(data => {
         console.log('Success:', data);
-      }).catch(error => {
+        console.log('wait modif');
+        document.getElementById('modify-event').addEventListener('click', function () {
+            console.log('modify start');
+            fetch(`/cards/modifyForm/${eventId}`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({eventId: eventId}),
+            }).then(async response => {
+                aVenir.innerHTML  = await response.text();
+                let modal = document.getElementById('details');
+                modal.classList.remove('details--openned');
+
+
+                const closeModify = document.getElementById('modify-back');
+                closeModify.addEventListener('click', function () {
+                    aVenir.innerHTML = aVenirInner;
+                });
+            })
+        });
+        }).catch(error => {
         console.error('Error:', error);
-      });
+    });
     });
   }
 }
@@ -632,7 +653,6 @@ if (document.getElementById('calendar')) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({eventId: eventId}),
         }).then(async (response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -836,42 +856,3 @@ if (document.getElementById('calendar')) {
     }
   }
 }
-
-function addValidation(cardId) {
-  const validationBtn = document.querySelector('.btns--a-valider-details');
-
-  validationBtn.addEventListener('click', function() {
-    const cardId = this.getAttribute('card-id');
-
-    // Retourne la promesse créée par fetch
-    return fetch(`/cards/validation/${cardId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(async (response) => {
-      if (!response.ok) {
-        // Gestion des erreurs
-        const errorMessage = await response.text(); // ou response.json() si le serveur renvoie du JSON
-        throw new Error(`Server response: ${response.status} - ${errorMessage}`);
-      }
-
-      const removedBtn = document.querySelector('.btns--a-valider button');
-      removedBtn.parentNode.removeChild(removedBtn);
-
-      const counter= document.querySelector('.btns--a-valider--counter');
-      counter.style.borderRadius = 'var(--grup-2)';
-
-      window.location.reload();
-    })
-    .then(data => {
-      console.log('Success:', data); // Affiche la réponse du serveur
-    })
-    .catch(error => {
-      console.error('Error:', error.message); // Affiche le message d'erreur
-      // Vous pourriez également afficher un message d'erreur à l'utilisateur ici
-    });
-  });
-}
-
