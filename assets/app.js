@@ -425,6 +425,34 @@ if (document.getElementById('calendar')) {
 
         hideType(i, isPressed);
       }
+
+      const btnValidated = document.querySelector('.statusEvent button');
+
+      const isPressed = localStorage.getItem('isvalidated') !== null;
+
+      btnValidated.setAttribute('aria-pressed', isPressed ? 'true' : 'false');
+
+      if (btnValidated.getAttribute('aria-pressed') === 'true') {
+        btnValidated.classList.add('btn--active');
+      } else {
+        btnValidated.classList.remove('btn--active');
+      }
+
+      hideCards(isPressed);
+
+      const btnValidated2 = document.querySelector('.statusHomework button');
+
+      const isPressed2 = localStorage.getItem('isdone') !== null;
+
+      btnValidated2.setAttribute('aria-pressed', isPressed2 ? 'true' : 'false');
+
+      if (btnValidated2.getAttribute('aria-pressed') === 'true') {
+        btnValidated2.classList.add('btn--active');
+      } else {
+        btnValidated2.classList.remove('btn--active');
+      }
+
+      hideCards(isPressed);
     });
 
     // METTRE LE BOUTON TODAY À DROITE
