@@ -18,13 +18,6 @@
                             <i class="fa-solid fa-table-list" aria-hidden="true"></i>
                         </button>
                     </div>
-                    <button type="button"
-                            title="Aujourd'hui"
-                            disabled=""
-                            aria-pressed="false"
-                            class="fc-today-button fc-button fc-button-primary btn--highlighted">
-                        Aujourd'hui
-                    </button>
                 </div>
                 <div class="fc-toolbar-chunk fc-toolbar-title-div ">
                     <h2 class="fc-toolbar-title" id="fc-dom-1"> janvier 2024 </h2>
@@ -63,7 +56,7 @@
         </div>
 
         {# Items List #}
-        <div id='list--items'>
+        <div id='list--items' class="global-list">
 
             {# List Weeks #}
             {% for week in weekList %}
