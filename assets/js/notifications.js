@@ -205,7 +205,7 @@ if(seeButton) {
                 }
                 let eventId = button.getAttribute('card-id');
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', `/details?eventId=${eventId}`, true);
+                xhr.open('GET', `/details/${eventId}`, true);
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         document.getElementById('details').innerHTML = xhr.responseText;
