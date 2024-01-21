@@ -504,12 +504,6 @@ if (document.getElementById('calendar')) {
   const btnstatusEvent = document.querySelectorAll('.statusEvent button');
   btnstatusEvent[0].innerHTML = '<i class="fa-regular fa-square-check"></i> Validés';
 
-  const subjectDiv = document.createElement('div');
-  subjectDiv.classList.add('fc-button-group');
-  subjectDiv.classList.add('subject');
-
-  divFilter.appendChild(subjectDiv);
-
   generalFilter('.statusEvent button', 'isvalidated');
   generalFilter('.statusHomework button', 'isdone');
 
