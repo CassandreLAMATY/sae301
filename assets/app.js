@@ -252,7 +252,7 @@ if (document.getElementById('calendar')) {
                 eventDiv.innerHTML =
                     arg.event.title + '<br>' +
                     (arg.event.extendedProps.subject ? arg.event.extendedProps.subject.sbjRef + " - " + arg.event.extendedProps.subject.sbjName + '<br>' : '') +
-                    "À " + arg.event.extendedProps.hour + '<br> ' +
+                    "À " + arg.event.extendedProps.hour;
 
                 eventDiv.setAttribute('card-id', arg.event.id);
                 eventDiv.setAttribute('type-id', arg.event.extendedProps.type.typId);
