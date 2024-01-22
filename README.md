@@ -15,3 +15,6 @@ après avoir généré une clé ssh et l'avoir ajouté à github.
 
 ### Notation des commits :
 gitmoji : https://gitmoji.carloscuesta.me/
+
+
+## !!! Les données nécessaires a la base de données se trouvent dans le dossier /data à la racine du projet. !!!
